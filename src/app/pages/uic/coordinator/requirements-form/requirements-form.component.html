@@ -1,1 +1,22 @@
-<p>requirements-form works!</p>
+<div class="p-fluid">
+    <form action="" (ngSubmit)="onSubmit($event)">
+        <div class="p-grid">
+            <p-card class="p-lg-6 p-md-12 p-col-12">
+                <div class="p-field">
+                    <label for="multiple">Requisitos::</label>
+                    <p-fileUpload name="demo[]" url="" (onUpload)="onUpload($event)"
+                        multiple="multiple" accept="image/*" maxFileSize="1000000">
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="uploadedFiles.length">
+                                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                            </ul>
+                        </ng-template>
+                    </p-fileUpload>
+                </div>
+            </p-card>
+
+        </div>
+        
+    </form>
+</div>
+

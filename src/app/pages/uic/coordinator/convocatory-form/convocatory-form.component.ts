@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./convocatory-form.component.css']
 })
 export class ConvocatoryFormComponent implements OnInit {
-
+  value: Date;
   constructor() { }
 
   ngOnInit(): void {

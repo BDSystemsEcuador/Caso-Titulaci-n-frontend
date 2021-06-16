@@ -32,6 +32,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {CardModule} from 'primeng/card';
 import {SharedModule} from '../../shared/shared.module';
 import {RippleModule} from 'primeng/ripple';
+import {CalendarModule} from 'primeng/calendar';
 
 import { CoordinatorRouting } from './coordinator.routing';
 import { ConvocatoryFormComponent } from './convocatory-form/convocatory-form.component';
@@ -72,6 +73,8 @@ import { CoordinatorComponent } from './coordinator.component';
     CardModule,
     SkeletonModule,
     RippleModule,
+
+    CalendarModule
   ],
   declarations: [
     ConvocatoryFormComponent,
