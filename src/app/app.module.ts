@@ -1,4 +1,3 @@
-// Angular Libs
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -7,17 +6,18 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 // Application Modules
-import {AppRoutingModule} from './app-routing.module';
+import {AppRouting} from './app-routing';
 import {AppCodeModule} from './shared/components/code/app.code.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 
-// Primeng Modules
+// PrimeNg Modules
 import {CalendarModule} from 'primeng/calendar';
 import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import {PasswordModule} from 'primeng/password';
 
-// Application Components
+// Components
 import {AppComponent} from './app.component';
 import {AppMainComponent} from './shared/components/main/app.main.component';
 import {AppMenuComponent} from './shared/components/menu/app.menu.component';
@@ -29,23 +29,21 @@ import {AppTopBarComponent} from './shared/components/topbar/app.topbar.componen
 import {AppFooterComponent} from './shared/components/footer/app.footer.component';
 import {AppBlankComponent} from './shared/components/blank/app.blank.component';
 
-// Application Services
+// Services
 import {BreadcrumbService} from './shared/services/breadcrumb.service';
-import {MenuService} from './shared/services/app.menu.service';
 import {InterceptorService} from './interceptors/interceptor.service';
+import {MenuService} from './shared/services/app.menu.service';
 import {SharedModule} from './pages/shared/shared.module';
-import {PasswordModule} from 'primeng/password';
-
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
-        AppRoutingModule,
+        AppRouting,
         AppCodeModule,
         HttpClientModule,
-        SharedModule,
         NgxSpinnerModule,
+        SharedModule,
         // Primeng Modules
         CalendarModule,
         CheckboxModule,

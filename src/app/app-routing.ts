@@ -14,12 +14,18 @@ import {AuthGuard} from './shared/guards/auth.guard';
             {
                 path: '', component: AppMainComponent,
                 children: [
-                    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+                    // {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+                    {path: '', redirectTo: '/uic/coordinator', pathMatch: 'full'},
+                    // {
+                    //     path: 'dashboard',
+                    //     loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+                    //     canActivate: [AuthGuard]
+                    // },
                     {
-                        path: 'dashboard',
-                        loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+                        path: 'uic',
+                        loadChildren: () => import('./pages/uic/uic.module').then(m => m.UicModule),
                         canActivate: [AuthGuard]
-                    },
+                    }
                     // {
                     //     path: 'user',
                     //     loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
@@ -37,5 +43,5 @@ import {AuthGuard} from './shared/guards/auth.guard';
     ],
     exports: [RouterModule]
 })
-export class AppRoutingModule {
+export class AppRouting{
 }
