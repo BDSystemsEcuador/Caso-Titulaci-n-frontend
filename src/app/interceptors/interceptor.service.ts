@@ -9,28 +9,29 @@ import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {AuthService} from '../services/auth/auth.service';
-import {Token, Role, System} from '../models/auth/models.index';
-import {Institution} from '../models/app/institution';
+import {System, Token} from '../models/auth/models.index';
+import {getToken} from 'codelyzer/angular/styles/cssLexer';
+import {MessageService} from '../pages/shared/services/message.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService, private router: Router,private messageService: MessageService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = req.headers;
         let params = req.params;
         headers = headers.append('Accept', 'application/json');
-        if (localStorage.getItem('system')) {
-            params = params.append('system',
-                (JSON.parse(localStorage.getItem('system')) as System).id.toString());
+
+        if (this.authService.getSystem()) {
+            params = params.append('system', this.authService.getSystem().id.toString());
         }
         if (this.authService.getToken()) {
             headers = headers.append(
-                'Authorization', 'Bearer ' + (JSON.parse(localStorage.getItem('token')) as Token).access_token);
+                'Authorization', 'Bearer ' + this.authService.getToken().access_token);
             if (!req.params.has('page')) {
                 params = params.append('page', '1');
             }
@@ -49,20 +50,22 @@ export class InterceptorService implements HttpInterceptor {
         }
 
         return next.handle(req.clone({headers, params})).pipe(catchError(error => {
-            if ((error.status === 401 || error.status === 423 || error.status === 403)
-                && this.authService.getToken()) {
+            // Cuando la aplicación o una ruta está en mantenimiento
+            if (error.status === 503) {
+                this.authService.removeLogin();
+                this.router.navigate(['/auth/under-maintenance']);
+            }
+
+            // Cuando el usuario no tiene permisos para acceder a la ruta solicitada y se encuentra logueado
+            if ((error.status === 401 || error.status === 403 || error.status === 423) && this.authService.getToken()) {
                 this.authService.removeLogin();
                 this.router.navigate(['/auth/access-denied']);
             }
 
-            if (error.status === 403 && !localStorage.getItem('token')) {
+            // Cuando el usuario no tiene permisos para acceder a la ruta solicitada y no está logueado
+            if ((error.status === 401 || error.status === 403 || error.status === 423) && !this.authService.getToken()) {
                 this.authService.removeLogin();
                 this.router.navigate(['/auth/login']);
-            }
-
-            if (error.status === 503) {
-                this.authService.removeLogin();
-                this.router.navigate(['/auth/under-maintenance']);
             }
 
             return throwError(error);

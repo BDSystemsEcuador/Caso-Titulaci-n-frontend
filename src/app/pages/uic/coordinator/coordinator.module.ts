@@ -34,6 +34,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {RippleModule} from 'primeng/ripple';
 import {CalendarModule} from 'primeng/calendar';
 
+import {RadioButtonModule} from 'primeng/radiobutton';
 import { CoordinatorRouting } from './coordinator.routing';
 import { ConvocatoryFormComponent } from './convocatory-form/convocatory-form.component';
 import { RequirementsFormComponent } from './requirements-form/requirements-form.component';
@@ -74,7 +75,8 @@ import { CoordinatorComponent } from './coordinator.component';
     SkeletonModule,
     RippleModule,
 
-    CalendarModule
+    CalendarModule,
+    RadioButtonModule
   ],
   declarations: [
     ConvocatoryFormComponent,

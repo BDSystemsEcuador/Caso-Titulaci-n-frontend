@@ -33,11 +33,11 @@ import {AuthGuard} from './shared/guards/auth.guard';
                     // }
                 ]
             },
-            {
-                path: 'auth',
-                component: AppBlankComponent,
-                loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
-            },
+            // {
+            //     path: 'auth',
+            //     component: AppBlankComponent,
+            //     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+            // },
             {path: '**', redirectTo: '/auth/not-found'},
         ], {scrollPositionRestoration: 'enabled'})
     ],
