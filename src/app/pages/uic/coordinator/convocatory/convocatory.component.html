@@ -1,0 +1,50 @@
+<!-- <div class="p-grid">
+    <div class="p-col-12">
+        <app-convocatory-list *ngIf="!planningDialog" 
+                        [planningsIn]="plannings" 
+                        [flagPlannings]="flagPlannings"
+                        [paginatorIn]="paginator" 
+                        [formPlanningIn]="formPlanning"
+                        (planningsOut)="plannings=$event" 
+                        (displayOut)="planningDialog=$event" 
+                        (formPlanningOut)="formPlanning=$event"
+                        (paginatorOut)="getPlannings($event)">    
+        </app-convocatory-list>
+        
+        <div *ngIf="planningDialog">
+            <button pButton label="Atras" 
+                    (click)="planningDialog=false">
+            </button>
+            <app-convocatory-form 
+                [formPlanningIn]="formPlanning"
+            >
+            </app-convocatory-form>
+        </div>
+    </div>
+</div> -->
+<div class="p-grid">
+    <div class="p-col-12">
+        <app-convocatory-list *ngIf="!planningDialog" 
+        [planningsIn]="plannings" 
+        [flagPlannings]="flagPlannings"
+        [paginatorIn]="paginator" 
+        [formPlanningIn]="formPlanning"
+        (planningsOut)="plannings=$event" 
+        (displayOut)="planningDialog=$event" 
+        (formPlanningOut)="formPlanning=$event"
+        (paginatorOut)="getPlannings($event)">    
+        </app-convocatory-list>
+
+        <p-dialog [(visible)]="planningDialog" [style]="{width: '650px'}" header="Convocatoria" [modal]="true"
+                  styleClass="p-fluid" (onHide)="PlanningDialog=false">
+            <app-convocatory-form
+                    [planningsIn]="plannings"
+                    [formPlanningIn]="formPlanning"
+                    (planningsOut)="plannings=$event"
+                    (paginatorAdd)="paginator.total = paginator.total + $event"
+                    (displayOut)="planningDialog=$event">
+            </app-convocatory-form>
+        </p-dialog>
+
+    </div>
+</div>

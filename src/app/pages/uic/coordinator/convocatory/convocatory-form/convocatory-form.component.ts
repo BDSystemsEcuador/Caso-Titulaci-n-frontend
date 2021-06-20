@@ -15,7 +15,7 @@ export class ConvocatoryFormComponent implements OnInit {
   @Input() planningsIn: Planning[];
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() planningsOut = new EventEmitter<Planning[]>();
-  value: Date;
+  @Output() paginatorAdd = new EventEmitter<number>();
   constructor(
     private formBuilder:FormBuilder,
     private messageService: MessageService,

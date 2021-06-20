@@ -1,17 +1,11 @@
 <div class="card">
-    <h5>Apertura del proceso</h5>
+    <h5>Coordinación UIC</h5>
     <p-tabView>
         <p-tabPanel header="Convocatoria" leftIcon="pi pi-calendar-plus" tooltip="">
-           <app-convocatory-form
-               
-                [formPlanningIn]="formPlanning"
-
-           ></app-convocatory-form>
+            <app-convocatory></app-convocatory>
         </p-tabPanel>
-      
         <p-tabPanel header="Subir Formatos de Requisitos" leftIcon="pi pi-folder-open" tooltip="">
-           <app-requirements-form></app-requirements-form>
-    
-        </p-tabPanel>
+            <app-requirements-form></app-requirements-form>
+         </p-tabPanel>
     </p-tabView>
 </div>

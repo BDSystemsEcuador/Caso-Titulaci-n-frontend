@@ -1,8 +1,7 @@
 <!-- {{formPlanningIn.value|json}} -->
+
 <div class="p-fluid">
-    <form [formGroup]="formPlanningIn" (ngSubmit)="onSubmit($event, true)">
-        <div class="p-grid">
-            <p-card class="p-lg-6 p-md-12 p-col-12">
+    <form [formGroup]="formPlanningIn" (ngSubmit)="onSubmit($event)">
                 <div class="p-grid">
                     <div class="p-field p-lg-8 p-md-12 p-col-12">
                         <label for="name">
@@ -101,12 +100,24 @@
                     </div>
                     
                 </div>
-                <div class="p-field p-col">
-                    <button type="submit" pButton pRipple label="Guardar" icon="pi pi-save"
-                     class="p-button-success p-button-raised"></button>
+                <div class="p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <button pButton pRipple type="submit" id="btnSaveExit" 
+                                label="Guardar y Salir"
+                                class="p-button-success p-button-raised" 
+                                icon="pi pi-save">
+                        </button>
+                    </div>
+                    <div *ngIf="!idField.value" class="p-field p-col">
+                        <button pButton pRipple type="button" id="btnSaveContinue" 
+                                label="Guardar y Crear Nueva" 
+                                class="p-button-raised"
+                                icon="pi pi-arrow-right" 
+                                (click)="onSubmit($event,true)">
+                        </button>
+                    </div>
                 </div>
-            </p-card>
-        </div>
+    
         
     </form>
 </div>

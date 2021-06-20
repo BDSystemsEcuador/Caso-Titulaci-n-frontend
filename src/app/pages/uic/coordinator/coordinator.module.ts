@@ -11,6 +11,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import {SkeletonModule} from 'primeng/skeleton';
 
+
+
 // My Components
 import {TooltipModule} from 'primeng/tooltip';
 import {AutoCompleteModule} from 'primeng/autocomplete';
@@ -36,9 +38,11 @@ import {CalendarModule} from 'primeng/calendar';
 
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { CoordinatorRouting } from './coordinator.routing';
-import { ConvocatoryFormComponent } from './convocatory-form/convocatory-form.component';
 import { RequirementsFormComponent } from './requirements-form/requirements-form.component';
 import { CoordinatorComponent } from './coordinator.component';
+import { ConvocatoryComponent } from './convocatory/convocatory.component';
+import { ConvocatoryFormComponent } from './convocatory/convocatory-form/convocatory-form.component';
+import { ConvocatoryListComponent } from './convocatory/convocatory-list/convocatory-list.component';
 
 
 @NgModule({
@@ -74,14 +78,16 @@ import { CoordinatorComponent } from './coordinator.component';
     CardModule,
     SkeletonModule,
     RippleModule,
-
     CalendarModule,
-    RadioButtonModule
+    RadioButtonModule,
+    
   ],
   declarations: [
     ConvocatoryFormComponent,
     RequirementsFormComponent,
-    CoordinatorComponent
+    CoordinatorComponent,
+    ConvocatoryComponent,
+    ConvocatoryListComponent
   ],
 })
 export class CoordinatorModule { }

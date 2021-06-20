@@ -34,7 +34,6 @@ import {CardModule} from 'primeng/card';
 import {SharedModule} from '../shared/shared.module';
 import {RippleModule} from 'primeng/ripple';
 import { UicComponent } from './uic.component';
-import { ConvocatoryFormComponent } from './coordinator/convocatory-form/convocatory-form.component';
 import { RequirementsFormComponent } from './coordinator/requirements-form/requirements-form.component';
 
 
