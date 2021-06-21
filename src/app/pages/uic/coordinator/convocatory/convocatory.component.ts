@@ -5,7 +5,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Paginator } from 'src/app/models/setting/paginator';
 import { Planning } from 'src/app/models/uic/planning';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
-import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { MessageService } from '../../../shared/services/message.service';
 import { DateValidators } from '../../../shared/validators/date.validators';
 

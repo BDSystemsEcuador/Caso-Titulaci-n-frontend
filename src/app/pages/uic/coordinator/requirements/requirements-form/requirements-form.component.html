@@ -1,0 +1,61 @@
+<div class="p-fluid">
+    <form [formGroup]="formRequirementIn" (ngSubmit)="onSubmit($event)">
+                <div class="p-field">
+                    <label for="name">
+                        <i class="p-error">*</i> Nombre:
+                        <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
+                        <i *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
+                            class="pi pi-times-circle icon-invalid"></i>
+                    </label>
+                    <input id="name" formControlName="name" pInputText>
+                    <div *ngIf="nameField.errors && nameField.touched">
+                        <small *ngIf="nameField.hasError('required')" id="name-help-1" class="p-error">
+                            {{messageService.fieldRequired}}
+                        </small>
+                    </div>
+                </div>
+                <div class="p-field">
+                    <label for="file">Requisito:</label>
+                    
+                    <p-fileUpload #fubauto mode="basic" name="file" chooseLabel="Seleccionar"></p-fileUpload>      
+              </div>
+              <label for="is_required">
+                <i class="p-error">*</i> Nombre:
+                <i *ngIf="isRequiredField.valid" class="pi pi-check-circle icon-valid"></i>
+                <i *ngIf="isRequiredField.invalid && (isRequiredField.touched || isRequiredField.dirty)"
+                    class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                    <div class="p-field-radiobutton">
+                        <p-radioButton name="is_required" value="1"  formControlName="is_required" inputId="is_required_true"></p-radioButton>
+                        <label for="is_required_true">Requerido</label>
+                    </div>
+                    <div class="p-field-radiobutton">
+                        <p-radioButton name="is_required" value="0" formControlName="is_required" inputId="is_required_false"></p-radioButton>
+                        <label for="is_required_false">Opcional</label>
+                    </div>
+                    <div *ngIf="isRequiredField.errors && isRequiredField.touched">
+                        <small *ngIf="isRequiredField.hasError('required')" id="number-help-1" class="p-error">
+                            {{messageService.fieldRequired}}
+                        </small>
+                    </div>
+                    <div class="p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <button pButton pRipple type="submit" id="btnSaveExit" 
+                                    label="Guardar y Salir"
+                                    class="p-button-success p-button-raised" 
+                                    icon="pi pi-save">
+                            </button>
+                        </div>
+                        <div *ngIf="!idField.value" class="p-field p-col">
+                            <button pButton pRipple type="button" id="btnSaveContinue" 
+                                    label="Guardar y Crear Nueva" 
+                                    class="p-button-raised"
+                                    icon="pi pi-arrow-right" 
+                                    (click)="onSubmit($event,true)">
+                            </button>
+                        </div>
+                    </div>
+
+     </form>
+</div>
+

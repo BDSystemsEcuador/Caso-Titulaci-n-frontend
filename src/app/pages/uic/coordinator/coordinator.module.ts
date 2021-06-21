@@ -38,11 +38,13 @@ import {CalendarModule} from 'primeng/calendar';
 
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { CoordinatorRouting } from './coordinator.routing';
-import { RequirementsFormComponent } from './requirements-form/requirements-form.component';
 import { CoordinatorComponent } from './coordinator.component';
 import { ConvocatoryComponent } from './convocatory/convocatory.component';
 import { ConvocatoryFormComponent } from './convocatory/convocatory-form/convocatory-form.component';
 import { ConvocatoryListComponent } from './convocatory/convocatory-list/convocatory-list.component';
+import { RequirementsComponent } from './requirements/requirements.component';
+import { RequirementsListComponent } from './requirements/requirements-list/requirements-list.component';
+import { RequirementsFormComponent } from './requirements/requirements-form/requirements-form.component';
 
 
 @NgModule({
@@ -87,7 +89,9 @@ import { ConvocatoryListComponent } from './convocatory/convocatory-list/convoca
     RequirementsFormComponent,
     CoordinatorComponent,
     ConvocatoryComponent,
-    ConvocatoryListComponent
+    ConvocatoryListComponent,
+    RequirementsComponent,
+    RequirementsListComponent
   ],
 })
 export class CoordinatorModule { }
