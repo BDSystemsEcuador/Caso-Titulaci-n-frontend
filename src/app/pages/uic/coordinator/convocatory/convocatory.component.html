@@ -11,8 +11,8 @@
         (paginatorOut)="getPlannings($event)">    
         </app-convocatory-list>
 
-        <p-dialog [(visible)]="planningDialog" [style]="{width: '650px'}" header="Convocatoria" [modal]="true"
-                  styleClass="p-fluid" (onHide)="PlanningDialog=false">
+        <p-dialog [(visible)]="planningDialog" [style]="{width: '700px'}" header="Convocatoria" [modal]="true"
+                  styleClass="p-fluid" (onHide)="planningDialog=false">
             <app-convocatory-form
                     [planningsIn]="plannings"
                     [formPlanningIn]="formPlanning"

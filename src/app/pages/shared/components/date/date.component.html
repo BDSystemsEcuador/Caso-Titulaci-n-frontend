@@ -2,7 +2,8 @@
     <p-dropdown id="year" [options]="years" [formControl]="year" placeholder="Año"
                 [virtualScroll]="true"
                 [itemSize]="40"
-                (onChange)="updateValue();calculateTotalDays()"></p-dropdown>
+                (onChange)="updateValue();calculateTotalDays()"
+                ></p-dropdown>
     <p-dropdown id="month"
                 [options]="months"
                 [formControl]="month"

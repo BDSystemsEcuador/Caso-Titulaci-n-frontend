@@ -61,7 +61,7 @@ export class DateComponent implements OnInit, ControlValueAccessor {
     generateYears() {
         this.years = [];
         const currentYear = parseInt(moment().format('YYYY'));
-        for (let i = currentYear; i >= (currentYear - 100); i--) {
+        for (let i = currentYear+1; i >= (currentYear - 100); i--) {
             this.years.push({label: i.toString(), value: i.toString()});
         }
     }
