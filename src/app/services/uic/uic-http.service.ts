@@ -4,6 +4,7 @@ import {environment, WEB} from '../../../environments/environment';
 import {Router} from '@angular/router';
 
 import {MessageService} from '../../pages/shared/services/message.service';
+import { File } from 'src/app/models/app/file';
 
 
 
@@ -39,13 +40,25 @@ export class UicHttpService {
         return this.httpClient.put(url, {ids}, {params});
     }
 
-    uploadFiles(url, data: FormData, params = new HttpParams()) {
-        url = this.API_URL_UIC + url;
+    updateFile(file: File, params = new HttpParams()) {
+        const url = environment.API_URL_UIC + 'file/update/' + file.id;
+        return this.httpClient.put(url, file, {params});
+    }
+
+
+    downloadFiles(params = new HttpParams()) {
+        const url = environment.API_URL_UIC + 'file/download';
+        return this.httpClient.get(url, {params, responseType: 'blob' as 'json'});
+    }
+
+    deleteFiles(ids, params = new HttpParams()) {
+        const url = environment.API_URL_UIC + 'file/delete';
+        return this.httpClient.put(url, {ids}, {params});
+    }
+
+    uploadImages(data: FormData, params = new HttpParams()) {
+        const url = environment.API_URL_UIC + 'images';
         return this.httpClient.post(url, data, {params});
     }
 
-    getFiles(url, params = new HttpParams()) {
-        url = this.API_URL_UIC + url;
-        return this.httpClient.get(url, {params});
-    }
 }

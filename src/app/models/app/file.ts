@@ -1,8 +1,9 @@
 export interface File {
     id?: number;
-    name: string;
-    description: string;
-    extension: string;
-    directory: string;
-    
+    name?: string;
+    full_name?: string;
+    full_path?: string;
+    description?: string;
+    extension?: string;
+    directory?: string;
 }
