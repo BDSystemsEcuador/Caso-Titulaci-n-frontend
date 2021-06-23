@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
+import { File } from 'src/app/models/app/file';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,19 @@ export class AppHttpService {
     uploadImages(data: FormData, params = new HttpParams()) {
         const url = environment.API_URL_APP + 'images';
         return this.httpClient.post(url, data, {params});
+    }
+    updateFile(file: File, params = new HttpParams()) {
+        const url = environment.API_URL_APP + 'file/update/' + file.id;
+        return this.httpClient.put(url, file, {params});
+    }
+    deleteFiles(ids, params = new HttpParams()) {
+        const url = environment.API_URL_APP + 'file/delete';
+        return this.httpClient.put(url, {ids}, {params});
+    }
+
+    downloadFiles(params = new HttpParams()) {
+        const url = environment.API_URL_APP + 'file/download';
+        return this.httpClient.get(url, {params, responseType: 'blob' as 'json'});
     }
 
     getCatalogues(params = new HttpParams()) {

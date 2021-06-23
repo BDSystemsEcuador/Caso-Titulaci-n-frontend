@@ -56,9 +56,14 @@ export class UicHttpService {
         return this.httpClient.put(url, {ids}, {params});
     }
 
-    uploadImages(data: FormData, params = new HttpParams()) {
-        const url = environment.API_URL_UIC + 'images';
+    uploadFiles(url, data: FormData, params = new HttpParams()) {
+        url = this.API_URL_UIC + url;
         return this.httpClient.post(url, data, {params});
+    }
+
+    getFiles(url, params = new HttpParams()) {
+        url = this.API_URL_UIC + url;
+        return this.httpClient.get(url, {params});
     }
 
 }

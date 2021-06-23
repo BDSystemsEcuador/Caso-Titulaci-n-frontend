@@ -85,6 +85,10 @@
                             pTooltip="Eliminar" icon="pi pi-trash"
                             class="p-button-rounded p-button-danger p-ml-2"
                             (click)="deleteRequirement(rowData)"></button>
+                    <button pButton pRipple type="button" id="btnAttach"
+                            pTooltip="Adjuntar Archivos" icon="pi pi-paperclip"
+                            class="p-button-rounded p-ml-2"
+                            (click)="selectRequirement(rowData);openViewFilesRequirement()"></button>
                 </td>
             </tr>
         </ng-template>
@@ -95,3 +99,9 @@
         </ng-template>
     </p-table>
 </div>
+<p-dialog [(visible)]="dialogViewFiles" [style]="{width: '75%'}" header="Subir Archivos" [modal]="true"
+    styleClass="p-fluid" (onHide)="dialogViewFiles=false">
+    <app-view-files (files)="upload($event,selectedRequirement.id)" [filesIn]="files" [title]="'Requerimientos'"
+        (searchOut)="searchFiles($event)" [paginatorIn]="paginatorFiles" (paginatorOut)="getFiles($event)">
+    </app-view-files>
+</p-dialog>
