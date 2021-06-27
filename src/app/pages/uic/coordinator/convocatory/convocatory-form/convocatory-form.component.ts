@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Paginator } from 'src/app/models/setting/paginator';
 import { Planning } from 'src/app/models/uic/planning';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
@@ -13,9 +14,11 @@ import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 export class ConvocatoryFormComponent implements OnInit {
   @Input() formPlanningIn: FormGroup;
   @Input() planningsIn: Planning[];
+  @Input() paginatorIn: Paginator;
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() planningsOut = new EventEmitter<Planning[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
+  @Output() paginatorOut = new EventEmitter<Paginator>();
   constructor(
     private formBuilder:FormBuilder,
     private messageService: MessageService,
@@ -63,12 +66,17 @@ onSubmit(event: Event, flag = false) {
       this.formPlanningIn.markAllAsTouched();
   }
 }
+paginatePlanning(event) {
+  this.paginatorOut.emit(this.paginatorIn);
+}
+
 storePlanning(planning: Planning, flag = false) {
   this.spinnerService.show();
   this.uicHttpService.store('plannings', { planning }).subscribe(response => {
       this.spinnerService.hide();
       this.messageService.success(response);
       this.savePlanning(response['data']);
+      this.paginatorOut.emit(this.paginatorIn);
       if (flag) {
           this.formPlanningIn.reset();
       } else {

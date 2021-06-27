@@ -36,7 +36,7 @@
             >
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">Convocatorias</h5>
+                <h5 class="p-m-0">Requerimientos</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" (click)="searchRequirements($event,search.value)"></i>
                     <input pInputText #search type="text" 
@@ -94,7 +94,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
-                En total hay {{requirementsIn ? requirementsIn.length : 0 }} convocatorias.
+                En total hay {{requirementsIn ? requirementsIn.length : 0 }} requerimientos.
             </div>
         </ng-template>
     </p-table>
