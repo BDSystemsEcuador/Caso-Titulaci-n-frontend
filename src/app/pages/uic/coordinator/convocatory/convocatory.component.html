@@ -1,24 +1,17 @@
 <div class="p-grid">
     <div class="p-col-12">
-        <app-convocatory-list *ngIf="!planningDialog" 
-        [planningsIn]="plannings" 
-        [flagPlannings]="flagPlannings"
-        [paginatorIn]="paginator" 
-        [formPlanningIn]="formPlanning"
-        (planningsOut)="plannings=$event" 
-        (displayOut)="planningDialog=$event" 
-        (formPlanningOut)="formPlanning=$event"
-        (paginatorOut)="getPlannings($event)">    
+        <app-convocatory-list *ngIf="!planningDialog" [planningsIn]="plannings" [planningsEndIn]="planningsEnd"
+            [flagPlannings]="flagPlannings" [paginatorIn]="paginator" [formPlanningIn]="formPlanning"
+            (planningsOut)="plannings=$event" (planningsEndOut)="planningsEnd=$event"
+            (displayOut)="planningDialog=$event" (formPlanningOut)="formPlanning=$event"
+            (paginatorOut)="getPlannings($event)">
         </app-convocatory-list>
 
         <p-dialog [(visible)]="planningDialog" [style]="{width: '700px'}" header="Convocatoria" [modal]="true"
-                  styleClass="p-fluid" (onHide)="planningDialog=false">
-            <app-convocatory-form
-                    [planningsIn]="plannings"
-                    [formPlanningIn]="formPlanning"
-                    (planningsOut)="plannings=$event"
-                    (paginatorAdd)="paginator.total = paginator.total + $event"
-                    (displayOut)="planningDialog=$event">
+            styleClass="p-fluid" (onHide)="planningDialog=false">
+            <app-convocatory-form [planningsIn]="plannings" [formPlanningIn]="formPlanning"
+                (planningsOut)="plannings=$event" (paginatorAdd)="paginator.total = paginator.total + $event"
+                (displayOut)="planningDialog=$event">
             </app-convocatory-form>
         </p-dialog>
 

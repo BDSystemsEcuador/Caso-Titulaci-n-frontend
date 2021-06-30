@@ -1,11 +1,11 @@
-<app-skeleton *ngIf="flagPlannings" [type]="'table'"></app-skeleton>
-<div class="card" [hidden]="flagPlannings">
+<app-skeleton *ngIf="flagEvents" [type]="'table'"></app-skeleton>
+<div class="card" [hidden]="flagEvents">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
             <button pButton pRipple label="Crear" icon="pi pi-plus" class="p-button-success p-button-rounded"
-                (click)="openNewFormPlanning()"></button>
+                (click)="openNewFormEvent()"></button>
             <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger p-button-rounded p-ml-2"
-                (click)="deletePlannings()" [disabled]="!selectedPlannings || !selectedPlannings.length"></button>
+                (click)="deleteEvents()" [disabled]="!selectedEvents || !selectedEvents.length"></button>
         </ng-template>
         <ng-template pTemplate="right">
             <button pButton pRipple label="Actualizar" icon="pi pi-refresh" class="p-button-info"
@@ -13,16 +13,16 @@
         </ng-template>
     </p-toolbar>
     <p-paginator [rows]="paginatorIn.per_page" [totalRecords]="paginatorIn.total"
-        (onPageChange)="paginatePlanning($event)"></p-paginator>
-    <p-table #dt [value]="planningsIn" [columns]="colsPlanning" [rows]="paginatorIn.per_page" [paginator]="false"
-        [(selection)]="selectedPlannings" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
+        (onPageChange)="paginateEvent($event)"></p-paginator>
+    <p-table #dt [value]="eventsIn" [columns]="colsEvent" [rows]="paginatorIn.per_page" [paginator]="false"
+        [(selection)]="selectedEvents" [rowHover]="true" dataKey="id" styleClass="p-datatable-customers"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
-                <h5 class="p-m-0">Convocatorias Activas</h5>
+                <h5 class="p-m-0">Eventos</h5>
                 <span class="p-input-icon-left">
-                    <i class="pi pi-search" (click)="searchPlannings($event,search.value)"></i>
-                    <input pInputText #search type="text" (keyup)="searchPlannings($event,$event.target.value)"
+                    <i class="pi pi-search" (click)="searchEvents($event,search.value)"></i>
+                    <input pInputText #search type="text" (keyup)="searchEvents($event,$event.target.value)"
                         placeholder="Buscar..." />
                 </span>
             </div>
@@ -58,27 +58,16 @@
                 </td>
                 <td style="text-align:center">
                     <button pButton pRipple type="button" id="btnEdit" pTooltip="Editar" icon="pi pi-pencil"
-                        class="p-button-rounded p-button-warning" (click)="openEditFormPlanning(rowData)"></button>
+                        class="p-button-rounded p-button-warning" (click)="openEditFormEvent(rowData)"></button>
                     <button pButton pRipple type="button" id="btnDelete" pTooltip="Eliminar" icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger p-ml-2" (click)="deletePlanning(rowData)"></button>
-                    <button pButton pRipple type="button" id="btnAttach" pTooltip="Adjuntar Plantillas"
-                        icon="pi pi-paperclip" class="p-button-rounded p-ml-2"
-                        (click)="selectPlanning(rowData);openViewFilesPlanning()"></button>
+                        class="p-button-rounded p-button-danger p-ml-2" (click)="deleteEvent(rowData)"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="p-d-flex p-ai-center p-jc-between">
-                En total hay {{planningsIn ? planningsIn.length : 0 }} convocatorias.
+                En total hay {{eventsIn ? eventsIn.length : 0 }} eventos.
             </div>
         </ng-template>
     </p-table>
 </div>
-
-<p-dialog [(visible)]="dialogViewFiles" [style]="{width: '75%'}" header="Plantillas para los estudiantes" [modal]="true"
-    styleClass="p-fluid" (onHide)="dialogViewFiles=false">
-    <app-view-files (files)="upload($event,selectedPlanning.id)" [filesIn]="files"
-        [title]="'Plantillas para el estudiante'" (searchOut)="searchFiles($event)" [paginatorIn]="paginatorFiles"
-        (paginatorOut)="getFiles($event)">
-    </app-view-files>
-</p-dialog>

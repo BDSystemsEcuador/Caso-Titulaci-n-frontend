@@ -19,13 +19,14 @@
             </div>
             <div class="p-field p-lg-4 p-md-12 p-col-12">
                 <label for="number">
-                    <i class="p-error">*</i> Número de Convocatoria:
+                    <i class="p-error">*</i> Número:
                     <i *ngIf="numberField.valid" class="pi pi-check-circle icon-valid"></i>
                     <i *ngIf="numberField.invalid && (numberField.touched || numberField.dirty)"
                         class="pi pi-times-circle icon-invalid"></i>
-                    
+
                 </label>
-                <p-inputNumber name="number" formControlName="number" placeholder="número de convocatoria" ></p-inputNumber>
+                <p-inputNumber name="number" formControlName="number" placeholder="número de convocatoria">
+                </p-inputNumber>
                 <div *ngIf="numberField.errors && numberField.touched">
                     <small *ngIf="numberField.hasError('required')" id="number-help-1" class="p-error">
                         {{messageService.fieldRequired}}
@@ -34,67 +35,15 @@
             </div>
         </div>
         <div class="p-field">
-            <label for="event">
-                <i class="p-error">*</i>  Evento:
-                <i *ngIf="eventField.valid" class="pi pi-check-circle icon-valid"></i>
-                <i *ngIf="eventField.invalid && (eventField.touched || eventField.dirty)"
-                    class="pi pi-times-circle icon-invalid"></i>    
-               
-            </label>
-            <input name="event" formControlName="event" placeholder="convocatoria, inscripción, revisión etc" pInputText>
-            <div *ngIf="eventField.errors && eventField.touched">
-                <small *ngIf="eventField.hasError('required')" id="event-help-1" class="p-error">
-                    {{messageService.fieldRequired}}
-                </small>
-            </div>
-        </div>
-        <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
-    <div class="p-grid">
-
-        <div class="p-field p-lg-6">
-            <label for="startDate">
-                <i class="p-error">*</i>  Fecha Inicial:
-                <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
-                <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
-                    class="pi pi-times-circle icon-invalid"></i>    
-            </label>
-            <app-date id="startDate" name="startDate" formControlName="start_date"></app-date>
-            <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
-
-            <div *ngIf="startDateField.errors && startDateField.touched">
-                <small *ngIf="startDateField.hasError('required')" id="start_date-help-1" class="p-error">
-                    {{messageService.fieldRequired}}
-                </small>
-            </div>
-        </div>
-        <div class="p-field p-lg-6">
-            <label for="endDate">
-                
-                <i class="p-error">*</i>  Fecha Final:
-                <i *ngIf="endDateField.valid" class="pi pi-check-circle icon-valid"></i>
-                <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
-                    class="pi pi-times-circle icon-invalid"></i>    
-            </label>
-            <app-date id="endDate" name="endDate" formControlName="end_date"></app-date>
-
-            <!-- <p-calendar id="endDate" name="endDate" formControlName="end_date" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
-            <!-- <input type="date" id="endDate" name="endDate" formControlName="end_date"> -->
-            <div *ngIf="endDateField.errors && endDateField.touched">
-                <small *ngIf="endDateField.hasError('required')" id="end_date-help-1" class="p-error">
-                    {{messageService.fieldRequired}}
-                </small>
-            </div>
-        </div>
-    </div>
-        <div class="p-field">
             <label for="description">
-                <i class="p-error">*</i> Descripción:
+                <i class="p-error">*</i> Acerca de la convocatoria:
                 <i *ngIf="descriptionField.valid" class="pi pi-check-circle icon-valid"></i>
                 <i *ngIf="descriptionField.invalid && (descriptionField.touched || descriptionField.dirty)"
                     class="pi pi-times-circle icon-invalid"></i>
             </label>
-        
-            <textarea pInputTextarea name="description" id="description" formControlName="description" rows="4"></textarea>
+
+            <textarea pInputTextarea name="description" id="description" formControlName="description"
+                rows="4"></textarea>
             <div *ngIf="descriptionField.errors && descriptionField.touched">
                 <small *ngIf="descriptionField.hasError('required')" id="description-help-1" class="p-error">
                     {{messageService.fieldRequired}}
@@ -103,25 +52,58 @@
                     Mínimo de caracteres es {{descriptionField.errors.minlength.requiredLength}}.
                 </small>
             </div>
-            
+
         </div>
+        <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
+        <div class="p-grid">
+
+            <div class="p-field p-lg-6">
+                <label for="startDate">
+                    <i class="p-error">*</i> Fecha Inicial:
+                    <i *ngIf="startDateField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="startDateField.invalid && (startDateField.touched || startDateField.dirty)"
+                        class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <app-date id="startDate" name="startDate" formControlName="start_date"></app-date>
+                <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+
+                <div *ngIf="startDateField.errors && startDateField.touched">
+                    <small *ngIf="startDateField.hasError('required')" id="start_date-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                </div>
+            </div>
+            <div class="p-field p-lg-6">
+                <label for="endDate">
+
+                    <i class="p-error">*</i> Fecha Final:
+                    <i *ngIf="endDateField.valid" class="pi pi-check-circle icon-valid"></i>
+                    <i *ngIf="endDateField.invalid && (endDateField.touched || endDateField.dirty)"
+                        class="pi pi-times-circle icon-invalid"></i>
+                </label>
+                <app-date id="endDate" name="endDate" formControlName="end_date"></app-date>
+
+                <!-- <p-calendar id="endDate" name="endDate" formControlName="end_date" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+                <!-- <input type="date" id="endDate" name="endDate" formControlName="end_date"> -->
+                <div *ngIf="endDateField.errors && endDateField.touched">
+                    <small *ngIf="endDateField.hasError('required')" id="end_date-help-1" class="p-error">
+                        {{messageService.fieldRequired}}
+                    </small>
+                </div>
+            </div>
+        </div>
+
         <div class="p-formgrid p-grid">
             <div class="p-field p-col">
-                <button pButton pRipple type="submit" id="btnSaveExit" 
-                        label="Guardar y Salir"
-                        class="p-button-success p-button-raised" 
-                        icon="pi pi-save">
+                <button pButton pRipple type="submit" id="btnSaveExit" label="Guardar y Salir"
+                    class="p-button-success p-button-raised" icon="pi pi-save">
                 </button>
             </div>
             <div *ngIf="!idField.value" class="p-field p-col">
-                <button pButton pRipple type="button" id="btnSaveContinue" 
-                        label="Guardar y Crear Nueva" 
-                        class="p-button-raised"
-                        icon="pi pi-arrow-right" 
-                        (click)="onSubmit($event,true)">
+                <button pButton pRipple type="button" id="btnSaveContinue" label="Guardar y Crear Nueva"
+                    class="p-button-raised" icon="pi pi-arrow-right" (click)="onSubmit($event,true)">
                 </button>
             </div>
         </div>
     </form>
 </div>
-

@@ -1,27 +1,18 @@
 <div class="card">
     <app-upload-files (files)="upload($event)"></app-upload-files>
     <div *ngIf="filesIn?.length">
-        <p-paginator [rows]="paginatorIn.per_page" [totalRecords]="paginatorIn.total"
-                     (onPageChange)="paginate($event)"></p-paginator>
+        <p-paginator [rows]="paginatorIn.per_page" [totalRecords]="paginatorIn.total" (onPageChange)="paginate($event)">
+        </p-paginator>
         <p-toolbar styleClass="p-mb-4">
             <ng-template pTemplate="left">
                 <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger p-mr-2 p-mb-2"
-                        (click)="delete()"
-                        [disabled]="!selectedFiles || !selectedFiles.length"></button>
+                    (click)="delete()" [disabled]="!selectedFiles || !selectedFiles.length"></button>
             </ng-template>
         </p-toolbar>
-        <p-table #dt
-                 dataKey="id"
-                 [value]="filesIn"
-                 [columns]="cols"
-                 [paginator]="false"
-                 [(selection)]="selectedFiles"
-                 editMode="row"
-                 [responsive]="true"
-                 [rowHover]="true"
-                 styleClass="p-datatable-customers"
-                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                 [showCurrentPageReport]="true">
+        <p-table #dt dataKey="id" [value]="filesIn" [columns]="cols" [paginator]="false" [(selection)]="selectedFiles"
+            editMode="row" [responsive]="true" [rowHover]="true" styleClass="p-datatable-customers"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
             <ng-template pTemplate="caption">
                 <div class="p-fluid">
                     <div class="p-field">
@@ -31,8 +22,7 @@
                         <i class="p-input-icon-left" style="width: 100%">
                             <i class="pi pi-search" (click)="searchFiles($event,search.value)"></i>
                             <input #search pInputText type="text" class="p-text-uppercase"
-                                   (keyup)="searchFiles($event,$event.target.value)"
-                                   placeholder="Buscar..."/>
+                                (keyup)="searchFiles($event,$event.target.value)" placeholder="Buscar..." />
                         </i>
                     </div>
                 </div>
@@ -47,10 +37,8 @@
                         <p-sortIcon [field]="col.field"></p-sortIcon>
                     </th>
                     <th style="text-align:center">
-                        <button pButton pRipple
-                                type="button" id="btnOptions"
-                                icon="pi pi-cog" class="p-button-secondary"
-                                disabled></button>
+                        <button pButton pRipple type="button" id="btnOptions" icon="pi pi-cog"
+                            class="p-button-secondary" disabled></button>
                     </th>
                 </tr>
             </ng-template>
@@ -62,21 +50,19 @@
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text"
-                                       [(ngModel)]="rowData.name">
+                                <input pInputText type="text" [(ngModel)]="rowData.name">
                             </ng-template>
                             <ng-template pTemplate="output">
                                 <button pButton pRipple id="btnDownload1" class="p-button-link"
-                                        (click)="download(rowData)"
-                                        [label]="rowData.name + '.' +rowData.extension"></button>
+                                    (click)="download(rowData)"
+                                    [label]="rowData.name + '.' +rowData.extension"></button>
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <textarea pInputTextarea
-                                          [(ngModel)]="rowData.description"></textarea>
+                                <textarea pInputTextarea [(ngModel)]="rowData.description"></textarea>
                             </ng-template>
                             <ng-template pTemplate="output">
                                 <textarea pInputTextarea disabled>{{rowData.description}}</textarea>
@@ -85,22 +71,22 @@
                     </td>
                     <td style="text-align:center">
                         <img [src]="rowData.extension | extensions" [pTooltip]="rowData.extension" alt="tipo"
-                             (click)="download(rowData)">
+                            (click)="download(rowData)">
                     </td>
                     <td style="text-align:center">
                         <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow pTooltip="Editar"
-                                icon="pi pi-pencil" (click)="onRowEditInit(rowData)"
-                                class="p-button-rounded p-button-warning"></button>
+                            icon="pi pi-pencil" (click)="onRowEditInit(rowData)"
+                            class="p-button-rounded p-button-warning"></button>
                         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow pTooltip="Guardar"
-                                icon="pi pi-check" (click)="onRowEditSave(rowData,ri)"
-                                class="p-button-rounded p-button-text p-button-success p-ml-2"></button>
+                            icon="pi pi-check" (click)="onRowEditSave(rowData,ri)"
+                            class="p-button-rounded p-button-text p-button-success p-ml-2"></button>
                         <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow pTooltip="Cancelar"
-                                icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)"
-                                class="p-button-rounded p-button-text p-button-danger p-ml-2"></button>
-                        <button pButton pRipple pTooltip="Descargar" icon="pi pi-download" class="p-button-rounded p-button-info p-ml-2"
-                                (click)="download(rowData)"></button>
-                        <button pButton pRipple pTooltip="Eliminar" icon="pi pi-trash" class="p-button-rounded p-button-danger p-ml-2"
-                                (click)="delete(rowData)"></button>
+                            icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)"
+                            class="p-button-rounded p-button-text p-button-danger p-ml-2"></button>
+                        <button pButton pRipple pTooltip="Descargar" icon="pi pi-download"
+                            class="p-button-rounded p-button-info p-ml-2" (click)="download(rowData)"></button>
+                        <button pButton pRipple pTooltip="Eliminar" icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger p-ml-2" (click)="delete(rowData)"></button>
                     </td>
                 </tr>
             </ng-template>

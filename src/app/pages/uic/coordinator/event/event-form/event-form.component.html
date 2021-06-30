@@ -1,0 +1,51 @@
+<div class="p-fluid">
+    <form [formGroup]="formEventIn" (ngSubmit)="onSubmit($event)">
+
+        <div class="p-field">
+            <label for="name">
+                <i class="p-error">*</i> Nombre:
+                <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
+                <i *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
+                    class="pi pi-times-circle icon-invalid"></i>
+            </label>
+            <input id="name" formControlName="name" pInputText>
+            <div *ngIf="nameField.errors && nameField.touched">
+                <small *ngIf="nameField.hasError('required')" id="name-help-1" class="p-error">
+                    {{messageService.fieldRequired}}
+                </small>
+            </div>
+        </div>
+        <div class="p-field">
+            <label for="description">
+                <i class="p-error">*</i> Acerca del evento:
+                <i *ngIf="descriptionField.valid" class="pi pi-check-circle icon-valid"></i>
+                <i *ngIf="descriptionField.invalid && (descriptionField.touched || descriptionField.dirty)"
+                    class="pi pi-times-circle icon-invalid"></i>
+            </label>
+
+            <textarea pInputTextarea name="description" id="description" formControlName="description"
+                rows="4"></textarea>
+            <div *ngIf="descriptionField.errors && descriptionField.touched">
+                <small *ngIf="descriptionField.hasError('required')" id="description-help-1" class="p-error">
+                    {{messageService.fieldRequired}}
+                </small>
+                <small *ngIf="descriptionField.hasError('minlength')" id="description-help-2" class="p-error">
+                    Mínimo de caracteres es {{descriptionField.errors.minlength.requiredLength}}.
+                </small>
+            </div>
+
+        </div>
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <button pButton pRipple type="submit" id="btnSaveExit" label="Guardar y Salir"
+                    class="p-button-success p-button-raised" icon="pi pi-save">
+                </button>
+            </div>
+            <div *ngIf="!idField.value" class="p-field p-col">
+                <button pButton pRipple type="button" id="btnSaveContinue" label="Guardar y Crear Nueva"
+                    class="p-button-raised" icon="pi pi-arrow-right" (click)="onSubmit($event,true)">
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

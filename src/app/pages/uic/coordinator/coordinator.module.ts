@@ -45,6 +45,9 @@ import { ConvocatoryListComponent } from './convocatory/convocatory-list/convoca
 import { RequirementsComponent } from './requirements/requirements.component';
 import { RequirementsListComponent } from './requirements/requirements-list/requirements-list.component';
 import { RequirementsFormComponent } from './requirements/requirements-form/requirements-form.component';
+import { EventComponent } from './event/event.component';
+import { EventListComponent } from './event/event-list/event-list.component';
+import { EventFormComponent } from './event/event-form/event-form.component';
 
 
 @NgModule({
@@ -91,7 +94,10 @@ import { RequirementsFormComponent } from './requirements/requirements-form/requ
     ConvocatoryComponent,
     ConvocatoryListComponent,
     RequirementsComponent,
-    RequirementsListComponent
+    RequirementsListComponent,
+    EventComponent,
+    EventListComponent,
+    EventFormComponent
   ],
 })
 export class CoordinatorModule { }

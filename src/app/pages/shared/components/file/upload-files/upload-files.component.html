@@ -1,16 +1,6 @@
-<p-fileUpload
-    #uploadFiles
-    chooseLabel="Browse"
-    chooseIcon="pi pi-search"
-    uploadLabel="Subir archivos"
-    cancelLabel="Limpiar"
-    name="files[]"
-    [auto]="true"
-    [accept]="acceptAttributes"
-    [multiple]="multiple"
-    [maxFileSize]="maxFileSize"
-    [fileLimit]="fileLimit"
-    customUpload="true"
+<p-fileUpload #uploadFiles chooseLabel="Browse" chooseIcon="pi pi-search" uploadLabel="Subir archivos"
+    cancelLabel="Limpiar" name="files[]" [auto]="true" [accept]="acceptAttributes" [multiple]="multiple"
+    [maxFileSize]="maxFileSize" [fileLimit]="fileLimit" customUpload="true"
     (uploadHandler)="upload($event,uploadFiles)">
     <ng-template pTemplate="content" let-files>
         <div class="p-text-center">
