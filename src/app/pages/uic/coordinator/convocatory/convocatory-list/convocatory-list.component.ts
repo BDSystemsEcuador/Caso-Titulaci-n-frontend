@@ -27,11 +27,9 @@ export class ConvocatoryListComponent implements OnInit {
   @Output() paginatorOut = new EventEmitter<Paginator>();
   colsPlanning: Col[];
   selectedPlannings: any[];
-  dialogUploadFiles: boolean;
+
   selectedPlanning: Planning;
-  paginatorFiles: Paginator;
-  files: File[];
-  dialogViewFiles: boolean;
+
   currentDate = new Date().toDateString();
   constructor(
     private messageService: MessageService,
@@ -39,12 +37,10 @@ export class ConvocatoryListComponent implements OnInit {
     private uicHttpService: UicHttpService
   ) {
     this.resetPaginatorPlannings();
-    this.resetPaginator();
+
     console.log(this.currentDate);
   }
-  resetPaginator() {
-    this.paginatorFiles = { current_page: 1, per_page: 5 };
-  }
+
 
   ngOnInit(): void {
     this.loadColsPlanning();
@@ -160,80 +156,15 @@ export class ConvocatoryListComponent implements OnInit {
     this.planningsOut.emit(this.planningsIn);
   }
 
-  //upload files
-  openUploadFilesPlanning() {
-    this.dialogUploadFiles = true;
-  }
+
   selectPlanning(planning: Planning) {
     this.selectedPlanning = planning;
   }
 
-  openViewFilesPlanning() {
-    this.getFiles(this.paginatorFiles);
-  }
-  getFiles(paginator: Paginator) {
-    debugger;
-    const params = new HttpParams()
-      .append("id", this.selectedPlanning.id.toString())
-      .append("page", paginator.current_page.toString())
-      .append("per_page", paginator.per_page.toString());
-    this.spinnerService.show();
-    this.uicHttpService.getFiles("planning/file", params).subscribe(
-      (response) => {
-        this.spinnerService.hide();
-        this.files = response["data"];
-        this.paginatorFiles = response as Paginator;
-        this.dialogViewFiles = true;
-      },
-      (error) => {
-        this.spinnerService.hide();
-        this.files = [];
-        this.dialogViewFiles = true;
-        this.messageService.error(error);
-      }
-    );
-  }
   pageChange(event) {
     this.paginatorIn.current_page = event.page + 1;
     this.paginatorOut.emit(this.paginatorIn);
   }
 
-  upload(event, id) {
-    console.log(event);
-    const formData = new FormData();
-    for (const file of event) {
-      formData.append("files[]", file);
-    }
-    formData.append("id", id.toString());
-    this.spinnerService.show();
-    this.uicHttpService.uploadFiles("planning/file", formData).subscribe(
-      (response) => {
-        this.spinnerService.hide();
-        this.messageService.success(response);
-        this.getFiles(this.paginatorFiles);
-      },
-      (error) => {
-        this.spinnerService.hide();
-        this.messageService.error(error);
-      }
-    );
-  }
-  searchFiles(search) {
-    let params = new HttpParams().append(
-      "id",
-      this.selectedPlanning.id.toString()
-    );
-    params = search.length > 0 ? params.append("search", search) : params;
-    this.spinnerService.show();
-    this.uicHttpService.get("planning/file", params).subscribe(
-      (response) => {
-        this.files = response["data"];
-        this.spinnerService.hide();
-      },
-      (error) => {
-        this.spinnerService.hide();
-        this.messageService.error(error);
-      }
-    );
-  }
+  
 }

@@ -43,7 +43,6 @@ export class ConvocatoryComponent implements OnInit {
       id: [null],
       name: [null, [Validators.required]],
       number: [null, [Validators.required]],
-      event: [null, [Validators.required]],
       start_date: [null, [Validators.required, DateValidators.valid]],
       end_date: [null, [Validators.required, DateValidators.valid]],
       description: [null, [Validators.required, Validators.minLength(10)]],

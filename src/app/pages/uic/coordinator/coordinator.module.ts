@@ -48,6 +48,10 @@ import { RequirementsFormComponent } from './requirements/requirements-form/requ
 import { EventComponent } from './event/event.component';
 import { EventListComponent } from './event/event-list/event-list.component';
 import { EventFormComponent } from './event/event-form/event-form.component';
+import { EventPlanningComponent } from './event-planning/event-planning.component';
+import { EventPlanningListComponent } from './event-planning/event-planning-list/event-planning-list.component';
+import { EventPlanningFormComponent } from './event-planning/event-planning-form/event-planning-form.component';
+
 
 
 @NgModule({
@@ -97,7 +101,11 @@ import { EventFormComponent } from './event/event-form/event-form.component';
     RequirementsListComponent,
     EventComponent,
     EventListComponent,
-    EventFormComponent
+    EventFormComponent,
+    EventPlanningComponent,
+    EventPlanningListComponent,
+    EventPlanningFormComponent,
+
   ],
 })
 export class CoordinatorModule { }

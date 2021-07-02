@@ -1,11 +1,18 @@
 <div class="card">
-    <h5>Coordinador de la carrera UIC</h5>
-    <p-tabView>
-        <p-tabPanel header="Convocatorias" leftIcon="pi pi-calendar-plus" tooltip="">
-            <app-convocatory></app-convocatory>
-        </p-tabPanel>
-        <p-tabPanel header="Eventos" leftIcon="pi pi-calendar-plus" tooltip="">
-            <app-event></app-event>
-        </p-tabPanel>
-    </p-tabView>
+  <h5>Coordinador de la carrera UIC</h5>
+  <p-tabView>
+    <p-tabPanel header="Convocatorias" leftIcon="pi pi-volume-up" tooltip="">
+      <app-convocatory></app-convocatory>
+    </p-tabPanel>
+    <p-tabPanel
+      header="Asignación de eventos"
+      leftIcon="pi pi-clock"
+      tooltip=""
+    >
+      <app-event-planning></app-event-planning>
+    </p-tabPanel>
+    <p-tabPanel header="Eventos" leftIcon="pi pi-calendar-plus" tooltip="">
+      <app-event></app-event>
+    </p-tabPanel>
+  </p-tabView>
 </div>

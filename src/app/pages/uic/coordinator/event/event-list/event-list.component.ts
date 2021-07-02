@@ -44,7 +44,7 @@ export class EventListComponent implements OnInit {
   }
 
   resetPaginator() {
-    this.paginatorFiles = { current_page: 1, per_page: 5 };
+    this.paginatorFiles = { current_page: 1, per_page: 10 };
   }
 
   ngOnInit(): void {
