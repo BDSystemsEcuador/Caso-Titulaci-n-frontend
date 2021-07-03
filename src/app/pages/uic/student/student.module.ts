@@ -1,9 +1,8 @@
 // Angular Modules
 import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import { UicRouting } from './uic.routing';
 
 // PrimeNG Modules
 import {PasswordModule} from 'primeng/password';
@@ -11,6 +10,8 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import {SkeletonModule} from 'primeng/skeleton';
+
+
 
 // My Components
 import {TooltipModule} from 'primeng/tooltip';
@@ -26,19 +27,25 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {PaginatorModule} from 'primeng/paginator';
 import {KeyFilterModule} from 'primeng/keyfilter';
-import {TabPanel, TabViewModule} from 'primeng/tabview';
+import {TabViewModule} from 'primeng/tabview';
 import {TreeModule} from 'primeng/tree';
 import {AccordionModule} from 'primeng/accordion';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {CardModule} from 'primeng/card';
-import {SharedModule} from '../shared/shared.module';
+import {SharedModule} from '../../shared/shared.module';
 import {RippleModule} from 'primeng/ripple';
-import { UicComponent } from './uic.component';
+import {CalendarModule} from 'primeng/calendar';
+
+import {RadioButtonModule} from 'primeng/radiobutton';
+import { StudentRouting } from './student.routing';
+import { RequirementFormComponent } from './requirement/requirement-form/requirement-form.component';
+import { StudentComponent } from './student.component';
+import { RequirementComponent } from './requirement/requirement.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(UicRouting),
+    RouterModule.forChild(StudentRouting),
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -64,14 +71,21 @@ import { UicComponent } from './uic.component';
     TreeModule,
     AccordionModule,
     OverlayPanelModule,
+    SharedModule,
     CardModule,
     SkeletonModule,
     RippleModule,
+    CalendarModule,
+    RadioButtonModule,
+    
   ],
   declarations: [
-      UicComponent
+    StudentComponent,
+    RequirementComponent,
+    RequirementFormComponent
+  
   ],
-  exports: [],
-  providers: []
 })
-export class UicModule { }
+export class StudentModule { 
+
+}

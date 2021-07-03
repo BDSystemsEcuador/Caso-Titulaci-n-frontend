@@ -42,9 +42,6 @@ import { CoordinatorComponent } from './coordinator.component';
 import { ConvocatoryComponent } from './convocatory/convocatory.component';
 import { ConvocatoryFormComponent } from './convocatory/convocatory-form/convocatory-form.component';
 import { ConvocatoryListComponent } from './convocatory/convocatory-list/convocatory-list.component';
-import { RequirementsComponent } from './requirements/requirements.component';
-import { RequirementsListComponent } from './requirements/requirements-list/requirements-list.component';
-import { RequirementsFormComponent } from './requirements/requirements-form/requirements-form.component';
 import { EventComponent } from './event/event.component';
 import { EventListComponent } from './event/event-list/event-list.component';
 import { EventFormComponent } from './event/event-form/event-form.component';
@@ -93,12 +90,9 @@ import { EventPlanningFormComponent } from './event-planning/event-planning-form
   ],
   declarations: [
     ConvocatoryFormComponent,
-    RequirementsFormComponent,
     CoordinatorComponent,
     ConvocatoryComponent,
     ConvocatoryListComponent,
-    RequirementsComponent,
-    RequirementsListComponent,
     EventComponent,
     EventListComponent,
     EventFormComponent,

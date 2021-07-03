@@ -11,6 +11,11 @@ export const UicRouting: Routes = [
         path: 'coordinator',
         loadChildren: () => import('./coordinator/coordinator.module').then(m => m.CoordinatorModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'student',
+        loadChildren: () => import('./student/student.module').then(m => m.StudentModule),
+        canActivate: [AuthGuard]
       }
     ]
   }
