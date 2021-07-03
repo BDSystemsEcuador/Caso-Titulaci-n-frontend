@@ -18,6 +18,7 @@ export class EventPlanningFormComponent implements OnInit {
   @Input() formEventPlanningIn: FormGroup;
   @Input() eventPlanningsIn: EventPlanning[];
   @Input() paginatorIn: Paginator;
+
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() eventPlanningsOut = new EventEmitter<EventPlanning[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
@@ -32,10 +33,11 @@ export class EventPlanningFormComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private uicHttpService: UicHttpService,
   ) { 
-  }
-  ngOnInit(): void {
     this.getPlannings();
     this.getEvents();
+  }
+  ngOnInit(): void {
+    
   }
   // Fields of Form
   get idField() {

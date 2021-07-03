@@ -20,6 +20,8 @@ export class EventPlanningListComponent implements OnInit {
   @Input() paginatorIn: Paginator;
   @Input() formEventPlanningIn: FormGroup;
   @Input() displayIn: boolean;
+
+
   @Output() eventPlanningsOut = new EventEmitter<EventPlanning[]>();
   @Output() eventPlanningsEndOut = new EventEmitter<EventPlanning[]>();
   @Output() formEventPlanningOut = new EventEmitter<FormGroup>();
@@ -61,6 +63,7 @@ export class EventPlanningListComponent implements OnInit {
   }
 
   openNewFormEventPlanning() {
+  
     this.formEventPlanningIn.reset();
     this.formEventPlanningOut.emit(this.formEventPlanningIn);
     this.displayOut.emit(true);

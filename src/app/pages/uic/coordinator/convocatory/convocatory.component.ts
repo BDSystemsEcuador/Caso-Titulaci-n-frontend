@@ -15,7 +15,7 @@ import { DateValidators } from "../../../shared/validators/date.validators";
 })
 export class ConvocatoryComponent implements OnInit {
   paginator: Paginator;
-  plannings: Planning[];
+  plannings: Planning[];//inicializar 
   planningsEnd: Planning[];
   formPlanning: FormGroup;
   planning: Planning;
@@ -23,7 +23,7 @@ export class ConvocatoryComponent implements OnInit {
   flagPlannings: boolean;
   constructor(
     private spinnerService: NgxSpinnerService,
-    private messageService: MessageService,
+    public messageService: MessageService,//siempre publico
     private formBuilder: FormBuilder,
     private uicHttpService: UicHttpService
   ) {
@@ -35,7 +35,7 @@ export class ConvocatoryComponent implements OnInit {
   ngOnInit(): void {
     this.buildFormPlanning();
     this.getPlannings(this.paginator);
-    this.getPlanningsEnd(this.paginator);
+    //this.getPlanningsEnd(this.paginator);//paginador por tabla
   }
   // Build form course
   buildFormPlanning() {
