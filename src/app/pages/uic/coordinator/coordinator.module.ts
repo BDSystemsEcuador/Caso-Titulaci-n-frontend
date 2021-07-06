@@ -10,6 +10,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import {SkeletonModule} from 'primeng/skeleton';
+import {CheckboxModule} from 'primeng/checkbox';
 
 
 
@@ -48,6 +49,9 @@ import { EventFormComponent } from './event/event-form/event-form.component';
 import { EventPlanningComponent } from './event-planning/event-planning.component';
 import { EventPlanningListComponent } from './event-planning/event-planning-list/event-planning-list.component';
 import { EventPlanningFormComponent } from './event-planning/event-planning-form/event-planning-form.component';
+import { ProjectPlanComponent } from './project-plan/project-plan.component';
+import { ProjectPlanFormComponent } from './project-plan/project-plan-form/project-plan-form.component';
+import { ProjectPlanListComponent } from './project-plan/project-plan-list/project-plan-list.component';
 
 
 
@@ -84,6 +88,7 @@ import { EventPlanningFormComponent } from './event-planning/event-planning-form
     CardModule,
     SkeletonModule,
     RippleModule,
+    CheckboxModule,
     CalendarModule,
     RadioButtonModule,
     
@@ -99,6 +104,9 @@ import { EventPlanningFormComponent } from './event-planning/event-planning-form
     EventPlanningComponent,
     EventPlanningListComponent,
     EventPlanningFormComponent,
+    ProjectPlanComponent,
+    ProjectPlanFormComponent,
+    ProjectPlanListComponent,
 
   ],
 })

@@ -1,0 +1,248 @@
+{{ formProjectPlanIn.value | json }}
+
+<div class="p-fluid">
+  <form [formGroup]="formProjectPlanIn" (ngSubmit)="onSubmit($event)">
+    <div class="p-field">
+      <label for="title">
+        <i class="p-error">*</i> Título:
+        <i *ngIf="titleField.valid" class="pi pi-check-circle icon-valid"></i>
+        <i
+          *ngIf="titleField.invalid && (titleField.touched || titleField.dirty)"
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <input id="title" formControlName="title" pInputText />
+      <div *ngIf="titleField.errors && titleField.touched">
+        <small
+          *ngIf="titleField.hasError('required')"
+          id="title-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="description">
+        <i class="p-error">*</i> Descripción:
+        <i
+          *ngIf="descriptionField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            descriptionField.invalid &&
+            (descriptionField.touched || descriptionField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+
+      <textarea
+        pInputTextarea
+        name="description"
+        id="description"
+        formControlName="description"
+        rows="4"
+      ></textarea>
+      <div *ngIf="descriptionField.errors && descriptionField.touched">
+        <small
+          *ngIf="descriptionField.hasError('required')"
+          id="description-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+        <small
+          *ngIf="descriptionField.hasError('minlength')"
+          id="description-help-2"
+          class="p-error"
+        >
+          Mínimo de caracteres es
+          {{ descriptionField.errors.minlength.requiredLength }}.
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="act_code">
+        <i class="p-error">*</i> Código de acta:
+        <i *ngIf="actCodeField.valid" class="pi pi-check-circle icon-valid"></i>
+        <i
+          *ngIf="
+            actCodeField.invalid && (actCodeField.touched || actCodeField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <p-inputNumber
+        name="act_code"
+        formControlName="act_code"
+        placeholder="código de acta"
+      ></p-inputNumber>
+      <div *ngIf="actCodeField.errors && actCodeField.touched">
+        <small
+          *ngIf="actCodeField.hasError('required')"
+          id="act_code-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
+    </div>
+    <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
+    <div class="p-grid">
+      <div class="p-field p-lg-6">
+        <label for="approval_date">
+          <i class="p-error">*</i> Fecha de aprobación:
+          <i
+            *ngIf="approvalDateField.valid"
+            class="pi pi-check-circle icon-valid"
+          ></i>
+          <i
+            *ngIf="
+              approvalDateField.invalid &&
+              (approvalDateField.touched || approvalDateField.dirty)
+            "
+            class="pi pi-times-circle icon-invalid"
+          ></i>
+        </label>
+        <app-date
+          id="approval_date"
+          name="approval_date"
+          formControlName="approval_date"
+        ></app-date>
+        <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+
+        <div *ngIf="approvalDateField.errors && approvalDateField.touched">
+          <small
+            *ngIf="approvalDateField.hasError('required')"
+            id="approval_date-help-1"
+            class="p-error"
+          >
+            {{ messageService.fieldRequired }}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="is_approved">
+        <i class="p-error">*</i> Esta aprobado:
+        <i
+          *ngIf="isApprovedField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            isApprovedField.invalid &&
+            (isApprovedField.touched || isApprovedField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <div class="p-field" style="display: flex; align-items: center">
+        <p-checkbox
+          formControlName="is_approved"
+          [(ngModel)]="checked"
+          binary="true"
+          inputId="binary"
+        ></p-checkbox>
+        <label style="margin-left: 10px" for="binary">{{
+          checked ? "si" : "no"
+        }}</label>
+      </div>
+      <div *ngIf="isApprovedField.errors && isApprovedField.touched">
+        <small
+          *ngIf="isApprovedField.hasError('required')"
+          id="is_approved-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
+    </div>
+
+    <label for="observations"> Observaciones: </label>
+    <div formArrayName="observations" class="p-field">
+      <div>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Añadir una observación"
+          iconPos="right"
+          icon="pi pi-plus"
+          class="p-button-success p-button-raised"
+          (click)="addObservations()"
+        ></button>
+      </div>
+      <div
+        *ngFor="
+          let observations of observationsField.controls;
+          let nameObservation = index
+        "
+      >
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
+            <input
+              pInputText
+              id="observations"
+              [formControlName]="nameObservation"
+            />
+          </div>
+          <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded"
+              (click)="removeObservations(nameObservation)"
+            ></button>
+          </div>
+          <div
+            *ngIf="
+              observationsField.errors &&
+              (observationsField.touched || observationsField.dirty)
+            "
+          >
+            <small
+              *ngIf="observationsField.hasError('required')"
+              id="observations-help-1"
+              class="p-error"
+            >
+              {{ messageService.fieldRequired }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="submit"
+          id="btnSaveExit"
+          label="Guardar y Salir"
+          class="p-button-success p-button-raised"
+          icon="pi pi-save"
+        ></button>
+      </div>
+      <div *ngIf="!idField.value" class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="button"
+          id="btnSaveContinue"
+          label="Guardar y Crear Nueva"
+          class="p-button-raised"
+          icon="pi pi-arrow-right"
+          (click)="onSubmit($event, true)"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>

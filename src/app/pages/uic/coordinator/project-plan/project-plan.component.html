@@ -1,0 +1,36 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <app-project-plan-list
+      *ngIf="!projectPlanDialog"
+      [projectPlansIn]="projectPlans"
+      [projectPlansEndIn]="projectPlansEnd"
+      [flagProjectPlans]="flagProjectPlans"
+      [paginatorIn]="paginator"
+      [formProjectPlanIn]="formProjectPlan"
+      (projectPlansOut)="projectPlans = $event"
+      (projectPlansEndOut)="projectPlansEnd = $event"
+      (displayOut)="projectPlanDialog = $event"
+      (formProjectPlanOut)="formProjectPlan = $event"
+      (paginatorOut)="getProjectPlans($event)"
+    >
+    </app-project-plan-list>
+
+    <p-dialog
+      [(visible)]="projectPlanDialog"
+      [style]="{ width: '700px' }"
+      header="Acta de aprobación de anteproyecto"
+      [modal]="true"
+      styleClass="p-fluid"
+      (onHide)="projectPlanDialog = false"
+    >
+      <app-project-plan-form
+        [projectPlansIn]="projectPlans"
+        [formProjectPlanIn]="formProjectPlan"
+        (projectPlansOut)="projectPlans = $event"
+        (paginatorAdd)="paginator.total = paginator.total + $event"
+        (displayOut)="projectPlanDialog = $event"
+      >
+      </app-project-plan-form>
+    </p-dialog>
+  </div>
+</div>
