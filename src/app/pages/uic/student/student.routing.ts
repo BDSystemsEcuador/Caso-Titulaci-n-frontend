@@ -1,3 +1,4 @@
+import { InscriptionComponent } from './inscription/inscription.component';
   
 // Angular Router
 import {Routes} from '@angular/router';
@@ -8,8 +9,13 @@ import { StudentComponent } from './student.component';
 
 export const StudentRouting: Routes = [
     {
-        path: '',
+        path: 'requirements',
         component: StudentComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'inscription',
+        component: InscriptionComponent,
         canActivate: [AuthGuard]
     }
 ];

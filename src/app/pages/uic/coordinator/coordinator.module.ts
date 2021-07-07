@@ -52,6 +52,8 @@ import { EventPlanningFormComponent } from './event-planning/event-planning-form
 import { ProjectPlanComponent } from './project-plan/project-plan.component';
 import { ProjectPlanFormComponent } from './project-plan/project-plan-form/project-plan-form.component';
 import { ProjectPlanListComponent } from './project-plan/project-plan-list/project-plan-list.component';
+import { RequirementsComponent } from './requirements/requirements.component';
+import { RequirementsListComponent } from './requirements/requirements-list/requirements-list.component';
 
 
 
@@ -107,6 +109,8 @@ import { ProjectPlanListComponent } from './project-plan/project-plan-list/proje
     ProjectPlanComponent,
     ProjectPlanFormComponent,
     ProjectPlanListComponent,
+    RequirementsComponent,
+    RequirementsListComponent,
 
   ],
 })

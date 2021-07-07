@@ -41,6 +41,7 @@ import { StudentRouting } from './student.routing';
 import { StudentComponent } from './student.component';
 import { RequirementComponent } from './requirement/requirement.component';
 import { RequirementListComponent } from './requirement/requirement-list/requirement-list.component';
+import { InscriptionComponent } from './inscription/inscription.component';
 
 @NgModule({
   imports: [
@@ -82,7 +83,8 @@ import { RequirementListComponent } from './requirement/requirement-list/require
   declarations: [
     StudentComponent,
     RequirementComponent,
-    RequirementListComponent
+    RequirementListComponent,
+    InscriptionComponent
   
   ],
 })
