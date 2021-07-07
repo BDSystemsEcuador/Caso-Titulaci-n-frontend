@@ -1,1 +1,18 @@
-<p>requirement works!</p>
+<div class="p-grid">
+  <div class="p-col-12">
+    <app-requirement-list
+      *ngIf="!requirementDialog"
+      [requirementsIn]="requirements"
+      [requirementsEndIn]="requirementsEnd"
+      [flagRequirements]="flagRequirements"
+      [paginatorIn]="paginator"
+      [formRequirementIn]="formRequirement"
+      (requirementsOut)="requirements = $event"
+      (requirementsEndOut)="requirementsEnd = $event"
+      (displayOut)="requirementDialog = $event"
+      (formRequirementOut)="formRequirement = $event"
+      (paginatorOut)="getRequirements($event)"
+    >
+    </app-requirement-list>
+  </div>
+</div>

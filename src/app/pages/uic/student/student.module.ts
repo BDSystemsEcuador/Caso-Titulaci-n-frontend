@@ -38,9 +38,9 @@ import {CalendarModule} from 'primeng/calendar';
 
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { StudentRouting } from './student.routing';
-import { RequirementFormComponent } from './requirement/requirement-form/requirement-form.component';
 import { StudentComponent } from './student.component';
 import { RequirementComponent } from './requirement/requirement.component';
+import { RequirementListComponent } from './requirement/requirement-list/requirement-list.component';
 
 @NgModule({
   imports: [
@@ -82,7 +82,7 @@ import { RequirementComponent } from './requirement/requirement.component';
   declarations: [
     StudentComponent,
     RequirementComponent,
-    RequirementFormComponent
+    RequirementListComponent
   
   ],
 })
