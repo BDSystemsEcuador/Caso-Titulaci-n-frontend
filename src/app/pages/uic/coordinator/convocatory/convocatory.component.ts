@@ -1,3 +1,4 @@
+import { Validator } from './../../../../models/setting/validator';
 import { Component, OnInit } from "@angular/core";
 import { HttpParams } from "@angular/common/http";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -41,8 +42,8 @@ export class ConvocatoryComponent implements OnInit {
   buildFormPlanning() {
     this.formPlanning = this.formBuilder.group({
       id: [null],
+      career: [null, [Validators.required]],
       name: [null, [Validators.required]],
-      number: [null, [Validators.required]],
       start_date: [null, [Validators.required, DateValidators.valid]],
       end_date: [null, [Validators.required, DateValidators.valid]],
       description: [null, [Validators.required, Validators.minLength(10)]],

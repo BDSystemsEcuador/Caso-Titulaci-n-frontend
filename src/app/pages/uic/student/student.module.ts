@@ -42,6 +42,7 @@ import { StudentComponent } from './student.component';
 import { RequirementComponent } from './requirement/requirement.component';
 import { RequirementListComponent } from './requirement/requirement-list/requirement-list.component';
 import { InscriptionComponent } from './inscription/inscription.component';
+import { StudentFormComponent } from './student-form/student-form.component';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { InscriptionComponent } from './inscription/inscription.component';
     StudentComponent,
     RequirementComponent,
     RequirementListComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    StudentFormComponent
   
   ],
 })

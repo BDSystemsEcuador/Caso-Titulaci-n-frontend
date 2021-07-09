@@ -1,9 +1,11 @@
+import { Career } from './../../../../../models/app/career';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Paginator } from 'src/app/models/setting/paginator';
 import { Planning } from 'src/app/models/uic/planning';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
+import { AppHttpService } from 'src/app/services/app/app-http.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 
 @Component({
@@ -15,26 +17,33 @@ export class ConvocatoryFormComponent implements OnInit {
   @Input() formPlanningIn: FormGroup;
   @Input() planningsIn: Planning[];
   @Input() paginatorIn: Paginator;
+  selectedCareer:Career;
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() planningsOut = new EventEmitter<Planning[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
+
+  careers:Career[];
+
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private spinnerService: NgxSpinnerService,
     private uicHttpService: UicHttpService,
-  ) { }
+    private appHttpService: AppHttpService,
+  ) { 
+    
+  }
 
   ngOnInit(): void {
-
+    this.getCareers();
   }
   // Fields of Form
+  get careerField() {
+    return this.formPlanningIn.get('career');
+  }
   get nameField() {
     return this.formPlanningIn.get('name');
-  }
-  get numberField() {
-    return this.formPlanningIn.get('number');
   }
   get startDateField() {
     return this.formPlanningIn.get('start_date');
@@ -110,5 +119,14 @@ export class ConvocatoryFormComponent implements OnInit {
         this.spinnerService.hide();
         this.messageService.error(error);
       });
+  }
+
+  getCareers() {
+    this.appHttpService.get('careers').subscribe(response => {
+      this.careers = response['data'];
+      console.log(this.careers);
+    }, error => {
+      this.messageService.error(error);
+    });
   }
 }

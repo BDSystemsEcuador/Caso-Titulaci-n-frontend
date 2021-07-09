@@ -48,7 +48,6 @@ export class ConvocatoryListComponent implements OnInit {
   loadColsPlanning() {
     this.colsPlanning = [
       { field: "name", header: "Convocatoria" },
-      { field: "number", header: "Número" },
       { field: "start_date", header: "Fecha Inicial" },
       { field: "end_date", header: "Fecha Final" },
       { field: "description", header: "Descripción" },
