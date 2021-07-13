@@ -43,7 +43,6 @@ export class EventPlanningComponent implements OnInit {
       event: [null, [Validators.required]],
       start_date: [null, [Validators.required, DateValidators.valid]],
       end_date: [null, [Validators.required, DateValidators.valid]],
-      observations: this.formBuilder.array([this.formBuilder.control(null)]),
     });
   }
   getEventPlannings(paginator: Paginator) {

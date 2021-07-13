@@ -1,4 +1,4 @@
-<!-- {{formPlanningIn.value|json}} -->
+{{ formPlanningIn.value | json }}
 
 <div class="p-fluid">
   <form [formGroup]="formPlanningIn" (ngSubmit)="onSubmit($event)">
@@ -17,20 +17,20 @@
         id="career"
         [options]="careers"
         formControlName="career"
-        optionLabel="name"
+        optionLabel="short_name"
         [filter]="true"
-        filterBy="name"
+        filterBy="short_name"
         [showClear]="true"
         placeholder="Selecciona la carrera"
       >
         <ng-template pTemplate="selectedCareer">
           <div class="country-item country-item-value" *ngIf="selectedCareer">
-            <div>{{ selectedCareer.name }}</div>
+            <div>{{ selectedCareer.short_name }}</div>
           </div>
         </ng-template>
-        <ng-template let-selectedPlan pTemplate="selectedCareer">
+        <ng-template let-selectedCareers pTemplate="selectedCareer">
           <div class="country-item">
-            <div>{{ selectedPlan.name }}</div>
+            <div>{{ selectedCareers.short_name }}</div>
           </div>
         </ng-template>
       </p-dropdown>

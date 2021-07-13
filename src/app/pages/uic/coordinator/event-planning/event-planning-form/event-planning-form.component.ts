@@ -7,6 +7,7 @@ import { Event as EventModel } from 'src/app/models/uic/event';
 import { EventPlanning } from 'src/app/models/uic/event-planning';
 import { Planning } from 'src/app/models/uic/planning';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
+import { AppHttpService } from 'src/app/services/app/app-http.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class EventPlanningFormComponent implements OnInit {
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
   plannings: Planning[];
-  events: EventModel[];
+  events: any;
   selectedPlanning: Planning;
   selectedEvent: EventModel;
   constructor(
@@ -32,6 +33,7 @@ export class EventPlanningFormComponent implements OnInit {
     private messageService: MessageService,
     private spinnerService: NgxSpinnerService,
     private uicHttpService: UicHttpService,
+    private appHttpService:AppHttpService
   ) { 
     this.getPlannings();
     this.getEvents();
@@ -55,15 +57,8 @@ export class EventPlanningFormComponent implements OnInit {
   get endDateField() {
     return this.formEventPlanningIn.get('end_date');
   }
-  get observationsField() {
-    return this.formEventPlanningIn.get('observations') as FormArray;
-  }
-  addObservations(){
-    this.observationsField.push(this.formBuilder.control(null, Validators.required));
-  }
-  removeObservations(observation){
-      this.observationsField.removeAt(observation);
-  }
+
+ 
   // Submit Form
   onSubmit(event: Event, flag = false) {
     debugger
@@ -134,11 +129,15 @@ export class EventPlanningFormComponent implements OnInit {
       this.messageService.error(error);
     });
   }
+
   getEvents() {
-    this.uicHttpService.get('events').subscribe(response => {
-      this.events = response['data'];
-    }, error => {
-      this.messageService.error(error);
-    });
+    this.uicHttpService.get('events').subscribe(
+      (response) => {
+        this.events = response;
+      },
+      (error) => {
+        this.messageService.error(error);
+      }
+    );
   }
 }

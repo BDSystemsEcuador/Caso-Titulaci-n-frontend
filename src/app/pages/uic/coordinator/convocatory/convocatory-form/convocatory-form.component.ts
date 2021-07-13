@@ -17,12 +17,12 @@ export class ConvocatoryFormComponent implements OnInit {
   @Input() formPlanningIn: FormGroup;
   @Input() planningsIn: Planning[];
   @Input() paginatorIn: Paginator;
-  selectedCareer:Career;
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() planningsOut = new EventEmitter<Planning[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
-
+  
+  selectedCareer:Career;
   careers:Career[];
 
   constructor(
@@ -32,11 +32,10 @@ export class ConvocatoryFormComponent implements OnInit {
     private uicHttpService: UicHttpService,
     private appHttpService: AppHttpService,
   ) { 
-    
+    this.getCareers();
   }
 
   ngOnInit(): void {
-    this.getCareers();
   }
   // Fields of Form
   get careerField() {
@@ -124,7 +123,6 @@ export class ConvocatoryFormComponent implements OnInit {
   getCareers() {
     this.appHttpService.get('careers').subscribe(response => {
       this.careers = response['data'];
-      console.log(this.careers);
     }, error => {
       this.messageService.error(error);
     });

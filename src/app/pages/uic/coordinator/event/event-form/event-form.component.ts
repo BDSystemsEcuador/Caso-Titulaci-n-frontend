@@ -4,6 +4,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Paginator } from "src/app/models/setting/paginator";
 import { Event as EventModel } from "src/app/models/uic/event";
 import { MessageService } from "src/app/pages/shared/services/message.service";
+import { AppHttpService } from "src/app/services/app/app-http.service";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 @Component({
   selector: "app-event-form",
@@ -22,16 +23,16 @@ export class EventFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private spinnerService: NgxSpinnerService,
-    private uicHttpService: UicHttpService
-  ) {}
+    private uicHttpService: UicHttpService,
+    private appHttpService: AppHttpService
+  ) {
+    
+  }
 
   ngOnInit(): void {}
   // Fields of Form
   get nameField() {
     return this.formEventIn.get("name");
-  }
-  get descriptionField() {
-    return this.formEventIn.get("description");
   }
   get idField() {
     return this.formEventIn.get("id");
@@ -41,11 +42,13 @@ export class EventFormComponent implements OnInit {
   onSubmit(event: Event, flag = false) {
    
     event.preventDefault();
-    debugger;
+    
     if (this.formEventIn.valid) {
       if (this.idField.value) {
+        debugger
         this.updateEvent(this.formEventIn.value);
       } else {
+        debugger
         this.storeEvent(this.formEventIn.value, flag);
         this.formEventIn.reset();
       }
@@ -57,26 +60,25 @@ export class EventFormComponent implements OnInit {
     this.paginatorOut.emit(this.paginatorIn);
   }
 
+  
   storeEvent(event: EventModel, flag = false) {
-    debugger;
+    debugger
     this.spinnerService.show();
-    this.uicHttpService.store("events", { event }).subscribe(
-      (response) => {
-        this.spinnerService.hide();
-        this.messageService.success(response);
-        this.saveEvent(response["data"]);
-        this.paginatorOut.emit(this.paginatorIn);
-        if (flag) {
-          this.formEventIn.reset();
-        } else {
-          this.displayOut.emit(false);
-        }
-      },
-      (error) => {
-        this.spinnerService.hide();
-        this.messageService.error(error);
+    this.uicHttpService.store('events', { event }).subscribe(response => {
+      this.spinnerService.hide();
+      this.messageService.success(response);
+      this.saveEvent(response['data']);
+      this.paginatorOut.emit(this.paginatorIn);
+      if (flag) {
+        this.formEventIn.reset();
+      } else {
+        this.displayOut.emit(false);
       }
-    );
+
+    }, error => {
+      this.spinnerService.hide();
+      this.messageService.error(error);
+    });
   }
 
   // Save in frontend

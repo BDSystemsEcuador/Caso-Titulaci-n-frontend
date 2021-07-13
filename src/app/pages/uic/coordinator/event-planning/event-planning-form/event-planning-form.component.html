@@ -140,61 +140,7 @@
         </div>
       </div>
     </div>
-    <label for="observations"> Observaciones: </label>
-    <div formArrayName="observations" class="p-field">
-      <div>
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="Añadir una observación"
-          iconPos="right"
-          icon="pi pi-plus"
-          class="p-button-success p-button-raised"
-          (click)="addObservations()"
-        ></button>
-      </div>
-      <div
-        *ngFor="
-          let observations of observationsField.controls;
-          let nameObservation = index
-        "
-      >
-        <div class="p-fluid p-formgrid p-grid">
-          <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
-            <input
-              pInputText
-              id="observations"
-              [formControlName]="nameObservation"
-            />
-          </div>
-          <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
-            <button
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-trash"
-              class="p-button-danger p-button-rounded"
-              (click)="removeObservations(nameObservation)"
-            ></button>
-          </div>
-          <div
-            *ngIf="
-              observationsField.errors &&
-              (observationsField.touched || observationsField.dirty)
-            "
-          >
-            <small
-              *ngIf="observationsField.hasError('required')"
-              id="observations-help-1"
-              class="p-error"
-            >
-              {{ messageService.fieldRequired }}
-            </small>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="p-formgrid p-grid">
       <div class="p-field p-col">
         <button

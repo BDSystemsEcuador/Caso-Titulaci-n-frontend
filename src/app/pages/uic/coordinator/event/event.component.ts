@@ -7,6 +7,8 @@ import { Event } from "src/app/models/uic/event";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 import { MessageService } from "../../../shared/services/message.service";
 import { DateValidators } from "../../../shared/validators/date.validators";
+import { AppHttpService } from "src/app/services/app/app-http.service";
+import { Catalogue } from "src/app/models/app/catalogue";
 
 @Component({
   selector: "app-event",
@@ -15,19 +17,19 @@ import { DateValidators } from "../../../shared/validators/date.validators";
 })
 export class EventComponent implements OnInit {
   paginator: Paginator;
-  events: Event[];
+  events: any;
   formEvent: FormGroup;
-  event: Event;
+  event: Catalogue;
   eventDialog: boolean;
   flagEvents: boolean;
   constructor(
     private spinnerService: NgxSpinnerService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private uicHttpService: UicHttpService
+    private uicHttpService: UicHttpService,
+    private appHttpService:AppHttpService
   ) {
     this.paginator = { current_page: 1, per_page: 5 };
-    this.events = [];
   }
 
   ngOnInit(): void {
@@ -39,7 +41,6 @@ export class EventComponent implements OnInit {
     this.formEvent = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
-      description: [null],
     });
   }
 
@@ -51,7 +52,8 @@ export class EventComponent implements OnInit {
     this.uicHttpService.get("events", params).subscribe(
       (response) => {
         this.flagEvents = false;
-        this.events = response["data"];
+        debugger
+        this.events = response['data'];
         this.paginator = response as Paginator;
       },
       (error) => {

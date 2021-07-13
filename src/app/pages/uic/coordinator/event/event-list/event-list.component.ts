@@ -2,6 +2,7 @@ import { HttpParams } from "@angular/common/http";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Catalogue } from "src/app/models/app/catalogue";
 import { Col } from "src/app/models/setting/col";
 import { Paginator } from "src/app/models/setting/paginator";
 import { Event } from "src/app/models/uic/event";
@@ -15,20 +16,20 @@ import { UicHttpService } from "src/app/services/uic/uic-http.service";
 })
 export class EventListComponent implements OnInit {
   @Input() flagEvents: boolean;
-  @Input() eventsIn: Event[];
-  @Input() eventsEndIn: Event[];
+  @Input() eventsIn: Catalogue[];
+  @Input() eventsEndIn: Catalogue[];
   @Input() paginatorIn: Paginator;
   @Input() formEventIn: FormGroup;
   @Input() displayIn: boolean;
-  @Output() eventsOut = new EventEmitter<Event[]>();
-  @Output() eventsEndOut = new EventEmitter<Event[]>();
+  @Output() eventsOut = new EventEmitter<Catalogue[]>();
+  @Output() eventsEndOut = new EventEmitter<Catalogue[]>();
   @Output() formEventOut = new EventEmitter<FormGroup>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
   colsEvent: Col[];
   selectedEvents: any[];
   dialogUploadFiles: boolean;
-  selectedEvent: Event;
+  selectedEvent: Catalogue;
   paginatorFiles: Paginator;
   files: File[];
   dialogViewFiles: boolean;
@@ -52,8 +53,7 @@ export class EventListComponent implements OnInit {
   }
   loadColsEvent() {
     this.colsEvent = [
-      { field: "name", header: "Evento" },
-      { field: "description", header: "Descripción" },
+      { field: "name", header: "Evento" }
     ];
   }
 
@@ -63,7 +63,7 @@ export class EventListComponent implements OnInit {
     this.displayOut.emit(true);
   }
 
-  openEditFormEvent(event: Event) {
+  openEditFormEvent(event: Catalogue) {
     this.formEventIn.patchValue(event);
     this.formEventOut.emit(this.formEventIn);
     this.displayOut.emit(true);
@@ -78,7 +78,7 @@ export class EventListComponent implements OnInit {
     this.paginatorIn = { current_page: 1, per_page: 5 };
   }
 
-  deleteEvent(event: Event) {
+  deleteEvent(event: Catalogue) {
     this.messageService.questionDelete({}).then((result) => {
       if (result.isConfirmed) {
         this.spinnerService.show();
@@ -98,7 +98,7 @@ export class EventListComponent implements OnInit {
   }
 
   // no se utiliza VERIFICAR DDE NUEVO
-  removeEvent(event: Event) {
+  removeEvent(event: Catalogue) {
     this.eventsIn = this.eventsIn.filter((element) => element !== event);
     this.eventsOut.emit(this.eventsIn);
   }
