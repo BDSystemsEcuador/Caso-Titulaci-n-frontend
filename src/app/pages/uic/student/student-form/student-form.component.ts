@@ -70,7 +70,7 @@ export class StudentInformationFormComponent implements OnInit {
   onSubmit(event: Event, flag = false) {
     event.preventDefault();
     if (this.formStudentInformationIn.valid) {
-      debugger
+      
       if (this.idField.value) {
         this.updateStudentInformationForm(this.formStudentInformationIn.value);
       } else {
@@ -86,12 +86,12 @@ export class StudentInformationFormComponent implements OnInit {
   }
 
   storeStudentInformationForm(studentInformation: StudentInformation, flag = false) {
-    debugger
+    
     this.spinnerService.show();
     this.uicHttpService.store('student-informations', { studentInformation }).subscribe(response => {
       this.spinnerService.hide();
       this.messageService.success(response);
-      debugger
+      
       this.saveStudentInformationForm(response['data']);
       this.paginatorOut.emit(this.paginatorIn);
       if (flag) {

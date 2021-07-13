@@ -108,7 +108,7 @@ export class ConvocatoryListComponent implements OnInit {
   deletePlannings(planning = null) {
     this.messageService.questionDelete({}).then((result) => {
       if (result.isConfirmed) {
-        debugger;
+        ;
         if (planning) {
           this.selectedPlannings = [];
           this.selectedPlannings.push(planning);

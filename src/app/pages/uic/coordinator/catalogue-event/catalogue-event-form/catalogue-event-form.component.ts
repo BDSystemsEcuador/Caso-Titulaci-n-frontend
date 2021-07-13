@@ -1,22 +1,22 @@
+import { Catalogue } from './../../../../../models/app/catalogue';
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Paginator } from "src/app/models/setting/paginator";
-import { Event as EventModel } from "src/app/models/uic/event";
 import { MessageService } from "src/app/pages/shared/services/message.service";
 import { AppHttpService } from "src/app/services/app/app-http.service";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 @Component({
-  selector: "app-event-form",
+  selector: "app-catalogue-event-form",
   templateUrl: "./catalogue-event-form.component.html",
   styleUrls: ["./catalogue-event-form.component.css"],
 })
-export class EventFormComponent implements OnInit {
-  @Input() formEventIn: FormGroup;
-  @Input() eventsIn: EventModel[];
+export class CatalogueEventFormComponent implements OnInit {
+  @Input() formCatalogueEventIn: FormGroup;
+  @Input() catalogueEventsIn: Catalogue[];
   @Input() paginatorIn: Paginator;
   @Output() displayOut = new EventEmitter<boolean>();
-  @Output() eventsOut = new EventEmitter<EventModel[]>();
+  @Output() catalogueEventsOut = new EventEmitter<Catalogue[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
   constructor(
@@ -32,45 +32,46 @@ export class EventFormComponent implements OnInit {
   ngOnInit(): void {}
   // Fields of Form
   get nameField() {
-    return this.formEventIn.get("name");
+    return this.formCatalogueEventIn.get("name");
   }
   get idField() {
-    return this.formEventIn.get("id");
+    return this.formCatalogueEventIn.get("id");
   }
 
   // Submit Form
   onSubmit(event: Event, flag = false) {
    
     event.preventDefault();
-    
-    if (this.formEventIn.valid) {
+    debugger
+    if (this.formCatalogueEventIn.valid) {
       if (this.idField.value) {
         debugger
-        this.updateEvent(this.formEventIn.value);
+        this.updateCatalogueEvent(this.formCatalogueEventIn.value);
       } else {
-        debugger
-        this.storeEvent(this.formEventIn.value, flag);
-        this.formEventIn.reset();
+        
+        this.storeCatalogueEvent(this.formCatalogueEventIn.value, flag);
+        this.formCatalogueEventIn.reset();
       }
     } else {
-      this.formEventIn.markAllAsTouched();
+      this.formCatalogueEventIn.markAllAsTouched();
     }
   }
-  paginateEvent(event) {
+  paginateCatalogueEvent(event) {
     this.paginatorOut.emit(this.paginatorIn);
   }
 
   
-  storeEvent(event: EventModel, flag = false) {
-    debugger
+  storeCatalogueEvent(catalogueEvent: Catalogue, flag = false) {
+    
     this.spinnerService.show();
-    this.uicHttpService.store('events', { event }).subscribe(response => {
+    this.uicHttpService.store('catalogue-events', { catalogueEvent }).subscribe(response => {
+      debugger
       this.spinnerService.hide();
       this.messageService.success(response);
-      this.saveEvent(response['data']);
+      this.saveCatalogueEvent(response['data']);
       this.paginatorOut.emit(this.paginatorIn);
       if (flag) {
-        this.formEventIn.reset();
+        this.formCatalogueEventIn.reset();
       } else {
         this.displayOut.emit(false);
       }
@@ -82,24 +83,24 @@ export class EventFormComponent implements OnInit {
   }
 
   // Save in frontend
-  saveEvent(event: EventModel) {
-    const index = this.eventsIn.findIndex((element) => element.id === event.id);
+  saveCatalogueEvent(catalogueEvent: Catalogue) {
+    const index = this.catalogueEventsIn.findIndex((element) => element.id === catalogueEvent.id);
     if (index === -1) {
-      this.eventsIn.push(event);
+      this.catalogueEventsIn.push(catalogueEvent);
     } else {
-      this.eventsIn[index] = event;
+      this.catalogueEventsIn[index] = catalogueEvent;
     }
-    this.eventsOut.emit(this.eventsIn);
+    this.catalogueEventsOut.emit(this.catalogueEventsIn);
   }
 
   // Save in backend
-  updateEvent(event: EventModel) {
+  updateCatalogueEvent(catalogueEvent: Catalogue) {
     this.spinnerService.show();
-    this.uicHttpService.update("events/" + event.id, { event }).subscribe(
+    this.uicHttpService.update("catalogue-events/" + catalogueEvent.id, { catalogueEvent }).subscribe(
       (response) => {
         this.spinnerService.hide();
         this.messageService.success(response);
-        this.saveEvent(response["data"]);
+        this.saveCatalogueEvent(response["data"]);
         this.displayOut.emit(false);
       },
       (error) => {

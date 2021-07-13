@@ -5,31 +5,30 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Catalogue } from "src/app/models/app/catalogue";
 import { Col } from "src/app/models/setting/col";
 import { Paginator } from "src/app/models/setting/paginator";
-import { Event } from "src/app/models/uic/event";
 import { MessageService } from "src/app/pages/shared/services/message.service";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 
 @Component({
-  selector: "app-event-list",
+  selector: "app-catalogue-event-list",
   templateUrl: "./catalogue-event-list.component.html",
   styleUrls: ["./catalogue-event-list.component.css"],
 })
-export class EventListComponent implements OnInit {
-  @Input() flagEvents: boolean;
-  @Input() eventsIn: Catalogue[];
-  @Input() eventsEndIn: Catalogue[];
+export class CatalogueEventListComponent implements OnInit {
+  @Input() flagCatalogueEvents: boolean;
+  @Input() catalogueEventsIn: Catalogue[];
+  @Input() catalogueEventsEndIn: Catalogue[];
   @Input() paginatorIn: Paginator;
-  @Input() formEventIn: FormGroup;
+  @Input() formCatalogueEventIn: FormGroup;
   @Input() displayIn: boolean;
-  @Output() eventsOut = new EventEmitter<Catalogue[]>();
-  @Output() eventsEndOut = new EventEmitter<Catalogue[]>();
-  @Output() formEventOut = new EventEmitter<FormGroup>();
+  @Output() catalogueEventsOut = new EventEmitter<Catalogue[]>();
+  @Output() catalogueEventsEndOut = new EventEmitter<Catalogue[]>();
+  @Output() formCatalogueEventOut = new EventEmitter<FormGroup>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
-  colsEvent: Col[];
-  selectedEvents: any[];
+  colsCatalogueEvent: Col[];
+  selectedCatalogueEvents: any[];
   dialogUploadFiles: boolean;
-  selectedEvent: Catalogue;
+  selectedCatalogueEvent: Catalogue;
   paginatorFiles: Paginator;
   files: File[];
   dialogViewFiles: boolean;
@@ -39,7 +38,7 @@ export class EventListComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private uicHttpService: UicHttpService
   ) {
-    this.resetPaginatorEvents();
+    this.resetPaginatorCatalogueEvents();
     this.resetPaginator();
     console.log(this.currentDate);
   }
@@ -49,44 +48,44 @@ export class EventListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadColsEvent();
+    this.loadColsCatalogueEvent();
   }
-  loadColsEvent() {
-    this.colsEvent = [
+  loadColsCatalogueEvent() {
+    this.colsCatalogueEvent = [
       { field: "name", header: "Evento" }
     ];
   }
 
-  openNewFormEvent() {
-    this.formEventIn.reset();
-    this.formEventOut.emit(this.formEventIn);
+  openNewFormCatalogueEvent() {
+    this.formCatalogueEventIn.reset();
+    this.formCatalogueEventOut.emit(this.formCatalogueEventIn);
     this.displayOut.emit(true);
   }
 
-  openEditFormEvent(event: Catalogue) {
-    this.formEventIn.patchValue(event);
-    this.formEventOut.emit(this.formEventIn);
+  openEditFormCatalogueEvent(catalogueEvent: Catalogue) {
+    this.formCatalogueEventIn.patchValue(catalogueEvent);
+    this.formCatalogueEventOut.emit(this.formCatalogueEventIn);
     this.displayOut.emit(true);
   }
 
-  paginateEvent(event) {
-    this.paginatorIn.current_page = event.page + 1;
+  paginateCatalogueEvent(catalogueEvent) {
+    this.paginatorIn.current_page = catalogueEvent.page + 1;
     this.paginatorOut.emit(this.paginatorIn);
   }
 
-  resetPaginatorEvents() {
+  resetPaginatorCatalogueEvents() {
     this.paginatorIn = { current_page: 1, per_page: 5 };
   }
 
-  deleteEvent(event: Catalogue) {
+  deleteCatalogueEvent(catalogueEvent: Catalogue) {
     this.messageService.questionDelete({}).then((result) => {
       if (result.isConfirmed) {
         this.spinnerService.show();
-        this.uicHttpService.delete("event/delete", { ids: event.id }).subscribe(
+        this.uicHttpService.delete("catalogue-event/delete", { ids: catalogueEvent.id }).subscribe(
           (response) => {
             this.spinnerService.hide();
             this.messageService.success(response);
-            this.removeEvent(event);
+            this.removeCatalogueEvent(catalogueEvent);
           },
           (error) => {
             this.spinnerService.hide();
@@ -98,27 +97,27 @@ export class EventListComponent implements OnInit {
   }
 
   // no se utiliza VERIFICAR DDE NUEVO
-  removeEvent(event: Catalogue) {
-    this.eventsIn = this.eventsIn.filter((element) => element !== event);
-    this.eventsOut.emit(this.eventsIn);
+  removeCatalogueEvent(catalogueEvent: Catalogue) {
+    this.catalogueEventsIn = this.catalogueEventsIn.filter((element) => element !== catalogueEvent);
+    this.catalogueEventsOut.emit(this.catalogueEventsIn);
   }
 
-  deleteEvents(event = null) {
+  deleteCatalogueEvents(catalogueEvent = null) {
     this.messageService.questionDelete({}).then((result) => {
       if (result.isConfirmed) {
-        debugger;
-        if (event) {
-          this.selectedEvents = [];
-          this.selectedEvents.push(event);
+        ;
+        if (catalogueEvent) {
+          this.selectedCatalogueEvents = [];
+          this.selectedCatalogueEvents.push(catalogueEvent);
         }
-        const ids = this.selectedEvents.map((element) => element.id);
+        const ids = this.selectedCatalogueEvents.map((element) => element.id);
         this.spinnerService.show();
-        this.uicHttpService.delete("event/delete", ids).subscribe(
+        this.uicHttpService.delete("catalogue-event/delete", ids).subscribe(
           (response) => {
             this.spinnerService.hide();
             this.messageService.success(response);
-            this.removeEvents(ids);
-            this.selectedEvents = [];
+            this.removeCatalogueEvents(ids);
+            this.selectedCatalogueEvents = [];
           },
           (error) => {
             this.spinnerService.hide();
@@ -128,14 +127,14 @@ export class EventListComponent implements OnInit {
       }
     });
   }
-  searchEvents(event, search) {
-    if (event.type === "click" || event.keyCode === 13 || search.length === 0) {
+  searchCatalogueEvents(catalogueEvent, search) {
+    if (catalogueEvent.type === "click" || catalogueEvent.keyCode === 13 || search.length === 0) {
       const params =
         search.length > 0 ? new HttpParams().append("search", search) : null;
       this.spinnerService.show();
-      this.uicHttpService.get("events", params).subscribe(
+      this.uicHttpService.get("catalogue-events", params).subscribe(
         (response) => {
-          (this.eventsIn = response["data"]), this.spinnerService.hide();
+          (this.catalogueEventsIn = response["data"]), this.spinnerService.hide();
         },
         (error) => {
           this.spinnerService.hide();
@@ -145,10 +144,10 @@ export class EventListComponent implements OnInit {
     }
   }
   // no se utiliza
-  removeEvents(ids) {
+  removeCatalogueEvents(ids) {
     for (const id of ids) {
-      this.eventsIn = this.eventsIn.filter((element) => element.id !== id);
+      this.catalogueEventsIn = this.catalogueEventsIn.filter((element) => element.id !== id);
     }
-    this.eventsOut.emit(this.eventsIn);
+    this.catalogueEventsOut.emit(this.catalogueEventsIn);
   }
 }

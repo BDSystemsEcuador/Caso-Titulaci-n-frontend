@@ -61,7 +61,7 @@ export class EventFormComponent implements OnInit {
  
   // Submit Form
   onSubmit(event: Event, flag = false) {
-    debugger
+    
     event.preventDefault();
     if (this.formEventIn.valid) {
       if (this.idField.value) {

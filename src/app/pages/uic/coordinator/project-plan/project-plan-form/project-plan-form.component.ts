@@ -71,7 +71,7 @@ export class ProjectPlanFormComponent implements OnInit {
   }
   // Submit Form
   onSubmit(event: Event, flag = false) {
-    debugger
+    
     event.preventDefault();
     if (this.formProjectPlanIn.valid) {
       if (this.idField.value) {

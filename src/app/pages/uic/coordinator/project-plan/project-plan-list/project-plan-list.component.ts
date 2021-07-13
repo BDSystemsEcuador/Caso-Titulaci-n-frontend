@@ -175,7 +175,7 @@ export class ProjectPlanListComponent implements OnInit {
     this.getFiles(this.paginatorFiles);
   }
   getFiles(paginator: Paginator) {
-    debugger;
+    ;
     const params = new HttpParams()
       .append("id", this.selectedProjectPlan.id.toString())
       .append("page", paginator.current_page.toString())

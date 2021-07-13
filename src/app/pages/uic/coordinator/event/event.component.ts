@@ -53,7 +53,7 @@ export class EventComponent implements OnInit {
     this.uicHttpService.get("events", params).subscribe(
       (response) => {
         console.log(response["data"]);
-        debugger
+        
         this.flagEvents = false;
         this.events = response["data"];
         this.paginator = response as Paginator;

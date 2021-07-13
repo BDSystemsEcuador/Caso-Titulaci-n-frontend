@@ -1,3 +1,4 @@
+import { CatalogueEventFormComponent } from './catalogue-event/catalogue-event-form/catalogue-event-form.component';
 // Angular Modules
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
@@ -51,6 +52,8 @@ import { ProjectPlanFormComponent } from './project-plan/project-plan-form/proje
 import { ProjectPlanListComponent } from './project-plan/project-plan-list/project-plan-list.component';
 import { RequirementsComponent } from './requirements/requirements.component';
 import { RequirementsListComponent } from './requirements/requirements-list/requirements-list.component';
+import { CatalogueEventComponent } from './catalogue-event/catalogue-event.component';
+import { CatalogueEventListComponent } from './catalogue-event/catalogue-event-list/catalogue-event-list.component';
 
 
 
@@ -105,6 +108,9 @@ import { RequirementsListComponent } from './requirements/requirements-list/requ
     ProjectPlanListComponent,
     RequirementsComponent,
     RequirementsListComponent,
+    CatalogueEventComponent,
+    CatalogueEventFormComponent,
+    CatalogueEventListComponent
 
   ],
 })

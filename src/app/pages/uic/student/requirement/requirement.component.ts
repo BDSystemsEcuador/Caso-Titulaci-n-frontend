@@ -35,7 +35,7 @@ export class RequirementComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildFormRequirement();
-    debugger
+    
     this.getRequirements(this.paginator);
   }
 
