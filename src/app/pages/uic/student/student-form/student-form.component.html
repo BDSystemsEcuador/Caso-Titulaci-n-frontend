@@ -1,1 +1,177 @@
-<p>student-form works!</p>
+{{ formStudentInformationIn.value | json }}
+
+<div class="p-fluid">
+  <form [formGroup]="formStudentInformationIn" (ngSubmit)="onSubmit($event)">
+    <div class="p-field">
+      <label for="title">
+        <i class="p-error">*</i> Empresa donde labora:
+        <i
+          *ngIf="companyWorkField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            companyWorkField.invalid &&
+            (companyWorkField.touched || companyWorkField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <input id="company_work" formControlName="company_work" pInputText />
+      <div *ngIf="companyWorkField.errors && companyWorkField.touched">
+        <small
+          *ngIf="companyWorkField.hasError('required')"
+          id="company_work-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="relation_laboral_career">
+        <i class="p-error">*</i> Relación laboral vs carrera:
+        <i
+          *ngIf="relationLaboralCareerField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            relationLaboralCareerField.invalid &&
+            (relationLaboralCareerField.touched ||
+              relationLaboralCareerField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+
+      <div *ngFor="let relation of relations" class="p-field-checkbox">
+        <p-radioButton
+          [inputId]="relation.name"
+          name="relation_laboral_career"
+          [value]="relation"
+          formControlName="relation_laboral_career"
+        ></p-radioButton>
+        <label [for]="relation.id">{{ relation.name }}</label>
+      </div>
+
+      <div
+        *ngIf="
+          relationLaboralCareerField.errors &&
+          relationLaboralCareerField.touched
+        "
+      >
+        <small
+          *ngIf="relationLaboralCareerField.hasError('required')"
+          id="relation_laboral_career-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <label for="company_area">
+        <i class="p-error">*</i> Area:
+        <i
+          *ngIf="companyAreaField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            companyAreaField.invalid &&
+            (companyAreaField.touched || companyAreaField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <p-dropdown
+        id="company_area"
+        [options]="areas"
+        formControlName="company_area"
+        optionLabel="name"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Selecciona el area"
+      >
+        <ng-template pTemplate="selectedArea">
+          <div class="country-item country-item-value" *ngIf="selectedArea">
+            <div>{{ selectedArea.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-selectedArea pTemplate="selectedArea">
+          <div class="country-item">
+            <div>{{ selectedArea.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="p-field">
+      <label for="company_position">
+        <i class="p-error">*</i> Cargo:
+        <i
+          *ngIf="companyPositionField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            companyPositionField.invalid &&
+            (companyPositionField.touched || companyPositionField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <p-dropdown
+        id="company_position"
+        [options]="positions"
+        formControlName="company_position"
+        optionLabel="name"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Selecciona el cargo"
+      >
+        <ng-template pTemplate="selectedPosition">
+          <div class="country-item country-item-value" *ngIf="selectedPosition">
+            <div>{{ selectedPosition.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-selectedPosition pTemplate="selectedPosition">
+          <div class="country-item">
+            <div>{{ selectedPosition.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="submit"
+          id="btnSaveExit"
+          label="Guardar y Salir"
+          class="p-button-success p-button-raised"
+          icon="pi pi-save"
+        ></button>
+      </div>
+      <div *ngIf="!idField.value" class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="button"
+          id="btnSaveContinue"
+          label="Guardar y Crear Nueva"
+          class="p-button-raised"
+          icon="pi pi-arrow-right"
+          (click)="onSubmit($event, true)"
+        ></button>
+      </div>
+    </div>
+  </form>
+</div>

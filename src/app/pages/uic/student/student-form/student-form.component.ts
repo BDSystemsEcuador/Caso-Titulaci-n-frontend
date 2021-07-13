@@ -1,29 +1,35 @@
+import { Catalogue } from './../../../../models/app/catalogue';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Paginator } from 'src/app/models/setting/paginator';
 import { Event as EventModel } from 'src/app/models/uic/event';
-import { Student } from 'src/app/models/app/student';
 import { Planning } from 'src/app/models/uic/planning';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
+import { StudentInformation } from 'src/app/models/uic/student-information';
+import { AppHttpService } from 'src/app/services/app/app-http.service';
 
 @Component({
   selector: 'app-student-form',
   templateUrl: './student-form.component.html',
   styleUrls: ['./student-form.component.css']
 })
-export class StudentFormComponent implements OnInit {
+export class StudentInformationFormComponent implements OnInit {
 
-  checked: boolean = false;
+  selectedRelation: any = null;
+  relations: any;
+  areas: any;
+  positions: any;
 
-  @Input() formStudentFormIn: FormGroup;
-  @Input() studentFormsIn: Student[];
+
+  @Input() formStudentInformationIn: FormGroup;
+  @Input() studentInformationFormsIn: StudentInformation[];
   @Input() paginatorIn: Paginator;
 
   @Output() displayOut = new EventEmitter<boolean>();
-  @Output() studentFormsOut = new EventEmitter<Student[]>();
+  @Output() studentInformationFormsOut = new EventEmitter<StudentInformation[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
   plannings: Planning[];
@@ -35,53 +41,61 @@ export class StudentFormComponent implements OnInit {
     private messageService: MessageService,
     private spinnerService: NgxSpinnerService,
     private uicHttpService: UicHttpService,
+    private appHttpService: AppHttpService
   ) { 
     
   }
   ngOnInit(): void {
-    
+    this.getAreas();
+    this.getPositions();
+    this.getRelations();
   }
   // Fields of Form
   get idField() {
-    return this.formStudentFormIn.get('id');
+    return this.formStudentInformationIn.get('id');
   }
-  get userField() {
-    return this.formStudentFormIn.get('user');
+  get companyWorkField() {
+    return this.formStudentInformationIn.get('company_work');
   }
-  get adressField() {
-    return this.formStudentFormIn.get('address');
+  get relationLaboralCareerField() {
+    return this.formStudentInformationIn.get('relation_laboral_career');
   }
-  get schoolTypeField() {
-    return this.formStudentFormIn.get('school_type');
+  get companyAreaField() {
+    return this.formStudentInformationIn.get('company_area');
+  }
+  get companyPositionField() {
+    return this.formStudentInformationIn.get('company_position');
   }
   // Submit Form
   onSubmit(event: Event, flag = false) {
-    debugger
     event.preventDefault();
-    if (this.formStudentFormIn.valid) {
+    if (this.formStudentInformationIn.valid) {
+      debugger
       if (this.idField.value) {
-        this.updateStudentForm(this.formStudentFormIn.value);
+        this.updateStudentInformationForm(this.formStudentInformationIn.value);
       } else {
-        this.storeStudentForm(this.formStudentFormIn.value, flag);
-        this.formStudentFormIn.reset();
+        this.storeStudentInformationForm(this.formStudentInformationIn.value, flag);
+        this.formStudentInformationIn.reset();
       }
     } else {
-      this.formStudentFormIn.markAllAsTouched();
+      this.formStudentInformationIn.markAllAsTouched();
     }
   }
-  paginateStudentForm(event) {
+  paginateStudentInformationForm(event) {
     this.paginatorOut.emit(this.paginatorIn);
   }
 
-  storeStudentForm(studentForm: Student, flag = false) {
+  storeStudentInformationForm(studentInformation: StudentInformation, flag = false) {
+    debugger
     this.spinnerService.show();
-    this.uicHttpService.store('student', { studentForm }).subscribe(response => {
+    this.uicHttpService.store('student-informations', { studentInformation }).subscribe(response => {
       this.spinnerService.hide();
       this.messageService.success(response);
-      this.saveStudentForm(response['data']);
+      debugger
+      this.saveStudentInformationForm(response['data']);
       this.paginatorOut.emit(this.paginatorIn);
       if (flag) {
-        this.formStudentFormIn.reset();
+        this.formStudentInformationIn.reset();
       } else {
         this.displayOut.emit(false);
       }
@@ -93,29 +107,53 @@ export class StudentFormComponent implements OnInit {
   }
 
   // Save in frontend
-  saveStudentForm(studentForm: Student) {
-    const index = this.studentFormsIn.findIndex(element => element.id === studentForm.id);
+  saveStudentInformationForm(studentInformation: StudentInformation) {
+    const index = this.studentInformationFormsIn.findIndex(element => element.id === studentInformation.id);
     if (index === -1) {
-      this.studentFormsIn.push(studentForm);
+      this.studentInformationFormsIn.push(studentInformation);
     } else {
-      this.studentFormsIn[index] = studentForm;
+      this.studentInformationFormsIn[index] = studentInformation;
     }
-    this.studentFormsOut.emit(this.studentFormsIn);
+    this.studentInformationFormsOut.emit(this.studentInformationFormsIn);
   }
 
   // Save in backend
-  updateStudentForm(studentForm: Student) {
+  updateStudentInformationForm(studentInformation: StudentInformation) {
     this.spinnerService.show();
-    this.uicHttpService.update('student/' + studentForm.id, { studentForm })
+    this.uicHttpService.update('student-informations/' + studentInformation.id, { studentInformation })
       .subscribe(response => {
         this.spinnerService.hide();
         this.messageService.success(response);
-        this.saveStudentForm(response['data']);
+        this.saveStudentInformationForm(response['data']);
         this.displayOut.emit(false);
       }, error => {
         this.spinnerService.hide();
         this.messageService.error(error);
       });
+  }
+
+  getAreas() {
+    this.appHttpService.getCatalogues('UIC.COMPANY_AREA').subscribe((response) => {
+      this.areas = response['data'];
+    }, error => {
+      this.messageService.error(error);
+    });
+  }
+
+  getPositions() {
+    this.appHttpService.getCatalogues('UIC.COMPANY_POSITION').subscribe((response) => {
+      this.positions = response['data'];
+    }, error => {
+      this.messageService.error(error);
+    });
+  }
+
+  getRelations() {
+    this.appHttpService.getCatalogues('UIC.RELATIONAL_LABORAL_CAREER').subscribe((response) => {
+      this.relations = response['data'];
+    }, error => {
+      this.messageService.error(error);
+    });
   }
 
 }
