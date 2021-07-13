@@ -58,8 +58,9 @@ export class AppHttpService {
         return this.httpClient.get(url, {params, responseType: 'blob' as 'json'});
     }
 
-    getCatalogues(params = new HttpParams()) {
+    getCatalogues(type: any) {
         const url = environment.API_URL_APP + 'catalogues';
+        const params = new HttpParams().append('type', type);
         return this.httpClient.get(url, {params});
     }
 
