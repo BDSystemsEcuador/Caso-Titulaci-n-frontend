@@ -46,9 +46,6 @@ import { ConvocatoryListComponent } from './convocatory/convocatory-list/convoca
 import { EventComponent } from './event/event.component';
 import { EventListComponent } from './event/event-list/event-list.component';
 import { EventFormComponent } from './event/event-form/event-form.component';
-import { EventPlanningComponent } from './event-planning/event-planning.component';
-import { EventPlanningListComponent } from './event-planning/event-planning-list/event-planning-list.component';
-import { EventPlanningFormComponent } from './event-planning/event-planning-form/event-planning-form.component';
 import { ProjectPlanComponent } from './project-plan/project-plan.component';
 import { ProjectPlanFormComponent } from './project-plan/project-plan-form/project-plan-form.component';
 import { ProjectPlanListComponent } from './project-plan/project-plan-list/project-plan-list.component';
@@ -103,9 +100,6 @@ import { RequirementsListComponent } from './requirements/requirements-list/requ
     EventComponent,
     EventListComponent,
     EventFormComponent,
-    EventPlanningComponent,
-    EventPlanningListComponent,
-    EventPlanningFormComponent,
     ProjectPlanComponent,
     ProjectPlanFormComponent,
     ProjectPlanListComponent,

@@ -7,8 +7,7 @@ import { Paginator } from "src/app/models/setting/paginator";
 import { Planning } from "src/app/models/uic/planning";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 import { MessageService } from "../../../shared/services/message.service";
-import { DateValidators } from "../../../shared/validators/date.validators"
-import { EventPlanning } from 'src/app/models/uic/event-planning';
+import { DateValidators } from "../../../shared/validators/date.validators";
 
 @Component({
   selector: 'app-project-plan',

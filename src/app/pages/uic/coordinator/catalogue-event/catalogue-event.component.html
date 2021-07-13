@@ -1,0 +1,17 @@
+<div class="p-grid">
+    <div class="p-col-12">
+        <app-event-list *ngIf="!eventDialog" [eventsIn]="events" [eventsEndIn]="eventsEnd" [flagEvents]="flagEvents"
+            [paginatorIn]="paginator" [formEventIn]="formEvent" (eventsOut)="events=$event"
+            (eventsEndOut)="eventsEnd=$event" (displayOut)="eventDialog=$event" (formEventOut)="formEvent=$event"
+            (paginatorOut)="getEvents($event)">
+        </app-event-list>
+
+        <p-dialog [(visible)]="eventDialog" [style]="{width: '700px'}" header="Evento" [modal]="true"
+            styleClass="p-fluid" (onHide)="eventDialog=false">
+            <app-event-form [eventsIn]="events" [formEventIn]="formEvent" (eventsOut)="events=$event"
+                (paginatorAdd)="paginator.total = paginator.total + $event" (displayOut)="eventDialog=$event">
+            </app-event-form>
+        </p-dialog>
+
+    </div>
+</div>

@@ -3,23 +3,145 @@
 <div class="p-fluid">
   <form [formGroup]="formEventIn" (ngSubmit)="onSubmit($event)">
     <div class="p-field">
+      <label for="planning">
+        <i class="p-error">*</i> Convocatoria:
+        <i
+          *ngIf="planningField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            planningField.invalid &&
+            (planningField.touched || planningField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <p-dropdown
+        id="planning"
+        [options]="plannings"
+        formControlName="planning"
+        optionLabel="career_planning"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Selecciona la convocatoria"
+      >
+        <ng-template pTemplate="selectedPlanning">
+          <div class="country-item country-item-value" *ngIf="selectedPlanning">
+            <div>
+              {{ selectedPlan.career.short_name }} - {{ selectedPlan.name }}
+            </div>
+          </div>
+        </ng-template>
+        <ng-template let-selectedPlan pTemplate="selectedPlanning">
+          <div class="country-item">
+            <div>
+              {{ selectedPlan.career.short_name }} - {{ selectedPlan.name }}
+            </div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="p-field">
       <label for="name">
-        <i class="p-error">*</i> Nombre:
+        <i class="p-error">*</i> Evento:
         <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
         <i
           *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
           class="pi pi-times-circle icon-invalid"
         ></i>
       </label>
-      <input id="name" formControlName="name" pInputText />
-      <div *ngIf="nameField.errors && nameField.touched">
-        <small
-          *ngIf="nameField.hasError('required')"
-          id="name-help-1"
-          class="p-error"
-        >
-          {{ messageService.fieldRequired }}
-        </small>
+      <p-dropdown
+        id="name"
+        [options]="events"
+        formControlName="name"
+        optionLabel="name"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Selecciona el evento"
+      >
+        <ng-template pTemplate="selectedEvent">
+          <div class="country-item country-item-value" *ngIf="selectedEvent">
+            <div>{{ selectedEvent.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-selectedEv pTemplate="selectedEvent">
+          <div class="country-item">
+            <div>{{ selectedEv.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
+    <div class="p-grid">
+      <div class="p-field p-lg-6">
+        <label for="startDate">
+          <i class="p-error">*</i> Fecha Inicial:
+          <i
+            *ngIf="startDateField.valid"
+            class="pi pi-check-circle icon-valid"
+          ></i>
+          <i
+            *ngIf="
+              startDateField.invalid &&
+              (startDateField.touched || startDateField.dirty)
+            "
+            class="pi pi-times-circle icon-invalid"
+          ></i>
+        </label>
+        <app-date
+          id="startDate"
+          name="startDate"
+          formControlName="start_date"
+        ></app-date>
+        <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+
+        <div *ngIf="startDateField.errors && startDateField.touched">
+          <small
+            *ngIf="startDateField.hasError('required')"
+            id="start_date-help-1"
+            class="p-error"
+          >
+            {{ messageService.fieldRequired }}
+          </small>
+        </div>
+      </div>
+      <div class="p-field p-lg-6">
+        <label for="endDate">
+          <i class="p-error">*</i> Fecha Final:
+          <i
+            *ngIf="endDateField.valid"
+            class="pi pi-check-circle icon-valid"
+          ></i>
+          <i
+            *ngIf="
+              endDateField.invalid &&
+              (endDateField.touched || endDateField.dirty)
+            "
+            class="pi pi-times-circle icon-invalid"
+          ></i>
+        </label>
+        <app-date
+          id="endDate"
+          name="endDate"
+          formControlName="end_date"
+        ></app-date>
+
+        <!-- <p-calendar id="endDate" name="endDate" formControlName="end_date" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
+        <!-- <input type="date" id="endDate" name="endDate" formControlName="end_date"> -->
+        <div *ngIf="endDateField.errors && endDateField.touched">
+          <small
+            *ngIf="endDateField.hasError('required')"
+            id="end_date-help-1"
+            class="p-error"
+          >
+            {{ messageService.fieldRequired }}
+          </small>
+        </div>
       </div>
     </div>
 
