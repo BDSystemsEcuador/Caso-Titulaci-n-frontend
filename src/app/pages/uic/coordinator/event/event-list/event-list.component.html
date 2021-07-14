@@ -105,11 +105,16 @@
           <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
         <td *ngFor="let col of columns">
-          {{
-            rowData[col.field]?.name
-              ? rowData[col.field]?.name
-              : rowData[col.field]
-          }}
+          <div *ngIf="col.field == 'planning'">
+            {{ rowData[col.field].career_planning }}
+          </div>
+          <div *ngIf="col.field !== 'planning'">
+            {{
+              rowData[col.field]?.name
+                ? rowData[col.field]?.name
+                : rowData[col.field]
+            }}
+          </div>
         </td>
         <td style="text-align: center">
           <button
@@ -132,7 +137,7 @@
             class="p-button-rounded p-button-danger p-ml-2"
             (click)="deleteEvent(rowData)"
           ></button>
-          <button
+          <!-- <button
             pButton
             pRipple
             type="button"
@@ -141,7 +146,7 @@
             icon="pi pi-paperclip"
             class="p-button-rounded p-ml-2"
             (click)="selectEvent(rowData); openViewFilesEvent()"
-          ></button>
+          ></button> -->
         </td>
       </tr>
     </ng-template>

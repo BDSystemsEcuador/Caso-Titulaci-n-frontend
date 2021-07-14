@@ -54,8 +54,10 @@ export class RequirementListComponent implements OnInit {
   }
   loadColsRequirement() {
     this.colsRequirement = [
-      { field: "name", header: "Nombre del requerimiento" },
-      { field: "is_required", header: "Es requerido" }
+      { field: "career", header: "Carrera" },
+      { field: "name", header: "Requerimiento" },
+      { field: "is_required", header: "Es requerido" },
+      { field: "is_solicitable", header: "Es solicitado" }
     ];
   }
 

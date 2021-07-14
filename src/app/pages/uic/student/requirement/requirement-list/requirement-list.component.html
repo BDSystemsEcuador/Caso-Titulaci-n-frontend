@@ -86,11 +86,27 @@
           <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
         <td *ngFor="let col of columns">
-          {{
-            rowData[col.field]?.name
-              ? rowData[col.field]?.name
-              : rowData[col.field]
-          }}
+          <div
+            *ngIf="col.field == 'is_required' || col.field == 'is_solicitable'"
+          >
+            {{ rowData[col.field] ? "Si" : "No" }}
+          </div>
+          <div *ngIf="col.field == 'career'">
+            {{ rowData[col.field].short_name }}
+          </div>
+          <div
+            *ngIf="
+              col.field !== 'career' &&
+              col.field !== 'is_required' &&
+              col.field !== 'is_solicitable'
+            "
+          >
+            {{
+              rowData[col.field]?.name
+                ? rowData[col.field]?.name
+                : rowData[col.field]
+            }}
+          </div>
         </td>
         <td style="text-align: center">
           <button

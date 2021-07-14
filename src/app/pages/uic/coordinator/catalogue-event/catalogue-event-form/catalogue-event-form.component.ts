@@ -42,10 +42,10 @@ export class CatalogueEventFormComponent implements OnInit {
   onSubmit(event: Event, flag = false) {
    
     event.preventDefault();
-    debugger
+    
     if (this.formCatalogueEventIn.valid) {
       if (this.idField.value) {
-        debugger
+        
         this.updateCatalogueEvent(this.formCatalogueEventIn.value);
       } else {
         
@@ -65,7 +65,7 @@ export class CatalogueEventFormComponent implements OnInit {
     
     this.spinnerService.show();
     this.uicHttpService.store('catalogue-events', { catalogueEvent }).subscribe(response => {
-      debugger
+      
       this.spinnerService.hide();
       this.messageService.success(response);
       this.saveCatalogueEvent(response['data']);
