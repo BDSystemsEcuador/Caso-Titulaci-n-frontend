@@ -27,20 +27,6 @@
         [showClear]="true"
         placeholder="Selecciona la convocatoria"
       >
-        <ng-template pTemplate="selectedPlanning">
-          <div class="country-item country-item-value" *ngIf="selectedPlanning">
-            <div>
-              {{ selectedPlan.career.short_name }} - {{ selectedPlan.name }}
-            </div>
-          </div>
-        </ng-template>
-        <ng-template let-selectedPlan pTemplate="selectedPlanning">
-          <div class="country-item">
-            <div>
-              {{ selectedPlan.career.short_name }} - {{ selectedPlan.name }}
-            </div>
-          </div>
-        </ng-template>
       </p-dropdown>
     </div>
 
@@ -81,6 +67,7 @@
       <div class="p-field p-lg-6">
         <label for="startDate">
           <i class="p-error">*</i> Fecha Inicial:
+
           <i
             *ngIf="startDateField.valid"
             class="pi pi-check-circle icon-valid"

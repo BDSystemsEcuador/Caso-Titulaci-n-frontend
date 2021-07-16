@@ -65,7 +65,6 @@ export class ConvocatoryFormComponent implements OnInit {
         this.updatePlanning(this.formPlanningIn.value);
       } else {
         this.storePlanning(this.formPlanningIn.value, flag);
-        this.formPlanningIn.reset();
       }
     } else {
       this.formPlanningIn.markAllAsTouched();

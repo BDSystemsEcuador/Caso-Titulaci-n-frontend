@@ -67,9 +67,7 @@ export class EventFormComponent implements OnInit {
       if (this.idField.value) {
         this.updateEvent(this.formEventIn.value);
       } else {
-        
         this.storeEvent(this.formEventIn.value, flag);
-        this.formEventIn.reset();
       }
     } else {
       this.formEventIn.markAllAsTouched();
