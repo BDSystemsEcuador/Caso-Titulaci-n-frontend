@@ -25,6 +25,7 @@ export class ConvocatoryListComponent implements OnInit {
   @Output() formPlanningOut = new EventEmitter<FormGroup>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
+  @Output() disabledFormOut = new EventEmitter<boolean>();
   colsPlanning: Col[];
   selectedPlannings: any[];
 
@@ -49,9 +50,9 @@ export class ConvocatoryListComponent implements OnInit {
     this.colsPlanning = [
       { field: "career", header: "Carrera" },
       { field: "name", header: "Convocatoria" },
+      { field: "description", header: "Descripción" },
       { field: "start_date", header: "Fecha Inicial" },
       { field: "end_date", header: "Fecha Final" },
-      { field: "description", header: "Descripción" },
     ];
   }
 
@@ -59,12 +60,14 @@ export class ConvocatoryListComponent implements OnInit {
     this.formPlanningIn.reset();
     this.formPlanningOut.emit(this.formPlanningIn);
     this.displayOut.emit(true);
+    this.disabledFormOut.emit(false);
   }
 
   openEditFormPlanning(planning: Planning) {
     this.formPlanningIn.patchValue(planning);
     this.formPlanningOut.emit(this.formPlanningIn);
     this.displayOut.emit(true);
+    this.disabledFormOut.emit(true);
   }
 
   paginatePlanning(event) {

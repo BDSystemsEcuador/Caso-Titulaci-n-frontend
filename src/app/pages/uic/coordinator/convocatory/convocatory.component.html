@@ -12,6 +12,7 @@
       (planningsEndOut)="planningsEnd = $event"
       (displayOut)="planningDialog = $event"
       (formPlanningOut)="formPlanning = $event"
+      (disabledFormOut)="disabledForm = $event"
       (paginatorOut)="getPlannings($event)"
     >
     </app-convocatory-list>
@@ -27,9 +28,11 @@
       <app-convocatory-form
         [planningsIn]="plannings"
         [formPlanningIn]="formPlanning"
+        [disabledFormIn]="disabledForm"
         (planningsOut)="plannings = $event"
         (paginatorAdd)="paginator.total = paginator.total + $event"
         (displayOut)="planningDialog = $event"
+
       >
       </app-convocatory-form>
     </p-dialog>

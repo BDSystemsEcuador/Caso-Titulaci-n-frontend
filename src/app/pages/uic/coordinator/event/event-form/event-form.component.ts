@@ -18,6 +18,7 @@ export class EventFormComponent implements OnInit {
   @Input() formEventIn: FormGroup;
   @Input() eventsIn: EventModel[];
   @Input() paginatorIn: Paginator;
+  @Input() disabledFormIn: boolean;
 
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() eventsOut = new EventEmitter<EventModel[]>();

@@ -13,6 +13,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {SkeletonModule} from 'primeng/skeleton';
 import {CheckboxModule} from 'primeng/checkbox';
 
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
 // My Components
@@ -93,6 +94,7 @@ import { CatalogueEventListComponent } from './catalogue-event/catalogue-event-l
     CheckboxModule,
     CalendarModule,
     RadioButtonModule,
+    InputSwitchModule
     
   ],
   declarations: [

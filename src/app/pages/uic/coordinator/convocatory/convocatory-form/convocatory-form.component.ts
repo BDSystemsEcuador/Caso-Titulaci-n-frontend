@@ -17,6 +17,7 @@ export class ConvocatoryFormComponent implements OnInit {
   @Input() formPlanningIn: FormGroup;
   @Input() planningsIn: Planning[];
   @Input() paginatorIn: Paginator;
+  @Input() disabledFormIn: boolean;
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() planningsOut = new EventEmitter<Planning[]>();
   @Output() paginatorAdd = new EventEmitter<number>();

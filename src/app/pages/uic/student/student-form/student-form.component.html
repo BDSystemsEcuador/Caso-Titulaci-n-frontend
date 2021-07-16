@@ -1,8 +1,8 @@
 <!-- {{ formStudentInformationIn.value | json }} -->
 
-<div class="p-fluid">
+<div class="p-fluid" >
   <form [formGroup]="formStudentInformationIn" (ngSubmit)="onSubmit($event)">
-    <div class="p-field">
+    <div class="p-field p-lg-6 p-md-12">
       <label for="title">
         <i class="p-error">*</i> Empresa donde labora:
         <i
@@ -28,51 +28,10 @@
         </small>
       </div>
     </div>
+<div class="p-grid">
 
-    <div class="p-field">
-      <label for="relation_laboral_career">
-        <i class="p-error">*</i> Relación laboral vs carrera:
-        <i
-          *ngIf="relationLaboralCareerField.valid"
-          class="pi pi-check-circle icon-valid"
-        ></i>
-        <i
-          *ngIf="
-            relationLaboralCareerField.invalid &&
-            (relationLaboralCareerField.touched ||
-              relationLaboralCareerField.dirty)
-          "
-          class="pi pi-times-circle icon-invalid"
-        ></i>
-      </label>
+    <div class="p-field p-lg-3 p-md-12">
 
-      <div *ngFor="let relation of relations" class="p-field-checkbox">
-        <p-radioButton
-          [inputId]="relation.name"
-          name="relation_laboral_career"
-          [value]="relation"
-          formControlName="relation_laboral_career"
-        ></p-radioButton>
-        <label [for]="relation.id">{{ relation.name }}</label>
-      </div>
-
-      <div
-        *ngIf="
-          relationLaboralCareerField.errors &&
-          relationLaboralCareerField.touched
-        "
-      >
-        <small
-          *ngIf="relationLaboralCareerField.hasError('required')"
-          id="relation_laboral_career-help-1"
-          class="p-error"
-        >
-          {{ messageService.fieldRequired }}
-        </small>
-      </div>
-    </div>
-
-    <div class="p-field">
       <label for="company_area">
         <i class="p-error">*</i> Area:
         <i
@@ -110,7 +69,7 @@
       </p-dropdown>
     </div>
 
-    <div class="p-field">
+    <div class="p-field p-lg-3 p-md-12">
       <label for="company_position">
         <i class="p-error">*</i> Cargo:
         <i
@@ -147,9 +106,51 @@
         </ng-template>
       </p-dropdown>
     </div>
+  </div>
+  <div class="p-field p-lg-6">
+    <label for="relation_laboral_career">
+      <i class="p-error">*</i> Relación laboral vs carrera:
+      <i
+        *ngIf="relationLaboralCareerField.valid"
+        class="pi pi-check-circle icon-valid"
+      ></i>
+      <i
+        *ngIf="
+          relationLaboralCareerField.invalid &&
+          (relationLaboralCareerField.touched ||
+            relationLaboralCareerField.dirty)
+        "
+        class="pi pi-times-circle icon-invalid"
+      ></i>
+    </label>
 
+    <div *ngFor="let relation of relations" class="p-field-checkbox">
+      <p-radioButton
+        [inputId]="relation.name"
+        name="relation_laboral_career"
+        [value]="relation"
+        formControlName="relation_laboral_career"
+      ></p-radioButton>
+      <label [for]="relation.id">{{ relation.name }}</label>
+    </div>
+
+    <div
+      *ngIf="
+        relationLaboralCareerField.errors &&
+        relationLaboralCareerField.touched
+      "
+    >
+      <small
+        *ngIf="relationLaboralCareerField.hasError('required')"
+        id="relation_laboral_career-help-1"
+        class="p-error"
+      >
+        {{ messageService.fieldRequired }}
+      </small>
+    </div>
+  </div>
     <div class="p-formgrid p-grid">
-      <div class="p-field p-col">
+      <!-- <div class="p-field p-col">
         <button
           pButton
           pRipple
@@ -159,14 +160,14 @@
           class="p-button-success p-button-raised"
           icon="pi pi-save"
         ></button>
-      </div>
-      <div *ngIf="!idField.value" class="p-field p-col">
+      </div> -->
+      <div *ngIf="!idField.value" class="p-field p-col-6">
         <button
           pButton
           pRipple
           type="button"
           id="btnSaveContinue"
-          label="Guardar y Crear Nueva"
+          label="Actualizar"
           class="p-button-raised"
           icon="pi pi-arrow-right"
           (click)="onSubmit($event, true)"

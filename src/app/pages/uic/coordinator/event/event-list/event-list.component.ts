@@ -27,6 +27,9 @@ export class EventListComponent implements OnInit {
   @Output() formEventOut = new EventEmitter<FormGroup>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
+  @Output() disabledFormOut = new EventEmitter<boolean>();
+
+  disablePlanning:boolean = false;
   colsEvent: Col[];
   selectedEvents: any[];
   dialogUploadFiles: boolean;
@@ -62,16 +65,17 @@ export class EventListComponent implements OnInit {
   }
 
   openNewFormEvent() {
-  
     this.formEventIn.reset();
     this.formEventOut.emit(this.formEventIn);
     this.displayOut.emit(true);
+    this.disabledFormOut.emit(false);
   }
 
   openEditFormEvent(event: Event) {
     this.formEventIn.patchValue(event);
     this.formEventOut.emit(this.formEventIn);
     this.displayOut.emit(true);
+    this.disabledFormOut.emit(true);
   }
 
   paginateEvent(event) {

@@ -129,7 +129,7 @@
 
     <div class="p-field">
       <label for="is_approved">
-        <i class="p-error">*</i> Esta aprobado:
+        <i class="p-error">*</i> Aprobado?:
         <i
           *ngIf="isApprovedField.valid"
           class="pi pi-check-circle icon-valid"
@@ -143,12 +143,7 @@
         ></i>
       </label>
       <div class="p-field" style="display: flex; align-items: center">
-        <p-checkbox
-          formControlName="is_approved"
-          [(ngModel)]="checked"
-          binary="true"
-          inputId="binary"
-        ></p-checkbox>
+        <p-inputSwitch [(ngModel)]="checked"  formControlName="is_approved"></p-inputSwitch>
         <label style="margin-left: 10px" for="binary">{{
           checked ? "si" : "no"
         }}</label>

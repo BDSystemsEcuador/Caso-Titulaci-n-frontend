@@ -4,7 +4,7 @@
   <form [formGroup]="formPlanningIn" (ngSubmit)="onSubmit($event)">
     <div class="p-field">
       <label for="career">
-        <i class="p-error">*</i> Convocatoria:
+        <i class="p-error">*</i> Carrera:
         <i *ngIf="careerField.valid" class="pi pi-check-circle icon-valid"></i>
         <i
           *ngIf="
@@ -22,6 +22,7 @@
         filterBy="short_name"
         [showClear]="true"
         placeholder="Selecciona la carrera"
+        [disabled]="disabledFormIn"
       >
         <ng-template pTemplate="selectedCareer">
           <div class="country-item country-item-value" *ngIf="selectedCareer">
@@ -37,9 +38,9 @@
     </div>
 
     <div class="p-grid">
-      <div class="p-field p-lg-8 p-md-12 p-col-12">
+      <div class="p-field p-lg-12 p-md-12 p-col-12">
         <label for="name">
-          <i class="p-error">*</i> Nombre:
+          <i class="p-error">*</i> Nombre de la convocatoria:
           <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
           <i
             *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
@@ -59,18 +60,12 @@
       </div>
     </div>
     <div class="p-field">
-      <label for="description">
-        <i class="p-error">*</i> Acerca de la convocatoria:
-        <i
-          *ngIf="descriptionField.valid"
-          class="pi pi-check-circle icon-valid"
-        ></i>
+      <label for="description">Acerca de la convocatoria:
         <i
           *ngIf="
-            descriptionField.invalid &&
             (descriptionField.touched || descriptionField.dirty)
           "
-          class="pi pi-times-circle icon-invalid"
+          class="pi pi-check-circle icon-valid"
         ></i>
       </label>
 
@@ -81,23 +76,7 @@
         formControlName="description"
         rows="4"
       ></textarea>
-      <div *ngIf="descriptionField.errors && descriptionField.touched">
-        <small
-          *ngIf="descriptionField.hasError('required')"
-          id="description-help-1"
-          class="p-error"
-        >
-          {{ messageService.fieldRequired }}
-        </small>
-        <small
-          *ngIf="descriptionField.hasError('minlength')"
-          id="description-help-2"
-          class="p-error"
-        >
-          Mínimo de caracteres es
-          {{ descriptionField.errors.minlength.requiredLength }}.
-        </small>
-      </div>
+
     </div>
     <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
     <div class="p-grid">

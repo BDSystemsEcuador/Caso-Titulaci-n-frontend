@@ -22,6 +22,8 @@ export class ConvocatoryComponent implements OnInit {
   planning: Planning;
   planningDialog: boolean;
   flagPlannings: boolean;
+  disabledForm:boolean;
+  
   constructor(
     private spinnerService: NgxSpinnerService,
     public messageService: MessageService,//siempre publico
@@ -46,7 +48,7 @@ export class ConvocatoryComponent implements OnInit {
       name: [null, [Validators.required]],
       start_date: [null, [Validators.required, DateValidators.valid]],
       end_date: [null, [Validators.required, DateValidators.valid]],
-      description: [null, [Validators.required, Validators.minLength(10)]],
+      description: [null, []],
     });
   }
 

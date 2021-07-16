@@ -55,11 +55,9 @@ export class ProjectPlanListComponent implements OnInit {
   loadColsProjectPlan() {
     this.colsProjectPlan = [
       { field: "title", header: "Título" },
-      { field: "description", header: "Descripción" },
       { field: "act_code", header: "Código de acta" },
       { field: "approval_date", header: "Fecha de aprobación" },
       { field: "is_approved", header: "Esta aprobado" },
-      { field: "observations", header: "Observaciones"}
     ];
   }
 
