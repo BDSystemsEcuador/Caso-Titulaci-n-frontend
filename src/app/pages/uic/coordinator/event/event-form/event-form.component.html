@@ -28,7 +28,25 @@
         placeholder="Selecciona la convocatoria"
         [disabled]="disabledFormIn">
       </p-dropdown>
+
     </div>
+    <!-- <div class="p-field " *ngIf="planningField.value">
+      <label for="planning">
+        <i class="p-error">*</i> Fecha Inicio y Fin de la Convocatoria:
+        <i
+          *ngIf="planningField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            planningField.invalid &&
+            (planningField.touched || planningField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+      <input pInputText disabled value="{{ planningField.value.start_date }} / {{ planningField.value.end_date }}"/>
+    </div> -->
 
     <div class="p-field">
       <label for="name">
@@ -49,6 +67,7 @@
         [showClear]="true"
         placeholder="Selecciona el evento"
       >
+      
         <ng-template pTemplate="selectedEvent">
           <div class="country-item country-item-value" *ngIf="selectedEvent">
             <div>{{ selectedEvent.name }}</div>
@@ -63,28 +82,30 @@
     </div>
 
     <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
-    <div class="p-grid">
+    <div class="p-grid" *ngIf="planningField.value">
       <div class="p-field p-lg-6">
         <label for="startDate">
-          <i class="p-error">*</i> Fecha Inicial:
-
-          <i
-            *ngIf="startDateField.valid"
+          <i class="p-error">*</i> Fecha Inicio del Evento:
+          <div *ngIf="planningField.value" style="display: inline;">
+            <i
+            *ngIf="startDateField.value >= planningField.value.start_date && startDateField.value <= planningField.value.end_date"
             class="pi pi-check-circle icon-valid"
-          ></i>
-          <i
-            *ngIf="
-              startDateField.invalid &&
-              (startDateField.touched || startDateField.dirty)
-            "
+            ></i>
+            <i
+            *ngIf="startDateField.value < planningField.value.start_date || startDateField.value > planningField.value.end_date"
             class="pi pi-times-circle icon-invalid"
-          ></i>
+            ></i>
+          </div>
         </label>
-        <app-date
-          id="startDate"
-          name="startDate"
-          formControlName="start_date"
-        ></app-date>
+
+        <input type="date"  
+        id="startDate"
+        name="startDate"
+        formControlName="start_date"
+        [min]="planningField.value.start_date" 
+        [max]="planningField.value.end_date"
+        class="input-date"
+        >
         <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
 
         <div *ngIf="startDateField.errors && startDateField.touched">
@@ -99,24 +120,36 @@
       </div>
       <div class="p-field p-lg-6">
         <label for="endDate">
-          <i class="p-error">*</i> Fecha Final:
-          <i
-            *ngIf="endDateField.valid"
+          <i class="p-error">*</i> Fecha Fin del Evento:
+          <div style="display: inline;">
+            <i
+            *ngIf="endDateField.value <= planningField.value.end_date && endDateField.value >= planningField.value.start_date"
             class="pi pi-check-circle icon-valid"
-          ></i>
-          <i
-            *ngIf="
-              endDateField.invalid &&
-              (endDateField.touched || endDateField.dirty)
-            "
+            ></i>
+            <i
+            *ngIf="endDateField.value > planningField.value.end_date || endDateField.value < planningField.value.start_date"
             class="pi pi-times-circle icon-invalid"
-          ></i>
+            ></i>
+          </div>
+          
         </label>
-        <app-date
-          id="endDate"
-          name="endDate"
-          formControlName="end_date"
-        ></app-date>
+        <input type="date" id="endDate"
+        name="endDate"
+        formControlName="end_date"
+        [min]="planningField.value.start_date" 
+        [max]="planningField.value.end_date"
+        class="input-date"
+        >
+        <!-- <p-calendar      
+        id="endDate"
+        name="endDate"
+        formControlName="end_date" 
+        [showIcon]="true" inputId="icon" 
+        [minDate]="startDateField.value" 
+        [maxDate]="endDateField.value"
+        >
+      </p-calendar> -->
+
 
         <!-- <p-calendar id="endDate" name="endDate" formControlName="end_date" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
         <!-- <input type="date" id="endDate" name="endDate" formControlName="end_date"> -->

@@ -47,7 +47,7 @@
             class="pi pi-times-circle icon-invalid"
           ></i>
         </label>
-        <input id="name" formControlName="name" pInputText />
+        <input id="name" formControlName="name" pInputText style="text-transform: uppercase;"/>
         <div *ngIf="nameField.errors && nameField.touched">
           <small
             *ngIf="nameField.hasError('required')"
@@ -75,6 +75,7 @@
         id="description"
         formControlName="description"
         rows="4"
+        style="text-transform: uppercase;"
       ></textarea>
 
     </div>
