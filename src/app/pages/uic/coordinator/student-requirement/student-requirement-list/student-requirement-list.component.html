@@ -1,0 +1,139 @@
+<app-skeleton *ngIf="flagStudents" [type]="'table'"></app-skeleton>
+<div class="card" [hidden]="flagStudents">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left"> </ng-template>
+    <ng-template pTemplate="right">
+      <button
+        pButton
+        pRipple
+        label="Actualizar"
+        icon="pi pi-refresh"
+        class="p-button-info"
+        (click)="paginatorOut.emit(paginatorIn)"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <p-paginator
+    [rows]="paginatorIn.per_page"
+    [totalRecords]="paginatorIn.total"
+    (onPageChange)="paginateStudent($event)"
+  ></p-paginator>
+  <p-table
+    #dt
+    [value]="studentsIn"
+    [columns]="colsStudent"
+    [rows]="paginatorIn.per_page"
+    [paginator]="false"
+    [(selection)]="selectedStudents"
+    [rowHover]="true"
+    dataKey="id"
+    styleClass="p-datatable-customers"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div
+        class="
+          p-d-flex p-flex-column p-flex-md-row p-jc-md-between
+          table-header
+        "
+      >
+        <h5 class="p-m-0">Estudiantes</h5>
+        <span class="p-input-icon-left">
+          <i
+            class="pi pi-search"
+            (click)="searchStudents($event, search.value)"
+          ></i>
+          <input
+            pInputText
+            #search
+            type="text"
+            (keyup)="searchStudents($event, $event.target.value)"
+            placeholder="Buscar..."
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th
+          *ngFor="let col of columns"
+          [pSortableColumn]="col.field"
+          [ngSwitch]="col.field"
+        >
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+          <!-- <input style="width:100px; margin-top: 10px;"  pInputText (input)="dt.filter($event.target.value, col.field, 'contains')" /> -->
+        </th>
+        <th style="text-align: center">
+          <button
+            pButton
+            pRipple
+            type="button"
+            id="btnOptions"
+            icon="pi pi-cog"
+            class="p-button-secondary"
+            disabled
+          ></button>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-columns="columns" let-rowData>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+        </td>
+        <td *ngFor="let col of columns">
+          <div *ngIf="col.field == 'project_plan'">
+            {{ rowData[col.field].title }}
+          </div>
+          <div *ngIf="col.field == 'mesh_student'">
+            {{ rowData[col.field].student.user.full_name }}
+          </div>
+          <div *ngIf="col.field == 'observations'">
+            {{ rowData[col.field] }}
+          </div>
+          <div
+            *ngIf="col.field !== 'project_plan' && col.field !== 'mesh_student'"
+          >
+            {{
+              rowData[col.field]?.name
+                ? rowData[col.field]?.name
+                : rowData[col.field]
+            }}
+          </div>
+        </td>
+        <td style="text-align: center">
+          <button
+            pButton
+            pRipple
+            type="button"
+            id="btnEdit"
+            pTooltip="Ver"
+            icon="pi pi-eye"
+            class="p-button-rounded p-button-info"
+            (click)="openEditFormStudent(rowData)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            id="btnDelete"
+            pTooltip="Aprobar"
+            icon="pi pi-check"
+            class="p-button-rounded p-button-success p-ml-2"
+            (click)="deleteStudent(rowData)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        En total hay {{ studentsIn ? studentsIn.length : 0 }} convocatorias.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

@@ -9,3 +9,4 @@ export {SchoolPeriod} from './school-period';
 export {Student} from './student';
 export {Status} from './status';
 export {Teacher} from './teacher';
+export {MeshStudent} from './mesh-student';

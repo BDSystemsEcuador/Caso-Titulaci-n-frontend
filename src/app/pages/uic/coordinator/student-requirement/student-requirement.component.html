@@ -1,0 +1,39 @@
+<div class="p-grid">
+  <div class="p-xl-12 p-lg-12 p-md-12 p-sm-12">
+    <!-- //responsive -->
+    <app-student-requirement-list
+      *ngIf="!studentDialog"
+      [studentsIn]="students"
+      [studentsEndIn]="studentsEnd"
+      [flagStudents]="flagStudents"
+      [paginatorIn]="paginator"
+      [formStudentIn]="formStudent"
+      (studentsOut)="students = $event"
+      (studentsEndOut)="studentsEnd = $event"
+      (displayOut)="studentDialog = $event"
+      (formStudentOut)="formStudent = $event"
+      (disabledFormOut)="disabledForm = $event"
+      (paginatorOut)="getStudents($event)"
+    >
+    </app-student-requirement-list>
+
+    <p-dialog
+      [(visible)]="studentDialog"
+      [style]="{ width: '768px' }"
+      header="Convocatoria"
+      [modal]="true"
+      styleClass="p-fluid"
+      (onHide)="studentDialog = false"
+    >
+      <app-student-requirement-form
+        [studentsIn]="students"
+        [formStudentIn]="formStudent"
+        [disabledFormIn]="disabledForm"
+        (studentsOut)="students = $event"
+        (paginatorAdd)="paginator.total = paginator.total + $event"
+        (displayOut)="studentDialog = $event"
+      >
+      </app-student-requirement-form>
+    </p-dialog>
+  </div>
+</div>

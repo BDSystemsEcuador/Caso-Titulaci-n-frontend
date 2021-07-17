@@ -55,6 +55,9 @@ import { RequirementsComponent } from './requirements/requirements.component';
 import { RequirementsListComponent } from './requirements/requirements-list/requirements-list.component';
 import { CatalogueEventComponent } from './catalogue-event/catalogue-event.component';
 import { CatalogueEventListComponent } from './catalogue-event/catalogue-event-list/catalogue-event-list.component';
+import { StudentRequirementComponent } from './student-requirement/student-requirement.component';
+import { StudentRequirementListComponent } from './student-requirement/student-requirement-list/student-requirement-list.component';
+import { StudentRequirementFormComponent } from './student-requirement/student-requirement-form/student-requirement-form.component';
 
 
 
@@ -112,7 +115,10 @@ import { CatalogueEventListComponent } from './catalogue-event/catalogue-event-l
     RequirementsListComponent,
     CatalogueEventComponent,
     CatalogueEventFormComponent,
-    CatalogueEventListComponent
+    CatalogueEventListComponent,
+    StudentRequirementComponent,
+    StudentRequirementListComponent,
+    StudentRequirementFormComponent
 
   ],
 })

@@ -1,4 +1,4 @@
-<div class="p-grid">
+<!-- <div class="p-grid">
   <div class="p-col-12">
     <app-requirement-list
       *ngIf="!requirementDialog"
@@ -15,4 +15,121 @@
     >
     </app-requirement-list>
   </div>
+</div> -->
+
+<div class="p-fluid">
+  <p-accordion>
+    <p-accordionTab
+      header="Documentos Faltantes"
+      [selected]="requirements?.length > 0"
+    >
+      <div class="p-grid">
+        <p-card
+          *ngFor="let requirement of requirements"
+          class="p-xl-4 p-lg-4 p-md-6 p-sm-12"
+        >
+          <div class="p-formgrid p-grid">
+            <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
+              {{ requirement.name }}
+            </h5>
+          </div>
+
+          <div class="p-field">
+            <app-upload-files
+              [acceptAttributes]="'.pdf'"
+              (files)="upload($event, requirement.id)"
+            ></app-upload-files>
+          </div>
+        </p-card>
+      </div>
+    </p-accordionTab>
+    <!-- <p-accordionTab [header]="titleType" [selected]="documents?.length > 0">
+      <div class="p-grid">
+        <p-card
+          *ngFor="let document of documents"
+          class="p-xl-4 p-lg-4 p-md-6 p-sm-12"
+        >
+          <div class="p-fluid">
+            <div class="p-formgrid p-grid">
+              <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
+                {{ document.type.name | translate }}
+              </h5>
+              <div *ngIf="document.type.code === '3'" class="p-field">
+                <label for="aditional_information-edit"
+                  >{{ "Horas" | translate }}:</label
+                >
+                <input
+                  pInputText
+                  id="aditional_information-edit"
+                  [(ngModel)]="document.aditional_information"
+                />
+              </div>
+            </div>
+            <div class="p-field" style="text-align: center">
+              <img
+                class="p-button-link"
+                [src]="document.file.extension | extensions"
+                [pTooltip]="document.file.extension"
+                alt="tipo"
+                (click)="download(document.file)"
+              />
+            </div>
+            <div class="p-field">
+              <button
+                pButton
+                pRipple
+                id="btnDownload1"
+                class="p-button-link p-xl-4 p-lg-4 p-md-4 p-sm-12"
+                (click)="download(document.file)"
+                [label]="document.file.name + '.' + document.file.extension"
+              ></button>
+            </div>
+            <div class="p-field" style="text-align: center">
+              <button
+                pButton
+                pRipple
+                id="btnDownload"
+                pTooltip="Descargar"
+                class="p-button-info p-button-rised"
+                icon="pi pi-download"
+                (click)="download(document.file)"
+              ></button>
+              <button
+                *ngIf="
+                  document?.status?.code === 'IN_REVISION' ||
+                  document?.status?.code === 'REJECTED'
+                "
+                pButton
+                pRipple
+                id="btnDelete"
+                pTooltip="Eliminar"
+                class="p-button-danger p-button-rised p-ml-2"
+                icon="pi pi-trash"
+                (click)="deleteDocuments(document)"
+              ></button>
+            </div>
+            <div class="p-field" style="text-align: center">
+              <p-messages [severity]="getSeverity(document.status?.code)">
+                <ng-template pTemplate>
+                  <div style="width: 100%">
+                    {{ document.status?.name + ": " }}
+                    <textarea
+                      pInputTextarea
+                      autoResize="autoResize"
+                      disabled
+                      [value]="
+                        document?.observation
+                          ? document.observation
+                          : messageService.fieldNoObservation
+                      "
+                    ></textarea>
+                  </div>
+                </ng-template>
+              </p-messages>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </p-accordionTab> -->
+  </p-accordion>
 </div>
