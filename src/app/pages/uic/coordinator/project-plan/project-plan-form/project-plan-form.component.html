@@ -4,7 +4,7 @@
   <form [formGroup]="formProjectPlanIn" (ngSubmit)="onSubmit($event)">
     <div class="p-field">
       <label for="title">
-        <i class="p-error">*</i> Título:
+        <i class="p-error">*</i> Título del proyecto:
         <i *ngIf="titleField.valid" class="pi pi-check-circle icon-valid"></i>
         <i
           *ngIf="titleField.invalid && (titleField.touched || titleField.dirty)"
@@ -25,7 +25,7 @@
 
     <div class="p-field">
       <label for="description">
-        <i class="p-error">*</i> Descripción:
+        <i class="p-error">*</i> Descripción del proyecto:
         <i
           *ngIf="descriptionField.valid"
           class="pi pi-check-circle icon-valid"
@@ -92,10 +92,83 @@
       </div>
     </div>
     <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
+    <div class="p-field">
+      <label for="students"> Estudiantes: </label>
+      <div formArrayName="students" class="p-field">
+        <div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Añadir un estudiante"
+            iconPos="right"
+            icon="pi pi-plus"
+            class="p-button-success p-button-raised"
+            (click)="addStudents()"
+          ></button>
+        </div>
+
+        <div *ngFor="let student of studentsField.controls; let i = index">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
+              <!-- <input pInputText id="students" [formControlName]="i" /> -->
+              <p-dropdown
+                id="'student'+i"
+                [options]="students"
+                [formControlName]="i"
+                optionLabel="user.full_name"
+                [filter]="true"
+                filterBy="user.full_name"
+                [showClear]="true"
+                placeholder="Selecciona el estudiante"
+              >
+                <ng-template pTemplate="selectedStudent">
+                  <div
+                    class="country-item country-item-value"
+                    *ngIf="selectedStudent"
+                  >
+                    <div>{{ selectedStudent.user.full_name }}</div>
+                  </div>
+                </ng-template>
+                <ng-template let-selectedStudents pTemplate="selectedStudent">
+                  <div class="country-item">
+                    <div>{{ selectedStudents.user.full_name }}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
+              <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-trash"
+                class="p-button-danger p-button-rounded"
+                (click)="removeStudents(i)"
+              ></button>
+            </div>
+            <div
+              *ngIf="
+                observationsField.errors &&
+                (observationsField.touched || observationsField.dirty)
+              "
+            >
+              <small
+                *ngIf="observationsField.hasError('required')"
+                id="students-help-1"
+                class="p-error"
+              >
+                {{ messageService.fieldRequired }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="p-grid">
       <div class="p-field p-lg-6">
         <label for="approval_date">
-          <i class="p-error">*</i> Fecha de aprobación:
+          <i class="p-error">*</i> Fecha de aprobación del proyecto:
           <i
             *ngIf="approvalDateField.valid"
             class="pi pi-check-circle icon-valid"
@@ -143,7 +216,10 @@
         ></i>
       </label>
       <div class="p-field" style="display: flex; align-items: center">
-        <p-inputSwitch [(ngModel)]="checked"  formControlName="is_approved"></p-inputSwitch>
+        <p-inputSwitch
+          [(ngModel)]="checked"
+          formControlName="is_approved"
+        ></p-inputSwitch>
         <label style="margin-left: 10px" for="binary">{{
           checked ? "si" : "no"
         }}</label>

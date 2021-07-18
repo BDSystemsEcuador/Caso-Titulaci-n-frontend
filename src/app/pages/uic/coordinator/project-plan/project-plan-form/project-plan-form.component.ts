@@ -1,3 +1,5 @@
+import { Student } from './../../../../../models/app/student';
+import { Tutor } from './../../../../../models/uic/tutor';
 import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +10,7 @@ import { ProjectPlan } from 'src/app/models/uic/project-plan';
 import { Planning } from 'src/app/models/uic/planning';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
+import { AppHttpService } from 'src/app/services/app/app-http.service';
 
 @Component({
   selector: 'app-project-plan-form',
@@ -17,6 +20,8 @@ import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 export class ProjectPlanFormComponent implements OnInit {
 
   checked: boolean = false;
+  students: any;
+  tutors: Tutor[] = [];
 
   @Input() formProjectPlanIn: FormGroup;
   @Input() projectPlansIn: ProjectPlan[];
@@ -35,11 +40,13 @@ export class ProjectPlanFormComponent implements OnInit {
     private messageService: MessageService,
     private spinnerService: NgxSpinnerService,
     private uicHttpService: UicHttpService,
+    private appHttpService: AppHttpService
   ) { 
     
   }
   ngOnInit(): void {
-    
+    this.getStudents();
+    this.getTutors();
   }
   // Fields of Form
   get idField() {
@@ -63,11 +70,22 @@ export class ProjectPlanFormComponent implements OnInit {
   get observationsField() {
     return this.formProjectPlanIn.get('observations') as FormArray;
   }
+  get studentsField() {
+    return this.formProjectPlanIn.get('student') as FormArray;
+  }
+
   addObservations(){
     this.observationsField.push(this.formBuilder.control(null, Validators.required));
   }
   removeObservations(observation){
       this.observationsField.removeAt(observation);
+  }
+
+  addStudents(){
+    this.studentsField.push(this.formBuilder.control(null, Validators.required));
+  }
+  removeStudents(student){
+      this.studentsField.removeAt(student);
   }
   // Submit Form
   onSubmit(event: Event, flag = false) {
@@ -131,5 +149,22 @@ export class ProjectPlanFormComponent implements OnInit {
         this.spinnerService.hide();
         this.messageService.error(error);
       });
+  }
+
+  getStudents() {
+    this.appHttpService.get('students').subscribe(response => {
+      this.students = response;
+      console.log(this.students);
+    }, error => {
+      this.messageService.error(error);
+    });
+  }
+
+  getTutors() {
+    this.uicHttpService.get('tutors').subscribe(response => {
+      this.tutors = response['data'];
+    }, error => {
+      this.messageService.error(error);
+    });
   }
 }
