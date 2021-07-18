@@ -2,151 +2,55 @@
 
 <div class="p-fluid">
   <form [formGroup]="formStudentIn" (ngSubmit)="onSubmit($event)">
-    <div class="p-field">
-      <label for="career">
-        <i class="p-error">*</i> Carrera:
-        <i *ngIf="careerField.valid" class="pi pi-check-circle icon-valid"></i>
-        <i
-          *ngIf="
-            careerField.invalid && (careerField.touched || careerField.dirty)
-          "
-          class="pi pi-times-circle icon-invalid"
-        ></i>
-      </label>
-      <p-dropdown
-        id="career"
-        [options]="careers"
-        formControlName="career"
-        optionLabel="short_name"
-        [filter]="true"
-        filterBy="short_name"
-        [showClear]="true"
-        placeholder="Selecciona la carrera"
-        [disabled]="disabledFormIn"
+    <label for="observations"> Observaciones: </label>
+    <div formArrayName="observations" class="p-field">
+      <div>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Añadir una observación"
+          iconPos="right"
+          icon="pi pi-plus"
+          class="p-button-success p-button-raised"
+          (click)="addObservations()"
+        ></button>
+      </div>
+      <div
+        *ngFor="let observations of observationsField.controls; let i = index"
       >
-        <ng-template pTemplate="selectedCareer">
-          <div class="country-item country-item-value" *ngIf="selectedCareer">
-            <div>{{ selectedCareer.short_name }}</div>
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
+            <input
+              pInputText
+              [id]="'observations' + 'i'"
+              [formControlName]="i"
+            />
           </div>
-        </ng-template>
-        <ng-template let-selectedCareers pTemplate="selectedCareer">
-          <div class="country-item">
-            <div>{{ selectedCareers.short_name }}</div>
+          <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded"
+              (click)="removeObservations(i)"
+            ></button>
           </div>
-        </ng-template>
-      </p-dropdown>
-    </div>
-
-    <div class="p-grid">
-      <div class="p-field p-lg-12 p-md-12 p-col-12">
-        <label for="name">
-          <i class="p-error">*</i> Nombre de la convocatoria:
-          <i *ngIf="nameField.valid" class="pi pi-check-circle icon-valid"></i>
-          <i
-            *ngIf="nameField.invalid && (nameField.touched || nameField.dirty)"
-            class="pi pi-times-circle icon-invalid"
-          ></i>
-        </label>
-        <input
-          id="name"
-          formControlName="name"
-          pInputText
-          style="text-transform: uppercase"
-        />
-        <div *ngIf="nameField.errors && nameField.touched">
-          <small
-            *ngIf="nameField.hasError('required')"
-            id="name-help-1"
-            class="p-error"
-          >
-            {{ messageService.fieldRequired }}
-          </small>
-        </div>
-      </div>
-    </div>
-    <div class="p-field">
-      <label for="description"
-        >Acerca de la convocatoria:
-        <i
-          *ngIf="descriptionField.touched || descriptionField.dirty"
-          class="pi pi-check-circle icon-valid"
-        ></i>
-      </label>
-
-      <textarea
-        pInputTextarea
-        name="description"
-        id="description"
-        formControlName="description"
-        rows="4"
-        style="text-transform: uppercase"
-      ></textarea>
-    </div>
-    <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
-    <div class="p-grid">
-      <div class="p-field p-lg-6">
-        <label for="startDate">
-          <i class="p-error">*</i> Fecha Inicial:
-          <i
-            *ngIf="startDateField.valid"
-            class="pi pi-check-circle icon-valid"
-          ></i>
-          <i
+          <div
             *ngIf="
-              startDateField.invalid &&
-              (startDateField.touched || startDateField.dirty)
+              observationsField.errors &&
+              (observationsField.touched || observationsField.dirty)
             "
-            class="pi pi-times-circle icon-invalid"
-          ></i>
-        </label>
-        <app-date
-          id="startDate"
-          name="startDate"
-          formControlName="start_date"
-        ></app-date>
-        <!-- <p-calendar id="startDate" name="startDate" formControlName="startDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
-
-        <div *ngIf="startDateField.errors && startDateField.touched">
-          <small
-            *ngIf="startDateField.hasError('required')"
-            id="start_date-help-1"
-            class="p-error"
           >
-            {{ messageService.fieldRequired }}
-          </small>
-        </div>
-      </div>
-      <div class="p-field p-lg-6">
-        <label for="endDate">
-          <i class="p-error">*</i> Fecha Final:
-          <i
-            *ngIf="endDateField.valid"
-            class="pi pi-check-circle icon-valid"
-          ></i>
-          <i
-            *ngIf="
-              endDateField.invalid &&
-              (endDateField.touched || endDateField.dirty)
-            "
-            class="pi pi-times-circle icon-invalid"
-          ></i>
-        </label>
-        <app-date
-          id="endDate"
-          name="endDate"
-          formControlName="end_date"
-        ></app-date>
-
-        <!-- <p-calendar id="endDate" name="endDate" formControlName="end_date" [monthNavigator]="true" [yearNavigator]="true" yearRange="2018:2050"></p-calendar> -->
-        <!-- <input type="date" id="endDate" name="endDate" formControlName="end_date"> -->
-        <div *ngIf="endDateField.errors && endDateField.touched">
-          <small
-            *ngIf="endDateField.hasError('required')"
-            id="end_date-help-1"
-            class="p-error"
-          >
-            {{ messageService.fieldRequired }}
-          </small>
+            <small
+              *ngIf="observationsField.hasError('required')"
+              id="observations-help-1"
+              class="p-error"
+            >
+              {{ messageService.fieldRequired }}
+            </small>
+          </div>
         </div>
       </div>
     </div>
@@ -161,18 +65,6 @@
           label="Guardar y Salir"
           class="p-button-success p-button-raised"
           icon="pi pi-save"
-        ></button>
-      </div>
-      <div *ngIf="!idField.value" class="p-field p-col">
-        <button
-          pButton
-          pRipple
-          type="button"
-          id="btnSaveContinue"
-          label="Guardar y Crear Nueva"
-          class="p-button-raised"
-          icon="pi pi-arrow-right"
-          (click)="onSubmit($event, true)"
         ></button>
       </div>
     </div>

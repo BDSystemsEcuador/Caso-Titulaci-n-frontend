@@ -45,11 +45,7 @@ export class StudentRequirementComponent implements OnInit {
   buildFormStudent() {
     this.formStudent = this.formBuilder.group({
       id: [null],
-      career: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      start_date: [null, [Validators.required, DateValidators.valid]],
-      end_date: [null, [Validators.required, DateValidators.valid]],
-      description: [null, []],
+      observations: this.formBuilder.array([this.formBuilder.control(null)])
     });
   }
 

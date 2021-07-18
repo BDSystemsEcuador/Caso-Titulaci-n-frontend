@@ -9,6 +9,7 @@
       [paginatorIn]="paginator"
       [formStudentIn]="formStudent"
       (studentsOut)="students = $event"
+      (studentOut)="student = $event"
       (studentsEndOut)="studentsEnd = $event"
       (displayOut)="studentDialog = $event"
       (formStudentOut)="formStudent = $event"
@@ -27,11 +28,13 @@
     >
       <app-student-requirement-form
         [studentsIn]="students"
+        [studentIn]="student"
         [formStudentIn]="formStudent"
         [disabledFormIn]="disabledForm"
         (studentsOut)="students = $event"
         (paginatorAdd)="paginator.total = paginator.total + $event"
         (displayOut)="studentDialog = $event"
+        (paginatorOut)="getStudents($event)"
       >
       </app-student-requirement-form>
     </p-dialog>

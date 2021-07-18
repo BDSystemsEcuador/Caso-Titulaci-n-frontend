@@ -94,10 +94,18 @@
             {{ rowData[col.field].student.user.full_name }}
           </div>
           <div *ngIf="col.field == 'observations'">
-            {{ rowData[col.field] }}
+            <ul>
+              <li *ngFor="let observation of rowData[col.field]">
+                {{ observation }}
+              </li>
+            </ul>
           </div>
           <div
-            *ngIf="col.field !== 'project_plan' && col.field !== 'mesh_student'"
+            *ngIf="
+              col.field !== 'project_plan' &&
+              col.field !== 'mesh_student' &&
+              col.field !== 'observations'
+            "
           >
             {{
               rowData[col.field]?.name

@@ -1,12 +1,15 @@
+import { StudentRequirementFormComponent } from './../student-requirement-form/student-requirement-form.component';
+import { StudentComponent } from './../../../student/student.component';
 import { HttpParams } from "@angular/common/http";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Col } from "src/app/models/setting/col";
 import { Paginator } from "src/app/models/setting/paginator";
 import { Student } from "src/app/models/uic/student";
 import { MessageService } from "src/app/pages/shared/services/message.service";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
+import { StudentInformationFormComponent } from '../../../student/student-form/student-form.component';
 
 @Component({
   selector: 'app-student-requirement-list',
@@ -22,6 +25,7 @@ export class StudentRequirementListComponent implements OnInit {
   @Input() formStudentIn: FormGroup;
   @Input() displayIn: boolean;
   @Output() studentsOut = new EventEmitter<Student[]>();
+  @Output() studentOut = new EventEmitter<Student>();
   @Output() studentsEndOut = new EventEmitter<Student[]>();
   @Output() formStudentOut = new EventEmitter<FormGroup>();
   @Output() displayOut = new EventEmitter<boolean>();
@@ -36,7 +40,8 @@ export class StudentRequirementListComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private spinnerService: NgxSpinnerService,
-    private uicHttpService: UicHttpService
+    private uicHttpService: UicHttpService,
+    private formBuilder: FormBuilder
   ) {
     this.resetPaginatorStudents();
 
@@ -63,10 +68,28 @@ export class StudentRequirementListComponent implements OnInit {
   }
 
   openEditFormStudent(student: Student) {
+    debugger
     this.formStudentIn.patchValue(student);
     this.formStudentOut.emit(this.formStudentIn);
     this.displayOut.emit(true);
     this.disabledFormOut.emit(true);
+    this.studentOut.emit(student);
+    this.getStudents(student);
+  }
+
+  get observationsField() {
+    return this.formStudentIn.get('observations') as FormArray;
+  }
+
+  addObservation(observation: any){
+    this.observationsField.push(this.formBuilder.control(observation, Validators.required));
+  }
+
+  getStudents(student: Student) {
+    this.observationsField.clear();
+    for(const observation of student['observations']) {
+      this.addObservation(observation);
+      }
   }
 
   paginateStudent(event) {

@@ -1,6 +1,6 @@
 import { Career } from './../../../../../models/app/career';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Paginator } from 'src/app/models/setting/paginator';
 import { Student } from 'src/app/models/uic/student';
@@ -17,15 +17,13 @@ export class StudentRequirementFormComponent implements OnInit {
 
   @Input() formStudentIn: FormGroup;
   @Input() studentsIn: Student[];
+  @Input() studentIn: Student;
   @Input() paginatorIn: Paginator;
   @Input() disabledFormIn: boolean;
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() studentsOut = new EventEmitter<Student[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
-  
-  selectedCareer:Career;
-  careers:Career[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,29 +32,28 @@ export class StudentRequirementFormComponent implements OnInit {
     private uicHttpService: UicHttpService,
     private appHttpService: AppHttpService,
   ) { 
-    this.getCareers();
   }
 
   ngOnInit(): void {
+    
   }
   // Fields of Form
-  get careerField() {
-    return this.formStudentIn.get('career');
-  }
-  get nameField() {
-    return this.formStudentIn.get('name');
-  }
-  get startDateField() {
-    return this.formStudentIn.get('start_date');
-  }
-  get endDateField() {
-    return this.formStudentIn.get('end_date');
-  }
-  get descriptionField() {
-    return this.formStudentIn.get('description');
+  get observationsField() {
+    return this.formStudentIn.get('observations') as FormArray;
   }
   get idField() {
     return this.formStudentIn.get('id');
+  }
+
+  addObservation(observation: any){
+    this.observationsField.push(this.formBuilder.control(observation, Validators.required));
+  }
+
+  addObservations(){
+    this.observationsField.push(this.formBuilder.control(null, Validators.required));
+  }
+  removeObservations(observation){
+      this.observationsField.removeAt(observation);
   }
 
   // Submit Form
@@ -74,6 +71,17 @@ export class StudentRequirementFormComponent implements OnInit {
   }
   paginateStudent(event) {
     this.paginatorOut.emit(this.paginatorIn);
+  }
+
+  getStudents() {
+    debugger
+    if(this.disabledFormIn == true){
+      debugger
+        this.observationsField.clear();
+        for(const observation of this.studentIn['observations']) {
+          this.addObservation(observation);
+         }
+        }
   }
 
   storeStudent(student: Student, flag = false) {
@@ -119,14 +127,6 @@ export class StudentRequirementFormComponent implements OnInit {
         this.spinnerService.hide();
         this.messageService.error(error);
       });
-  }
-
-  getCareers() {
-    this.appHttpService.get('careers').subscribe(response => {
-      this.careers = response['data'];
-    }, error => {
-      this.messageService.error(error);
-    });
   }
 
 }
