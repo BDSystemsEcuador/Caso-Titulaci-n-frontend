@@ -46,9 +46,9 @@ export class ProjectPlanComponent implements OnInit {
       act_code: [null, [Validators.required]],
       approval_date: [null, [Validators.required]],
       is_approved: [null, [Validators.required]],
-      student: this.formBuilder.array([this.formBuilder.control(null)]),
+      students: this.formBuilder.array([this.formBuilder.control(null)]),
+      tutors: this.formBuilder.array([this.formBuilder.control(null)]),
       observations: this.formBuilder.array([this.formBuilder.control(null)])
-
     });
   }
   getProjectPlans(paginator: Paginator){

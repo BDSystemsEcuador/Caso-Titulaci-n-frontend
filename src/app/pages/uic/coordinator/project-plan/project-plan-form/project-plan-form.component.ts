@@ -21,7 +21,7 @@ export class ProjectPlanFormComponent implements OnInit {
 
   checked: boolean = false;
   students: any;
-  tutors: Tutor[] = [];
+  tutors: any;
 
   @Input() formProjectPlanIn: FormGroup;
   @Input() projectPlansIn: ProjectPlan[];
@@ -71,7 +71,10 @@ export class ProjectPlanFormComponent implements OnInit {
     return this.formProjectPlanIn.get('observations') as FormArray;
   }
   get studentsField() {
-    return this.formProjectPlanIn.get('student') as FormArray;
+    return this.formProjectPlanIn.get('students') as FormArray;
+  }
+  get tutorsField() {
+    return this.formProjectPlanIn.get('tutors') as FormArray;
   }
 
   addObservations(){
@@ -84,8 +87,17 @@ export class ProjectPlanFormComponent implements OnInit {
   addStudents(){
     this.studentsField.push(this.formBuilder.control(null, Validators.required));
   }
+
   removeStudents(student){
       this.studentsField.removeAt(student);
+  }
+
+  addTutors(){
+    this.tutorsField.push(this.formBuilder.control(null, Validators.required));
+  }
+  
+  removeTutors(tutor){
+      this.tutorsField.removeAt(tutor);
   }
   // Submit Form
   onSubmit(event: Event, flag = false) {
@@ -152,7 +164,7 @@ export class ProjectPlanFormComponent implements OnInit {
   }
 
   getStudents() {
-    this.appHttpService.get('students').subscribe(response => {
+    this.uicHttpService.get('students').subscribe(response => {
       this.students = response;
       console.log(this.students);
     }, error => {
@@ -162,7 +174,7 @@ export class ProjectPlanFormComponent implements OnInit {
 
   getTutors() {
     this.uicHttpService.get('tutors').subscribe(response => {
-      this.tutors = response['data'];
+      this.tutors = response;
     }, error => {
       this.messageService.error(error);
     });

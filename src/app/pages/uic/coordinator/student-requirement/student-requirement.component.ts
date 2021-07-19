@@ -45,6 +45,7 @@ export class StudentRequirementComponent implements OnInit {
   buildFormStudent() {
     this.formStudent = this.formBuilder.group({
       id: [null],
+      is_approved: [null, [Validators.required]],
       observations: this.formBuilder.array([this.formBuilder.control(null)])
     });
   }
@@ -54,8 +55,9 @@ export class StudentRequirementComponent implements OnInit {
       .append("page", paginator.current_page.toString())
       .append("per_page", paginator.per_page.toString());
     this.flagStudents = true;
-    this.uicHttpService.get("students", params).subscribe(
+    this.uicHttpService.get("mesh-student-requirements", params).subscribe(
       (response) => {
+        debugger
         this.flagStudents = false;
         this.students = response["data"];
         this.paginator = response as Paginator;

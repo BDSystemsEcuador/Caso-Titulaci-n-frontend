@@ -54,8 +54,8 @@ export class StudentRequirementListComponent implements OnInit {
   }
   loadColsStudent() {
     this.colsStudent = [
-      { field: "project_plan", header: "Proyecto" },
       { field: "mesh_student", header: "Estudiante" },
+      { field: "is_approved", header: "Esta aprobado" },
       { field: "observations", header: "Observaciones" },
     ];
   }

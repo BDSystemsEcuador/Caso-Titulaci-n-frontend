@@ -1,4 +1,4 @@
-<!-- {{ formProjectPlanIn.value | json }} -->
+{{ formProjectPlanIn.value | json }}
 
 <div class="p-fluid">
   <form [formGroup]="formProjectPlanIn" (ngSubmit)="onSubmit($event)">
@@ -93,6 +93,65 @@
     </div>
     <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
     <div class="p-field">
+      <label for="tutors"> Tutores: </label>
+      <div formArrayName="tutors" class="p-field">
+        <div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Añadir un tutor"
+            iconPos="right"
+            icon="pi pi-plus"
+            class="p-button-success p-button-raised"
+            (click)="addTutors()"
+          ></button>
+        </div>
+
+        <div *ngFor="let tutor of tutorsField.controls; let i = index">
+          <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
+              <!-- <input pInputText id="students" [formControlName]="i" /> -->
+              <p-dropdown
+                [id]="'tutors' + 'i'"
+                [options]="tutors"
+                [formControlName]="i"
+                optionLabel="teacher.user.full_name"
+                [filter]="true"
+                filterBy="teacher.user.full_name"
+                [showClear]="true"
+                placeholder="Selecciona el tutor"
+              >
+              </p-dropdown>
+            </div>
+            <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
+              <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-trash"
+                class="p-button-danger p-button-rounded"
+                (click)="removeTutors(i)"
+              ></button>
+            </div>
+            <div
+              *ngIf="
+                tutorsField.errors && (tutorsField.touched || tutorsField.dirty)
+              "
+            >
+              <small
+                *ngIf="tutorsField.hasError('required')"
+                id="students-help-1"
+                class="p-error"
+              >
+                {{ messageService.fieldRequired }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-field">
       <label for="students"> Estudiantes: </label>
       <div formArrayName="students" class="p-field">
         <div>
@@ -113,28 +172,15 @@
             <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
               <!-- <input pInputText id="students" [formControlName]="i" /> -->
               <p-dropdown
-                id="'student'+i"
+                [id]="'students' + 'i'"
                 [options]="students"
                 [formControlName]="i"
-                optionLabel="user.full_name"
+                optionLabel="mesh_student.student.user.full_name"
                 [filter]="true"
-                filterBy="user.full_name"
+                filterBy="mesh_student.student.user.full_name"
                 [showClear]="true"
                 placeholder="Selecciona el estudiante"
               >
-                <ng-template pTemplate="selectedStudent">
-                  <div
-                    class="country-item country-item-value"
-                    *ngIf="selectedStudent"
-                  >
-                    <div>{{ selectedStudent.user.full_name }}</div>
-                  </div>
-                </ng-template>
-                <ng-template let-selectedStudents pTemplate="selectedStudent">
-                  <div class="country-item">
-                    <div>{{ selectedStudents.user.full_name }}</div>
-                  </div>
-                </ng-template>
               </p-dropdown>
             </div>
             <div class="p-field p-xl-1 p-lg-1 p-md-1 p-sm-12">
@@ -149,12 +195,12 @@
             </div>
             <div
               *ngIf="
-                observationsField.errors &&
-                (observationsField.touched || observationsField.dirty)
+                studentsField.errors &&
+                (studentsField.touched || studentsField.dirty)
               "
             >
               <small
-                *ngIf="observationsField.hasError('required')"
+                *ngIf="studentsField.hasError('required')"
                 id="students-help-1"
                 class="p-error"
               >

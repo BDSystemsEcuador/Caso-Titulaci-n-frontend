@@ -87,9 +87,6 @@
           <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
         <td *ngFor="let col of columns">
-          <div *ngIf="col.field == 'project_plan'">
-            {{ rowData[col.field].title }}
-          </div>
           <div *ngIf="col.field == 'mesh_student'">
             {{ rowData[col.field].student.user.full_name }}
           </div>
@@ -101,11 +98,7 @@
             </ul>
           </div>
           <div
-            *ngIf="
-              col.field !== 'project_plan' &&
-              col.field !== 'mesh_student' &&
-              col.field !== 'observations'
-            "
+            *ngIf="col.field !== 'mesh_student' && col.field !== 'observations'"
           >
             {{
               rowData[col.field]?.name
@@ -140,7 +133,7 @@
     </ng-template>
     <ng-template pTemplate="summary">
       <div class="p-d-flex p-ai-center p-jc-between">
-        En total hay {{ studentsIn ? studentsIn.length : 0 }} convocatorias.
+        En total hay {{ studentsIn ? studentsIn.length : 0 }} estudiantes.
       </div>
     </ng-template>
   </p-table>
