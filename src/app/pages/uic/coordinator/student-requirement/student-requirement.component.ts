@@ -1,3 +1,4 @@
+import { MeshStudentRequirement } from './../../../../models/uic/mesh-student-requirement';
 import { Validator } from './../../../../models/setting/validator';
 import { Component, OnInit } from "@angular/core";
 import { HttpParams } from "@angular/common/http";
@@ -20,6 +21,7 @@ export class StudentRequirementComponent implements OnInit {
   paginator: Paginator;
   students: Student[];//inicializar 
   studentsEnd: Student[];
+  requirements: MeshStudentRequirement[];
   formStudent: FormGroup;
   student: Student;
   files: any;

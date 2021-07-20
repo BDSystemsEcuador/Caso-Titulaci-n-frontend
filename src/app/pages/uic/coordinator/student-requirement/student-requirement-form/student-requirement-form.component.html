@@ -1,1 +1,4 @@
-<div class="p-fluid"></div>
+{{ studentIn | json }}
+<div *ngFor="let requirements of requirementsIn; let i = index">
+  <h1>{{ i }}</h1>
+</div>

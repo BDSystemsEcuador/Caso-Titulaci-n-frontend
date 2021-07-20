@@ -1,3 +1,4 @@
+import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InscriptionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private uicHttpService: UicHttpService) { }
 
   ngOnInit(): void {
+  }
+
+  downloadEnrollment(){
+    this.uicHttpService.get("export-enrollment").subscribe((response) => {});
   }
 
 }

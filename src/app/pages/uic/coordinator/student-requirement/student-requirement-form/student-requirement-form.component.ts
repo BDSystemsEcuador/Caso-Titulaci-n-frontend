@@ -1,3 +1,4 @@
+import { MeshStudentRequirement } from './../../../../../models/uic/mesh-student-requirement';
 import { Career } from './../../../../../models/app/career';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
@@ -20,6 +21,7 @@ export class StudentRequirementFormComponent implements OnInit {
   @Input() studentIn: Student;
   @Input() paginatorIn: Paginator;
   @Input() disabledFormIn: boolean;
+  @Input() requirementsIn: MeshStudentRequirement[];
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() studentsOut = new EventEmitter<Student[]>();
   @Output() paginatorAdd = new EventEmitter<number>();

@@ -8,13 +8,12 @@
       [flagStudents]="flagStudents"
       [paginatorIn]="paginator"
       [formStudentIn]="formStudent"
+      (requirementsOut)="requirements = $event"
       (studentsOut)="students = $event"
       (studentOut)="student = $event"
-      (studentsEndOut)="studentsEnd = $event"
       (displayOut)="studentDialog = $event"
       (formStudentOut)="formStudent = $event"
       (filesOut)="files = $event"
-      (disabledFormOut)="disabledForm = $event"
       (paginatorOut)="getStudents($event)"
     >
     </app-student-requirement-list>
@@ -28,10 +27,10 @@
       (onHide)="studentDialog = false"
     >
       <app-student-requirement-form
+        [requirementsIn]="requirements"
         [studentsIn]="students"
         [studentIn]="student"
         [formStudentIn]="formStudent"
-        [disabledFormIn]="disabledForm"
         (studentsOut)="students = $event"
         (paginatorAdd)="paginator.total = paginator.total + $event"
         (displayOut)="studentDialog = $event"
