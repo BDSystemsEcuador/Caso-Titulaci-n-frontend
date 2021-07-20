@@ -13,6 +13,7 @@
       (studentsEndOut)="studentsEnd = $event"
       (displayOut)="studentDialog = $event"
       (formStudentOut)="formStudent = $event"
+      (filesOut)="files = $event"
       (disabledFormOut)="disabledForm = $event"
       (paginatorOut)="getStudents($event)"
     >
@@ -21,7 +22,7 @@
     <p-dialog
       [(visible)]="studentDialog"
       [style]="{ width: '768px' }"
-      header="Convocatoria"
+      header="Requerimientos"
       [modal]="true"
       styleClass="p-fluid"
       (onHide)="studentDialog = false"

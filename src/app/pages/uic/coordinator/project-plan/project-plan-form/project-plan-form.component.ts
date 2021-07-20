@@ -100,31 +100,61 @@ export class ProjectPlanFormComponent implements OnInit {
       this.tutorsField.removeAt(tutor);
   }
   // Submit Form
+  // onSubmit(event: Event, flag = false) {
+  //   event.preventDefault();
+  //   if (this.formProjectPlanIn.valid) {
+  //     if (this.idField.value) {
+  //       this.updateProjectPlan(this.formProjectPlanIn.value);
+  //     } else {
+  //       this.storeProjectPlan(this.formProjectPlanIn.value);
+  //       this.formProjectPlanIn.reset();
+  //     }
+  //   } else {
+  //     this.formProjectPlanIn.markAllAsTouched();
+  //   }
+  // }
+
   onSubmit(event: Event, flag = false) {
-    
     event.preventDefault();
     if (this.formProjectPlanIn.valid) {
       if (this.idField.value) {
         this.updateProjectPlan(this.formProjectPlanIn.value);
       } else {
         this.storeProjectPlan(this.formProjectPlanIn.value, flag);
-        this.formProjectPlanIn.reset();
       }
     } else {
       this.formProjectPlanIn.markAllAsTouched();
     }
   }
+
   paginateProjectPlan(event) {
     this.paginatorOut.emit(this.paginatorIn);
   }
 
+  // storeProjectPlan(projectPlan: ProjectPlan) {
+  //   this.spinnerService.show();
+  //   this.uicHttpService.store('project-plans', { projectPlan }).subscribe(response => {
+      
+  //     this.spinnerService.hide();
+  //     this.messageService.success(response);
+  //     this.saveProjectPlan(response['data']);
+  //     this.paginatorOut.emit(this.paginatorIn);
+
+  //   }, error => {
+  //     this.spinnerService.hide();
+  //     this.messageService.error(error);
+  //   });
+  // }
+
   storeProjectPlan(projectPlan: ProjectPlan, flag = false) {
+    debugger
     this.spinnerService.show();
     this.uicHttpService.store('project-plans', { projectPlan }).subscribe(response => {
       this.spinnerService.hide();
       this.messageService.success(response);
       this.saveProjectPlan(response['data']);
       this.paginatorOut.emit(this.paginatorIn);
+      debugger
       if (flag) {
         this.formProjectPlanIn.reset();
       } else {
@@ -139,6 +169,7 @@ export class ProjectPlanFormComponent implements OnInit {
 
   // Save in frontend
   saveProjectPlan(projectPlan: ProjectPlan) {
+    debugger
     const index = this.projectPlansIn.findIndex(element => element.id === projectPlan.id);
     if (index === -1) {
       this.projectPlansIn.push(projectPlan);
@@ -146,6 +177,7 @@ export class ProjectPlanFormComponent implements OnInit {
       this.projectPlansIn[index] = projectPlan;
     }
     this.projectPlansOut.emit(this.projectPlansIn);
+    this.displayOut.emit(false);
   }
 
   // Save in backend
@@ -156,6 +188,7 @@ export class ProjectPlanFormComponent implements OnInit {
         this.spinnerService.hide();
         this.messageService.success(response);
         this.saveProjectPlan(response['data']);
+        debugger
         this.displayOut.emit(false);
       }, error => {
         this.spinnerService.hide();

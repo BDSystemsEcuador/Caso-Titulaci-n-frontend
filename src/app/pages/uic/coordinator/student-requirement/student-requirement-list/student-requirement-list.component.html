@@ -87,24 +87,8 @@
           <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
         <td *ngFor="let col of columns">
-          <div *ngIf="col.field == 'mesh_student'">
-            {{ rowData[col.field].student.user.full_name }}
-          </div>
-          <div *ngIf="col.field == 'observations'">
-            <ul>
-              <li *ngFor="let observation of rowData[col.field]">
-                {{ observation }}
-              </li>
-            </ul>
-          </div>
-          <div
-            *ngIf="col.field !== 'mesh_student' && col.field !== 'observations'"
-          >
-            {{
-              rowData[col.field]?.name
-                ? rowData[col.field]?.name
-                : rowData[col.field]
-            }}
+          <div *ngIf="col.field == 'student'">
+            {{ rowData[col.field].user.full_name }}
           </div>
         </td>
         <td style="text-align: center">

@@ -8,6 +8,7 @@ import { Student } from "src/app/models/uic/student";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 import { MessageService } from "../../../shared/services/message.service";
 import { DateValidators } from "../../../shared/validators/date.validators";
+import { AppHttpService } from 'src/app/services/app/app-http.service';
 
 @Component({
   selector: 'app-student-requirement',
@@ -21,6 +22,7 @@ export class StudentRequirementComponent implements OnInit {
   studentsEnd: Student[];
   formStudent: FormGroup;
   student: Student;
+  files: any;
   studentDialog: boolean;
   flagStudents: boolean;
   disabledForm:boolean;
@@ -29,7 +31,8 @@ export class StudentRequirementComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     public messageService: MessageService,//siempre publico
     private formBuilder: FormBuilder,
-    private uicHttpService: UicHttpService
+    private uicHttpService: UicHttpService,
+    private appHttpService: AppHttpService
   ) {
     this.paginator = { current_page: 1, per_page: 5 };
     this.students = [];
@@ -37,25 +40,25 @@ export class StudentRequirementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buildFormStudent();
+    //this.buildFormStudent();
     this.getStudents(this.paginator);
     //this.getStudentsEnd(this.paginator);//paginador por tabla
   }
   // Build form course
-  buildFormStudent() {
-    this.formStudent = this.formBuilder.group({
-      id: [null],
-      is_approved: [null, [Validators.required]],
-      observations: this.formBuilder.array([this.formBuilder.control(null)])
-    });
-  }
+  // buildFormStudent() {
+  //   this.formStudent = this.formBuilder.group({
+  //     id: [null],
+  //     is_approved: [null, [Validators.required]],
+  //     observations: this.formBuilder.array([this.formBuilder.control(null)])
+  //   });
+  // }
 
   getStudents(paginator: Paginator) {
     const params = new HttpParams()
       .append("page", paginator.current_page.toString())
       .append("per_page", paginator.per_page.toString());
     this.flagStudents = true;
-    this.uicHttpService.get("mesh-student-requirements", params).subscribe(
+    this.uicHttpService.get("mesh-students", params).subscribe(
       (response) => {
         debugger
         this.flagStudents = false;

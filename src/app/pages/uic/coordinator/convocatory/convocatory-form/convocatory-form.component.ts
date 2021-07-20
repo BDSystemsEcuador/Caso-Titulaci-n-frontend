@@ -82,6 +82,7 @@ export class ConvocatoryFormComponent implements OnInit {
       this.messageService.success(response);
       this.savePlanning(response['data']);
       this.paginatorOut.emit(this.paginatorIn);
+      debugger
       if (flag) {
         this.formPlanningIn.reset();
       } else {

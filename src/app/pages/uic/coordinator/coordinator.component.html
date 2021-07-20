@@ -4,19 +4,17 @@
     <p-tabPanel header="Convocatorias" leftIcon="pi pi-volume-up" tooltip="">
       <app-convocatory></app-convocatory>
     </p-tabPanel>
+
+    <p-tabPanel header="Eventos" leftIcon="pi pi-calendar-plus" tooltip="">
+      <app-catalogue-event></app-catalogue-event>
+    </p-tabPanel>
+
     <p-tabPanel
       header="Asignación de eventos"
       leftIcon="pi pi-clock"
       tooltip=""
     >
       <app-event></app-event>
-    </p-tabPanel>
-    <p-tabPanel header="Eventos" leftIcon="pi pi-calendar-plus" tooltip="">
-      <app-catalogue-event></app-catalogue-event>
-    </p-tabPanel>
-
-    <p-tabPanel header="Lista de estudiantes" leftIcon="pi pi-users" tooltip="">
-      <app-student-requirement></app-student-requirement>
     </p-tabPanel>
 
     <p-tabPanel
@@ -25,6 +23,14 @@
       tooltip=""
     >
       <app-project-plan></app-project-plan>
+    </p-tabPanel>
+
+    <p-tabPanel
+      header="Estudiantes y requerimientos"
+      leftIcon="pi pi-users"
+      tooltip=""
+    >
+      <app-student-requirement></app-student-requirement>
     </p-tabPanel>
   </p-tabView>
 </div>

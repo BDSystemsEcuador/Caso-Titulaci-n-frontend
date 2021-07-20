@@ -18,16 +18,18 @@ import { StudentInformationFormComponent } from '../../../student/student-form/s
 })
 export class StudentRequirementListComponent implements OnInit {
 
+
   @Input() flagStudents: boolean;
   @Input() studentsIn: Student[];
   @Input() studentsEndIn: Student[];
   @Input() paginatorIn: Paginator;
-  @Input() formStudentIn: FormGroup;
+  @Input() formStudentIn: Student;
   @Input() displayIn: boolean;
   @Output() studentsOut = new EventEmitter<Student[]>();
+  @Output() filesOut = new EventEmitter<any>();
   @Output() studentOut = new EventEmitter<Student>();
   @Output() studentsEndOut = new EventEmitter<Student[]>();
-  @Output() formStudentOut = new EventEmitter<FormGroup>();
+  @Output() formStudentOut = new EventEmitter<Student>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
   @Output() disabledFormOut = new EventEmitter<boolean>();
@@ -54,43 +56,55 @@ export class StudentRequirementListComponent implements OnInit {
   }
   loadColsStudent() {
     this.colsStudent = [
-      { field: "mesh_student", header: "Estudiante" },
-      { field: "is_approved", header: "Esta aprobado" },
-      { field: "observations", header: "Observaciones" },
+      { field: "student", header: "Estudiante" }
     ];
   }
 
   openNewFormStudent() {
-    this.formStudentIn.reset();
-    this.formStudentOut.emit(this.formStudentIn);
-    this.displayOut.emit(true);
-    this.disabledFormOut.emit(false);
+  }
+
+  getMeshStudentRequirements(student: Student){
+    const params = new HttpParams()
+      .append("id", student.id.toString())
+    this.spinnerService.show();
+    this.uicHttpService.getFiles("mesh-student-requirements", params).subscribe(
+      (response) => {
+        debugger
+        this.spinnerService.hide();
+        this.filesOut.emit(response);
+      },
+      (error) => {
+        this.spinnerService.hide();
+        this.messageService.error(error);
+      }
+    );
   }
 
   openEditFormStudent(student: Student) {
     debugger
-    this.formStudentIn.patchValue(student);
-    this.formStudentOut.emit(this.formStudentIn);
+    //this.formStudentIn.patchValue(student);
+    this.formStudentOut.emit(student);
     this.displayOut.emit(true);
     this.disabledFormOut.emit(true);
     this.studentOut.emit(student);
-    this.getStudents(student);
+    this.getMeshStudentRequirements(student);
+    //this.getStudents(student);
   }
 
-  get observationsField() {
-    return this.formStudentIn.get('observations') as FormArray;
-  }
+  // get observationsField() {
+  //   return this.formStudentIn.get('observations') as FormArray;
+  // }
 
-  addObservation(observation: any){
-    this.observationsField.push(this.formBuilder.control(observation, Validators.required));
-  }
+  // addObservation(observation: any){
+  //   this.observationsField.push(this.formBuilder.control(observation, Validators.required));
+  // }
 
-  getStudents(student: Student) {
-    this.observationsField.clear();
-    for(const observation of student['observations']) {
-      this.addObservation(observation);
-      }
-  }
+  // getStudents(student: Student) {
+  //   this.observationsField.clear();
+  //   for(const observation of student['observations']) {
+  //     this.addObservation(observation);
+  //     }
+  // }
 
   paginateStudent(event) {
     this.paginatorIn.current_page = event.page + 1;

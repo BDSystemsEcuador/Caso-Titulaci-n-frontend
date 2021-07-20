@@ -3,12 +3,10 @@
     <app-project-plan-list
       *ngIf="!projectPlanDialog"
       [projectPlansIn]="projectPlans"
-      [projectPlansEndIn]="projectPlansEnd"
       [flagProjectPlans]="flagProjectPlans"
       [paginatorIn]="paginator"
       [formProjectPlanIn]="formProjectPlan"
       (projectPlansOut)="projectPlans = $event"
-      (projectPlansEndOut)="projectPlansEnd = $event"
       (displayOut)="projectPlanDialog = $event"
       (formProjectPlanOut)="formProjectPlan = $event"
       (paginatorOut)="getProjectPlans($event)"
