@@ -21,11 +21,11 @@
   <p-accordion>
     <p-accordionTab
       header="Documentos Faltantes"
-      [selected]="requirements?.length > 0"
+      [selected]="catalogueDocuments?.length > 0"
     >
       <div class="p-grid">
         <p-card
-          *ngFor="let requirement of requirements"
+          *ngFor="let requirement of catalogueDocuments"
           class="p-xl-4 p-lg-4 p-md-6 p-sm-12"
         >
           <div class="p-formgrid p-grid">
@@ -37,13 +37,14 @@
           <div class="p-field">
             <app-upload-files
               [acceptAttributes]="'.pdf'"
-              (files)="upload($event, requirement.id)"
+              (files)="storeRequirement($event, requirement.id)"
             ></app-upload-files>
           </div>
         </p-card>
       </div>
     </p-accordionTab>
-    <!-- <p-accordionTab [header]="titleType" [selected]="documents?.length > 0">
+
+    <p-accordionTab header="Mis documentos" [selected]="documents?.length > 0">
       <div class="p-grid">
         <p-card
           *ngFor="let document of documents"
@@ -52,36 +53,20 @@
           <div class="p-fluid">
             <div class="p-formgrid p-grid">
               <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
-                {{ document.type.name | translate }}
+                {{ document.requirement.name }}
               </h5>
-              <div *ngIf="document.type.code === '3'" class="p-field">
-                <label for="aditional_information-edit"
-                  >{{ "Horas" | translate }}:</label
-                >
-                <input
-                  pInputText
-                  id="aditional_information-edit"
-                  [(ngModel)]="document.aditional_information"
-                />
-              </div>
             </div>
             <div class="p-field" style="text-align: center">
-              <img
-                class="p-button-link"
-                [src]="document.file.extension | extensions"
-                [pTooltip]="document.file.extension"
-                alt="tipo"
-                (click)="download(document.file)"
-              />
-            </div>
-            <div class="p-field">
               <button
                 pButton
                 pRipple
                 id="btnDownload1"
-                class="p-button-link p-xl-4 p-lg-4 p-md-4 p-sm-12"
-                (click)="download(document.file)"
-                [label]="document.file.name + '.' + document.file.extension"
+                class="p-button-link"
+                (click)="download(document.files[0])"
+                [label]="
+                  document.files[0].name + '.' + document.files[0].extension
+                "
+                *ngIf="document.files[0]"
               ></button>
             </div>
             <div class="p-field" style="text-align: center">
@@ -92,12 +77,12 @@
                 pTooltip="Descargar"
                 class="p-button-info p-button-rised"
                 icon="pi pi-download"
-                (click)="download(document.file)"
+                (click)="download(document.files[0])"
               ></button>
               <button
                 *ngIf="
-                  document?.status?.code === 'IN_REVISION' ||
-                  document?.status?.code === 'REJECTED'
+                  document?.is_approved === false ||
+                  document?.is_approved == null
                 "
                 pButton
                 pRipple
@@ -108,28 +93,30 @@
                 (click)="deleteDocuments(document)"
               ></button>
             </div>
-            <div class="p-field" style="text-align: center">
-              <p-messages [severity]="getSeverity(document.status?.code)">
-                <ng-template pTemplate>
-                  <div style="width: 100%">
-                    {{ document.status?.name + ": " }}
-                    <textarea
-                      pInputTextarea
-                      autoResize="autoResize"
-                      disabled
-                      [value]="
-                        document?.observation
-                          ? document.observation
-                          : messageService.fieldNoObservation
-                      "
-                    ></textarea>
-                  </div>
-                </ng-template>
-              </p-messages>
-            </div>
+          </div>
+
+          <div class="p-fluid">
+            <p-message
+              severity="success"
+              text="Aprobado"
+              styleClass="p-mr-2"
+              *ngIf="document.is_approved"
+            ></p-message>
+            <p-message
+              severity="warn"
+              text="En espera"
+              styleClass="p-mr-2"
+              *ngIf="document.is_approved == null"
+            ></p-message>
+            <p-message
+              severity="error"
+              text="No aporbado"
+              styleClass="p-mr-2"
+              *ngIf="document.is_approved == false"
+            ></p-message>
           </div>
         </p-card>
       </div>
-    </p-accordionTab> -->
+    </p-accordionTab>
   </p-accordion>
 </div>

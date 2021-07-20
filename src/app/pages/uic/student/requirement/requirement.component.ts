@@ -1,3 +1,4 @@
+import { MeshStudentRequirement } from './../../../../models/uic/mesh-student-requirement';
 import { Requirement } from './../../../../models/uic/requirement';
 import { HttpParams } from "@angular/common/http";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -14,7 +15,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Catalogue } from 'src/app/models/app/catalogue';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { Role } from 'src/app/models/auth/role';
-//import {Document} from '../../../models/app/document';
+import {File} from '../../../../models/app/file';
 //import {AppHttpService} from '../../../services/app/app-http.service';
 //import {Catalogue} from '../../../models/app/catalogue';
 //import {File} from '../../../models/app/file';
@@ -28,192 +29,127 @@ import { Role } from 'src/app/models/auth/role';
   styleUrls: ['./requirement.component.css']
 })
 export class RequirementComponent implements OnInit {
+  catalogueDocuments: Requirement[];
+  documents: MeshStudentRequirement[] = [];
 
-  // paginator: Paginator;
-  requirements: Requirement[];
-  selectedRequirement: Requirement;
-  // formRequirement: FormGroup;
-  // requirement: Requirement;
-  // requirementDialog: boolean;
-  // flagRequirement: boolean;
+  constructor(private appHttpService: AppHttpService,
+              private authService: AuthService,
+              public messageService: MessageService,
+              private spinnerService: NgxSpinnerService,
+              private breadcrumbService: BreadcrumbService,
+              private uicHttpService: UicHttpService) {
 
-  // constructor(
-  //   private spinnerService: NgxSpinnerService,
-  //   private messageService: MessageService,
-  //   private formBuilder: FormBuilder,
-  //   private uicHttpService: UicHttpService
-  // ) {
-  //   this.paginator = { current_page: 1, per_page: 5 };
-  //   this.requirements = [];
-  //  }
-
-  // ngOnInit(): void {
-  //   this.buildFormRequirement();
-    
-  //   this.getRequirements(this.paginator);
-  // }
-
-  // buildFormRequirement(){
-  //   this.formRequirement = this.formBuilder.group({
-  //     id: [null],
-  //     name: [null, [Validators.required]],
-  //     is_required: [null, [Validators.required]]
-
-  //   });
-  // }
-  // getRequirements(paginator: Paginator){
-  //   const params = new HttpParams()
-  //     .append("page", paginator.current_page.toString())
-  //     .append("per_page", paginator.per_page.toString());
-  //   this.flagRequirement = true;
-  //   this.uicHttpService.get("requirements", params).subscribe(
-  //     (response) => {
-  //       this.flagRequirement = false;
-  //       this.requirements = response["data"];
-  //       this.paginator = response as Paginator;
-  //     },
-  //     (error) => {
-  //       this.flagRequirement = false;
-  //       this.messageService.error(error);
-  //     }
-  //   );
-
-  // }
-
-  documents: Document[] = [];
-    files: File[] = [];
-    documentType: string;
-    titleType: string;
-    //role: Role;
-    aditionalInformation: string;
-
-    constructor(private appHttpService: AppHttpService,
-                private authService: AuthService,
-                public messageService: MessageService,
-                private spinnerService: NgxSpinnerService,
-                private breadcrumbService: BreadcrumbService,
-                private uicHttpService: UicHttpService) {
-        //this.role = this.authService.getRole();
-        // if (this.role.code === 'CERTIFIED') {
-        //     this.documentType = 'DOCUMENT';
-        //     this.titleType = 'Mis Documentos';
-        // }
-
-        // if (this.role.code === 'RECERTIFIED') {
-        //     this.documentType = 'CONSTANCY';
-        //     this.titleType = 'Mis Constancias';
-        // }
-
-        this.breadcrumbService.setItems([
-            {label: 'Dashboard', routerLink: '/dashboard'},
-            {label: this.titleType},
-        ]);
-    }
-
-    ngOnInit() {
-        this.getFiles();
-        this.getRequirements();
-    }
-
-    getRequirements(){
-        this.uicHttpService.get("requirements").subscribe(
-          (response) => {
-            this.requirements = response["data"];
-            console.log(this.requirements);
-          },
-          (error) => {
-            this.messageService.error(error);
-          }
-        );
-    
-      }
-
-    getFiles() {
-      this.spinnerService.show();
-      this.uicHttpService.getFiles("requirement/file").subscribe(
-        (response) => {
-          this.spinnerService.hide();
-          this.files = response["data"];
-        },
-        (error) => {
-          this.spinnerService.hide();
-          this.files = [];
-          this.messageService.error(error);
-        }
-      );
-    }
-
-    upload(event, id) {
       
-      const formData = new FormData();
-      for (const file of event) {
-        formData.append("files[]", file);
+  }
+
+  ngOnInit() {
+      this.getDocuments();
+  }
+
+  async getDocuments(){
+
+    this.spinnerService.show();
+
+    let result = await this.uicHttpService.get("requirements").toPromise();
+          this.catalogueDocuments = result["data"];
+
+          result = await this.uicHttpService.get("mesh-student-requirements").toPromise();
+
+      this.documents = await result['data'];
+      
+      this.verifyDocuments();
+      this.spinnerService.hide();
+  
+    }
+
+  download(file: File) {
+    
+    const params = new HttpParams().append('full_path', file.full_path);
+    this.appHttpService.downloadFiles(params).subscribe(response => {
+        const binaryData = [];
+        binaryData.push(response);
+        const filePath = URL.createObjectURL(new Blob(binaryData, {type: response['type']}));
+        const downloadLink = document.createElement('a');
+        downloadLink.href = filePath;
+        downloadLink.setAttribute('download', file.full_name);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }, error => {
+        this.messageService.error(error);
+    });
+}
+
+  storeRequirement(event, meshStudentRequirement: MeshStudentRequirement) {
+    
+    this.spinnerService.show();
+    this.uicHttpService.store('mesh-student-requirements', { meshStudentRequirement }).subscribe(response => {
+      this.spinnerService.hide();
+      this.upload(event, response['data'].id);
+      this.getDocuments();
+      this.messageService.success(response);
+    }, error => {
+      this.spinnerService.hide();
+      this.messageService.error(error);
+    });
+  }
+
+  upload(event, id) {
+    
+    const formData = new FormData();
+    for (const file of event) {
+      formData.append("files[]", file);
+    }
+    formData.append("id", id.toString());
+    this.spinnerService.show();
+    this.uicHttpService.uploadFiles("mesh-student-requirement/file", formData).subscribe(
+      (response) => {
+        
+        this.spinnerService.hide();
+        this.messageService.success(response);
+
+        this.verifyDocuments();
+      },
+      (error) => {
+        
+        this.spinnerService.hide();
+        this.messageService.error(error);
       }
-      formData.append("id", id.toString());
-      this.spinnerService.show();
-      this.uicHttpService.uploadFiles("requirement/file", formData).subscribe(
-        (response) => {
-          
-          this.spinnerService.hide();
-          this.messageService.success(response);
-        },
-        (error) => {
-          
-          this.spinnerService.hide();
-          this.messageService.error(error);
-        }
-      );
-    }
+    );
+  }
 
-    // download(file: File) {
-    //     this.appHttpService.downloadFile(file);
-    // }
+  deleteDocuments(document: MeshStudentRequirement) {
+    this.messageService.questionDelete({})
+        .then((result) => {
+            if (result.isConfirmed) {
+                const selectedDocuments = [];
+                selectedDocuments.push(document);
 
-    // deleteFiles(file: File) {
-    //     this.messageService.questionDelete({})
-    //         .then((result) => {
-    //             if (result.isConfirmed) {
-    //                 const selectedFiles = [];
-    //                 selectedFiles.push(file);
+                const ids = selectedDocuments.map(element => element.id);
+                this.spinnerService.show();
+                this.uicHttpService.delete('mesh-student-requirement/delete', ids)
+                    .subscribe(response => {
+                        this.spinnerService.hide();
+                        this.messageService.success(response);
+                        this.removeDocuments(ids);
+                        this.getDocuments();
+                    }, error => {
+                        this.spinnerService.hide();
+                        this.messageService.error(error);
+                    });
+            }
+        });
+}
 
-    //                 const ids = selectedFiles.map(element => element.id);
-    //                 this.spinnerService.show();
-    //                 this.appHttpService.delete('files/delete', ids)
-    //                     .subscribe(response => {
-    //                         this.spinnerService.hide();
-    //                         this.messageService.success(response);
-    //                         this.removeFiles(ids);
-    //                         this.getFiles();
-    //                     }, error => {
-    //                         this.spinnerService.hide();
-    //                         this.messageService.error(error);
-    //                     });
-    //             }
-    //         });
-    // }
+removeDocuments(ids) {
+  for (const id of ids) {
+      this.documents = this.documents.filter(element => element.id !== id);
+  }
+}
 
-    // removeDocuments(ids) {
-    //     for (const id of ids) {
-    //         this.files = this.files.filter(element => element.id !== id);
-    //     }
-    // }
-
-    // verifyDocuments() {
-    //     for (const document of this.documents) {
-    //         this.catalogueDocuments = this.catalogueDocuments.filter(element => element.id !== document.type.id);
-    //     }
-    // }
-
-    getSeverity(status) {
-        switch (status) {
-            case 'ACCEPTED':
-                return 'success';
-            case 'REJECTED':
-                return 'error';
-            case 'IN_REVISION':
-                return 'info';
-        }
-        return 'warn';
-    }
+verifyDocuments() {
+  for (const document of this.documents) {
+      this.catalogueDocuments = this.catalogueDocuments.filter(element => element.id !== document.requirement.id);
+  }
+}
 
 }

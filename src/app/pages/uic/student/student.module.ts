@@ -35,6 +35,9 @@ import {CardModule} from 'primeng/card';
 import {SharedModule} from '../../shared/shared.module';
 import {RippleModule} from 'primeng/ripple';
 import {CalendarModule} from 'primeng/calendar';
+import { TagModule } from 'primeng/tag';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 import {RadioButtonModule} from 'primeng/radiobutton';
 import { StudentRouting } from './student.routing';
@@ -79,6 +82,9 @@ import { StudentInformationFormComponent } from './student-form/student-form.com
     RippleModule,
     CalendarModule,
     RadioButtonModule,
+    TagModule,
+    MessagesModule,
+    MessageModule
     
   ],
   declarations: [

@@ -1,4 +1,4 @@
-
+export { MeshStudentRequirement } from './mesh-student-requirement';
 export { StudentInformation } from './student-information';
 export { Planning } from "./planning";
 export { Requirement } from "./requirement";
