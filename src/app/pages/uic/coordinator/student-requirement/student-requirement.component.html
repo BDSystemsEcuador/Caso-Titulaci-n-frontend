@@ -8,7 +8,8 @@
       [flagStudents]="flagStudents"
       [paginatorIn]="paginator"
       [formStudentIn]="formStudent"
-      (requirementsOut)="requirements = $event"
+      (documentsOut)="documents = $event"
+      (approvedDocumentsOut)="approvedDocuments = $event"
       (studentsOut)="students = $event"
       (studentOut)="student = $event"
       (displayOut)="studentDialog = $event"
@@ -21,13 +22,14 @@
     <p-dialog
       [(visible)]="studentDialog"
       [style]="{ width: '768px' }"
-      header="Requerimientos"
+      header="Requerimientos del estudiante"
       [modal]="true"
       styleClass="p-fluid"
       (onHide)="studentDialog = false"
     >
       <app-student-requirement-form
-        [requirementsIn]="requirements"
+        [documentsIn]="documents"
+        [approvedDocumentsIn]="approvedDocuments"
         [studentsIn]="students"
         [studentIn]="student"
         [formStudentIn]="formStudent"

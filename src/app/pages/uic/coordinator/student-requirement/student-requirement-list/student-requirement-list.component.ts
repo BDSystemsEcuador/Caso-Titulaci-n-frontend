@@ -11,6 +11,7 @@ import { Student } from "src/app/models/uic/student";
 import { MessageService } from "src/app/pages/shared/services/message.service";
 import { UicHttpService } from "src/app/services/uic/uic-http.service";
 import { StudentInformationFormComponent } from '../../../student/student-form/student-form.component';
+import { MeshStudent } from 'src/app/models/app/mesh-student';
 
 @Component({
   selector: 'app-student-requirement-list',
@@ -19,7 +20,8 @@ import { StudentInformationFormComponent } from '../../../student/student-form/s
 })
 export class StudentRequirementListComponent implements OnInit {
 
-  requirements: MeshStudentRequirement[] = [];
+  requirements: MeshStudentRequirement[] = []; 
+  documents: MeshStudentRequirement[] = [];
 
   @Input() flagStudents: boolean;
   @Input() studentsIn: Student[];
@@ -30,7 +32,8 @@ export class StudentRequirementListComponent implements OnInit {
   @Output() studentsOut = new EventEmitter<Student[]>();
   @Output() filesOut = new EventEmitter<any>();
   @Output() studentOut = new EventEmitter<Student>();
-  @Output() requirementsOut = new EventEmitter<MeshStudentRequirement[]>();
+  @Output() documentsOut = new EventEmitter<MeshStudentRequirement[]>();
+  @Output() approvedDocumentsOut = new EventEmitter<MeshStudentRequirement[]>();
   @Output() formStudentOut = new EventEmitter<Student>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
@@ -82,11 +85,18 @@ export class StudentRequirementListComponent implements OnInit {
     );
   }
 
-  openEditFormStudent(student: Student) {
-    debugger
+  openEditFormStudent(student: MeshStudent) {
     this.displayOut.emit(true);
     this.studentOut.emit(student);
-    this.getRequirements(student.id);
+    this.getDocuments(student);
+    
+  }
+
+  getDocuments(student)
+  {
+    this.documents = student.mesh_student_requirements;
+    this.documentsOut.emit(this.documents);
+    this.approvedDocumentsOut.emit(this.documents);
   }
 
   // get observationsField() {
@@ -201,23 +211,6 @@ export class StudentRequirementListComponent implements OnInit {
   pageChange(event) {
     this.paginatorIn.current_page = event.page + 1;
     this.paginatorOut.emit(this.paginatorIn);
-  }
-
-  getRequirements(id){
-    const params = new HttpParams()
-      .append("student_id", id.toString());
-    this.uicHttpService.get("mesh-student-requirements", params).subscribe(
-      (response: MeshStudentRequirement[]) => {
-        debugger
-        this.requirements=response;
-        console.log(this.requirements);
-        this.requirementsOut.emit(this.requirements);
-      },
-      (error) => {
-        this.messageService.error(error);
-      }
-    );
-
   }
 
 }

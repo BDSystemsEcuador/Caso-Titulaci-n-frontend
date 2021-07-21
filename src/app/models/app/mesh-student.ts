@@ -7,5 +7,5 @@ export interface MeshStudent {
     start_cohort?: Date,
     end_cohort?: Date,
     is_graduated?: boolean,
-    mesh_student_requirements?: MeshStudentRequirement[]
+    mesh_student_requirements?: Array<MeshStudentRequirement>;
 }

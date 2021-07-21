@@ -1,3 +1,6 @@
+import { element } from 'protractor';
+import { MeshStudent } from './../../../../../models/app/mesh-student';
+import { HttpParams } from '@angular/common/http';
 import { MeshStudentRequirement } from './../../../../../models/uic/mesh-student-requirement';
 import { Career } from './../../../../../models/app/career';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -8,6 +11,7 @@ import { Student } from 'src/app/models/uic/student';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
 import { AppHttpService } from 'src/app/services/app/app-http.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
+import { File } from 'src/app/models/app/file';
 
 @Component({
   selector: 'app-student-requirement-form',
@@ -16,12 +20,17 @@ import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 })
 export class StudentRequirementFormComponent implements OnInit {
 
+  dialogDeleteFiles: boolean;
+  approvedDocuments: MeshStudentRequirement[] = [];
+  document: MeshStudentRequirement;
+
   @Input() formStudentIn: FormGroup;
   @Input() studentsIn: Student[];
-  @Input() studentIn: Student;
+  @Input() studentIn: MeshStudent;
   @Input() paginatorIn: Paginator;
   @Input() disabledFormIn: boolean;
-  @Input() requirementsIn: MeshStudentRequirement[];
+  @Input() documentsIn: MeshStudentRequirement[];
+  @Input() approvedDocumentsIn: MeshStudentRequirement[];
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() studentsOut = new EventEmitter<Student[]>();
   @Output() paginatorAdd = new EventEmitter<number>();
@@ -37,7 +46,6 @@ export class StudentRequirementFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
   }
   // Fields of Form
   get observationsField() {
@@ -75,10 +83,51 @@ export class StudentRequirementFormComponent implements OnInit {
     this.paginatorOut.emit(this.paginatorIn);
   }
 
+  approveDocument(document: MeshStudentRequirement){
+    
+    this.uicHttpService.update('mesh-student-requirement/approve/' + document.id, {document} ).subscribe(response => {
+      debugger
+      this.messageService.success(response);
+      this.removeDocuments([document.id]);
+    }, error => {
+      debugger
+      this.messageService.error(error);
+
+    });
+  }
+
+  disapproveDocument(document: MeshStudentRequirement){
+    debugger
+    this.document = document;
+    this.dialogDeleteFiles = true;
+  }
+
+  removeDocuments(ids) {
+    for (const id of ids) {
+        this.documentsIn = this.documentsIn.filter(element => element.id !== id);
+    }
+  }
+
+  download(file: File) {
+    
+    const params = new HttpParams().append('full_path', file.full_path);
+    this.appHttpService.downloadFiles(params).subscribe(response => {
+        const binaryData = [];
+        binaryData.push(response);
+        const filePath = URL.createObjectURL(new Blob(binaryData, {type: response['type']}));
+        const downloadLink = document.createElement('a');
+        downloadLink.href = filePath;
+        downloadLink.setAttribute('download', file.full_name);
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }, error => {
+        this.messageService.error(error);
+    });
+}
+
   getStudents() {
     debugger
     if(this.disabledFormIn == true){
-      debugger
         this.observationsField.clear();
         for(const observation of this.studentIn['observations']) {
           this.addObservation(observation);
@@ -130,5 +179,6 @@ export class StudentRequirementFormComponent implements OnInit {
         this.messageService.error(error);
       });
   }
+
 
 }

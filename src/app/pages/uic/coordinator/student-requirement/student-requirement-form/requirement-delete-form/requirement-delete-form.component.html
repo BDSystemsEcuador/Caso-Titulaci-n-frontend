@@ -1,0 +1,51 @@
+{{ documentIn | json }}
+<div class="p-fluid">
+  <!-- <form [formGroup]="formRequirementDelete" (ngSubmit)="onSubmit($event)">
+    <div class="p-field">
+      <label for="observation">
+        <i class="p-error">*</i> Observación:
+        <i
+          *ngIf="observationField.valid"
+          class="pi pi-check-circle icon-valid"
+        ></i>
+        <i
+          *ngIf="
+            observationField.invalid &&
+            (observationField.touched || observationField.dirty)
+          "
+          class="pi pi-times-circle icon-invalid"
+        ></i>
+      </label>
+
+      <textarea
+        pInputTextarea
+        name="observation"
+        id="observation"
+        formControlName="observation"
+        rows="4"
+      ></textarea>
+      <div *ngIf="observationField.errors && observationField.touched">
+        <small
+          *ngIf="observationField.hasError('required')"
+          id="observation-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
+    </div>
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <button
+          pButton
+          pRipple
+          type="submit"
+          id="btnSaveExit"
+          label="Rechazar"
+          class="p-button-warn p-button-raised"
+          icon="pi pi-thumbs-down"
+        ></button>
+      </div>
+    </div>
+  </form> -->
+</div>

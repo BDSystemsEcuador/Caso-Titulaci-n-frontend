@@ -12,6 +12,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {DropdownModule} from 'primeng/dropdown';
 import {SkeletonModule} from 'primeng/skeleton';
 import {CheckboxModule} from 'primeng/checkbox';
+import {DividerModule} from 'primeng/divider';
 
 import {InputSwitchModule} from 'primeng/inputswitch';
 
@@ -58,6 +59,7 @@ import { CatalogueEventListComponent } from './catalogue-event/catalogue-event-l
 import { StudentRequirementComponent } from './student-requirement/student-requirement.component';
 import { StudentRequirementListComponent } from './student-requirement/student-requirement-list/student-requirement-list.component';
 import { StudentRequirementFormComponent } from './student-requirement/student-requirement-form/student-requirement-form.component';
+import { RequirementDeleteFormComponent } from './student-requirement/student-requirement-form/requirement-delete-form/requirement-delete-form.component';
 
 
 
@@ -97,7 +99,8 @@ import { StudentRequirementFormComponent } from './student-requirement/student-r
     CheckboxModule,
     CalendarModule,
     RadioButtonModule,
-    InputSwitchModule
+    InputSwitchModule,
+    DividerModule
     
   ],
   declarations: [
@@ -118,7 +121,8 @@ import { StudentRequirementFormComponent } from './student-requirement/student-r
     CatalogueEventListComponent,
     StudentRequirementComponent,
     StudentRequirementListComponent,
-    StudentRequirementFormComponent
+    StudentRequirementFormComponent,
+    RequirementDeleteFormComponent
 
   ],
 })

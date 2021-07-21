@@ -1,4 +1,107 @@
-{{ studentIn | json }}
-<div *ngFor="let requirements of requirementsIn; let i = index">
-  <h1>{{ i }}</h1>
+<!-- {{ studentIn | json }} -->
+
+<p-divider align="left">
+  <div class="p-d-inline-flex p-ai-center">
+    <i class="pi pi-user p-mr-2"></i>
+    <h2>{{ studentIn.student.user.full_name }}</h2>
+  </div>
+</p-divider>
+
+<div class="p-fluid">
+  <div class="p-grid">
+    <div
+      *ngFor="let document of documentsIn"
+      class="p-xl-6 p-lg-6 p-md-12 p-sm-12"
+      style="display: inline-block"
+    >
+      <p-card
+        *ngIf="document.is_approved == false || document.is_approved == null"
+      >
+        <div class="p-fluid">
+          <div class="p-formgrid p-grid">
+            <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
+              {{ document.requirement.name }}
+            </h5>
+          </div>
+          <div class="p-field" style="text-align: center">
+            <button
+              pButton
+              pRipple
+              id="btnDownload1"
+              class="p-button-link"
+              (click)="download(document.files[0])"
+              [label]="
+                document.files[0].name + '.' + document.files[0].extension
+              "
+              *ngIf="document.files[0]"
+            ></button>
+          </div>
+          <div class="p-field" style="text-align: center">
+            <button
+              pButton
+              pRipple
+              id="btnDownload"
+              pTooltip="Descargar"
+              class="p-button-info p-button-rised"
+              icon="pi pi-download"
+              (click)="download(document.files[0])"
+            ></button>
+            <button
+              pButton
+              pRipple
+              id="btnDelete"
+              pTooltip="Rechazar documento"
+              class="p-button-danger p-button-rised p-ml-2"
+              icon="pi pi-thumbs-down"
+              (click)="disapproveDocument(document)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              id="btnSuccess"
+              pTooltip="Aprobar documento"
+              class="p-button-success p-button-rised p-ml-2"
+              icon="pi pi-thumbs-up"
+              (click)="approveDocument(document)"
+            ></button>
+          </div>
+        </div>
+
+        <div class="p-fluid">
+          <p-message
+            severity="success"
+            text="Aprobado"
+            styleClass="p-mr-2"
+            *ngIf="document.is_approved"
+          ></p-message>
+          <p-message
+            severity="warn"
+            text="En espera"
+            styleClass="p-mr-2"
+            *ngIf="document.is_approved == null"
+          ></p-message>
+          <p-message
+            severity="error"
+            text="No aporbado"
+            styleClass="p-mr-2"
+            *ngIf="document.is_approved == false"
+          ></p-message>
+        </div>
+      </p-card>
+    </div>
+  </div>
 </div>
+
+<p-dialog
+  [(visible)]="dialogDeleteFiles"
+  [style]="{ width: '75%' }"
+  header="Rechazar documento"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="dialogDeleteFiles = false"
+>
+  <app-requirement-delete-form
+    (displayOut)="dialogDeleteFiles = $event"
+    [documentIn]="document"
+  ></app-requirement-delete-form>
+</p-dialog>

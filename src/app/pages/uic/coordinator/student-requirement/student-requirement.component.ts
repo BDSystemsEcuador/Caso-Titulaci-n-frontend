@@ -10,6 +10,7 @@ import { UicHttpService } from "src/app/services/uic/uic-http.service";
 import { MessageService } from "../../../shared/services/message.service";
 import { DateValidators } from "../../../shared/validators/date.validators";
 import { AppHttpService } from 'src/app/services/app/app-http.service';
+import { MeshStudent } from 'src/app/models/app/mesh-student';
 
 @Component({
   selector: 'app-student-requirement',
@@ -21,9 +22,10 @@ export class StudentRequirementComponent implements OnInit {
   paginator: Paginator;
   students: Student[];//inicializar 
   studentsEnd: Student[];
-  requirements: MeshStudentRequirement[];
+  documents: MeshStudentRequirement[];
+  approvedDocuments: MeshStudentRequirement[];
   formStudent: FormGroup;
-  student: Student;
+  student: MeshStudent;
   files: any;
   studentDialog: boolean;
   flagStudents: boolean;
@@ -62,9 +64,21 @@ export class StudentRequirementComponent implements OnInit {
     this.flagStudents = true;
     this.uicHttpService.get("mesh-students", params).subscribe(
       (response) => {
-        debugger
+        
+        for(let i = 0; i<response['data'].length; i++){
+          
+          let haveRequirements: MeshStudentRequirement[] = [];
+          for(let j = 0; j<response['data'][i]['mesh_student_requirements'].length; j++){
+            
+            if(response['data'][i]['mesh_student_requirements'][j].is_approved == true){
+              haveRequirements.push(response['data'][i]['mesh_student_requirements'][j]);
+            }
+          }
+          if(haveRequirements.length <= response['data'][i]['mesh_student_requirements'].length-1){
+            this.students.push(response['data'][i]);
+          }
+        }
         this.flagStudents = false;
-        this.students = response["data"];
         this.paginator = response as Paginator;
       },
       (error) => {
