@@ -1,6 +1,6 @@
-{{ documentIn | json }}
+{{ formRequirementDelete.value | json }}
 <div class="p-fluid">
-  <!-- <form [formGroup]="formRequirementDelete" (ngSubmit)="onSubmit($event)">
+  <form [formGroup]="formRequirementDelete" (ngSubmit)="onSubmit($event)">
     <div class="p-field">
       <label for="observation">
         <i class="p-error">*</i> Observación:
@@ -34,18 +34,5 @@
         </small>
       </div>
     </div>
-    <div class="p-formgrid p-grid">
-      <div class="p-field p-col">
-        <button
-          pButton
-          pRipple
-          type="submit"
-          id="btnSaveExit"
-          label="Rechazar"
-          class="p-button-warn p-button-raised"
-          icon="pi pi-thumbs-down"
-        ></button>
-      </div>
-    </div>
-  </form> -->
+  </form>
 </div>

@@ -21,7 +21,7 @@ export class RequirementDeleteFormComponent implements OnInit {
   formRequirementDelete: FormGroup;
 
   @Output() displayOut = new EventEmitter<boolean>();
-  @Input() documentIn: MeshStudentRequirement;
+  @Input() documentIn: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,6 +38,7 @@ export class RequirementDeleteFormComponent implements OnInit {
     debugger
     this.formRequirementDelete = this.formBuilder.group({
       id: [null],
+      requirement_id: [this.documentIn, [Validators.required]],
       observation: [null, [Validators.required]]
     });
   }

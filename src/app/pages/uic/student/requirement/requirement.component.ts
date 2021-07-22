@@ -48,8 +48,6 @@ export class RequirementComponent implements OnInit {
 
   async getDocuments(){
 
-    this.spinnerService.show();
-
     let result = await this.uicHttpService.get("requirements").toPromise();
           this.catalogueDocuments = result["data"];
 
@@ -58,7 +56,6 @@ export class RequirementComponent implements OnInit {
       this.documents = await result['data'];
       
       this.verifyDocuments();
-      this.spinnerService.hide();
   
     }
 
@@ -81,14 +78,11 @@ export class RequirementComponent implements OnInit {
 
   storeRequirement(event, meshStudentRequirement: MeshStudentRequirement) {
     
-    this.spinnerService.show();
     this.uicHttpService.store('mesh-student-requirements', { meshStudentRequirement }).subscribe(response => {
-      this.spinnerService.hide();
       this.upload(event, response['data'].id);
       this.getDocuments();
       this.messageService.success(response);
     }, error => {
-      this.spinnerService.hide();
       this.messageService.error(error);
     });
   }

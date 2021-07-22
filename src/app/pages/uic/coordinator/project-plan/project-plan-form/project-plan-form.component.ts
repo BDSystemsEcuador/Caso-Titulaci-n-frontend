@@ -74,7 +74,7 @@ export class ProjectPlanFormComponent implements OnInit {
   get studentsField() {
     return this.formProjectPlanIn.get('students') as FormArray;
   }
-  get tutorsField() {
+  get teachersField() {
     return this.formProjectPlanIn.get('teachers') as FormArray;
   }
 
@@ -94,11 +94,11 @@ export class ProjectPlanFormComponent implements OnInit {
   }
 
   addTutors(){
-    this.tutorsField.push(this.formBuilder.control(null, Validators.required));
+    this.teachersField.push(this.formBuilder.control(null, Validators.required));
   }
   
   removeTutors(tutor){
-      this.tutorsField.removeAt(tutor);
+      this.teachersField.removeAt(tutor);
   }
   // Submit Form
   // onSubmit(event: Event, flag = false) {

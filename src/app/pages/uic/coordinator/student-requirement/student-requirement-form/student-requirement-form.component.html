@@ -53,8 +53,9 @@
               pTooltip="Rechazar documento"
               class="p-button-danger p-button-rised p-ml-2"
               icon="pi pi-thumbs-down"
-              (click)="disapproveDocument(document)"
+              (click)="openDeleteRequirement(document)"
             ></button>
+
             <button
               pButton
               pRipple
@@ -64,6 +65,70 @@
               icon="pi pi-thumbs-up"
               (click)="approveDocument(document)"
             ></button>
+            <div *ngIf="formRequirementDelete">
+              <div
+                class="p-fluid"
+                *ngIf="
+                  formRequirementDelete.value.requirement_id ==
+                  document.requirement_id
+                "
+              >
+                <form
+                  [formGroup]="formRequirementDelete"
+                  (ngSubmit)="onSubmit($event)"
+                >
+                  <div class="p-field">
+                    <label for="observations">
+                      <i class="p-error">*</i> Observación:
+                      <i
+                        *ngIf="observationField.valid"
+                        class="pi pi-check-circle icon-valid"
+                      ></i>
+                      <i
+                        *ngIf="
+                          observationField.invalid &&
+                          (observationField.touched || observationField.dirty)
+                        "
+                        class="pi pi-times-circle icon-invalid"
+                      ></i>
+                    </label>
+
+                    <textarea
+                      pInputTextarea
+                      name="observations"
+                      id="observations"
+                      formControlName="observations"
+                      rows="4"
+                    ></textarea>
+                    <div
+                      *ngIf="
+                        observationField.errors && observationField.touched
+                      "
+                    >
+                      <small
+                        *ngIf="observationField.hasError('required')"
+                        id="observation-help-1"
+                        class="p-error"
+                      >
+                        {{ messageService.fieldRequired }}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="p-field p-col" style="width: 50%; margin: auto">
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      id="btnSaveContinue"
+                      label="Rechazar"
+                      class="p-button-danger p-button-raised"
+                      icon="pi pi-thumbs-down"
+                      (click)="onSubmit($event, true)"
+                    ></button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -92,7 +157,7 @@
   </div>
 </div>
 
-<p-dialog
+<!-- <p-dialog
   [(visible)]="dialogDeleteFiles"
   [style]="{ width: '75%' }"
   header="Rechazar documento"
@@ -104,4 +169,4 @@
     (displayOut)="dialogDeleteFiles = $event"
     [documentIn]="document"
   ></app-requirement-delete-form>
-</p-dialog>
+</p-dialog> -->

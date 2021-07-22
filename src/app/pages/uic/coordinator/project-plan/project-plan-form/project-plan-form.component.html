@@ -76,11 +76,7 @@
           class="pi pi-times-circle icon-invalid"
         ></i>
       </label>
-      <p-inputNumber
-        name="act_code"
-        formControlName="act_code"
-        placeholder="código de acta"
-      ></p-inputNumber>
+      <p-inputNumber name="act_code" formControlName="act_code"></p-inputNumber>
       <div *ngIf="actCodeField.errors && actCodeField.touched">
         <small
           *ngIf="actCodeField.hasError('required')"
@@ -93,8 +89,8 @@
     </div>
     <!-- <div class="p-lg-6 p-md-12 p-col-12"> -->
     <div class="p-field">
-      <label for="tutors"> Tutores: </label>
-      <div formArrayName="tutors" class="p-field">
+      <label for="teachers"> Tutores: </label>
+      <div formArrayName="teachers" class="p-field">
         <div>
           <button
             pButton
@@ -108,7 +104,7 @@
           ></button>
         </div>
 
-        <div *ngFor="let tutor of tutorsField.controls; let i = index">
+        <div *ngFor="let teacher of teachersField.controls; let i = index">
           <div class="p-fluid p-formgrid p-grid">
             <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
               <!-- <input pInputText id="students" [formControlName]="i" /> -->
@@ -136,11 +132,12 @@
             </div>
             <div
               *ngIf="
-                tutorsField.errors && (tutorsField.touched || tutorsField.dirty)
+                teachersField.errors &&
+                (teachersField.touched || teachersField.dirty)
               "
             >
               <small
-                *ngIf="tutorsField.hasError('required')"
+                *ngIf="teachersField.hasError('required')"
                 id="students-help-1"
                 class="p-error"
               >

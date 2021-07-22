@@ -24,6 +24,8 @@ export class StudentRequirementFormComponent implements OnInit {
   approvedDocuments: MeshStudentRequirement[] = [];
   document: MeshStudentRequirement;
 
+  formRequirementDelete: FormGroup;
+
   @Input() formStudentIn: FormGroup;
   @Input() studentsIn: Student[];
   @Input() studentIn: MeshStudent;
@@ -47,38 +49,9 @@ export class StudentRequirementFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // Fields of Form
-  get observationsField() {
-    return this.formStudentIn.get('observations') as FormArray;
-  }
-  get idField() {
-    return this.formStudentIn.get('id');
-  }
-
-  addObservation(observation: any){
-    this.observationsField.push(this.formBuilder.control(observation, Validators.required));
-  }
-
-  addObservations(){
-    this.observationsField.push(this.formBuilder.control(null, Validators.required));
-  }
-  removeObservations(observation){
-      this.observationsField.removeAt(observation);
-  }
 
   // Submit Form
-  onSubmit(event: Event, flag = false) {
-    event.preventDefault();
-    if (this.formStudentIn.valid) {
-      if (this.idField.value) {
-        this.updateStudent(this.formStudentIn.value);
-      } else {
-        this.storeStudent(this.formStudentIn.value, flag);
-      }
-    } else {
-      this.formStudentIn.markAllAsTouched();
-    }
-  }
+  
   paginateStudent(event) {
     this.paginatorOut.emit(this.paginatorIn);
   }
@@ -96,14 +69,10 @@ export class StudentRequirementFormComponent implements OnInit {
     });
   }
 
-  disapproveDocument(document: MeshStudentRequirement){
-    debugger
-    this.document = document;
-    this.dialogDeleteFiles = true;
-  }
-
   removeDocuments(ids) {
+    debugger
     for (const id of ids) {
+      debugger
         this.documentsIn = this.documentsIn.filter(element => element.id !== id);
     }
   }
@@ -125,15 +94,15 @@ export class StudentRequirementFormComponent implements OnInit {
     });
 }
 
-  getStudents() {
-    debugger
-    if(this.disabledFormIn == true){
-        this.observationsField.clear();
-        for(const observation of this.studentIn['observations']) {
-          this.addObservation(observation);
-         }
-        }
-  }
+  // getStudents() {
+  //   debugger
+  //   if(this.disabledFormIn == true){
+  //       this.observationsField.clear();
+  //       for(const observation of this.studentIn['observations']) {
+  //         this.addObservation(observation);
+  //        }
+  //       }
+  // }
 
   storeStudent(student: Student, flag = false) {
     this.spinnerService.show();
@@ -180,5 +149,55 @@ export class StudentRequirementFormComponent implements OnInit {
       });
   }
 
+  openDeleteRequirement(document: MeshStudentRequirement){
+    this.buildFormRequirementDelete(document);
+    this.formRequirementDelete.patchValue(document);
+  }
 
+  buildFormRequirementDelete(document: MeshStudentRequirement){
+    debugger
+    this.formRequirementDelete = this.formBuilder.group({
+      id: [document.id],
+      requirement_id: [document.requirement.id, [Validators.required]],
+      observations: [null, [Validators.required]]
+    });
+  }
+
+  get idField() {
+    return this.formRequirementDelete.get('id');
+  }
+
+  get observationField() {
+    return this.formRequirementDelete.get('observations');
+  }
+
+  onSubmit(event: Event) {
+
+    event.preventDefault();
+    debugger
+    if (this.formRequirementDelete.valid) {
+      if (this.idField.value) {
+        this.updateRequirementDelete(this.formRequirementDelete.value);
+      } 
+    } else {
+      this.formRequirementDelete.markAllAsTouched();
+    }
+  }
+
+  
+
+  updateRequirementDelete(meshStudentRequirement: MeshStudentRequirement) {
+    debugger
+    this.spinnerService.show();
+    this.uicHttpService.update('mesh-student-requirement/disapproved/' + meshStudentRequirement.id, { meshStudentRequirement })
+      .subscribe(response => {
+        debugger
+        this.spinnerService.hide();
+        this.messageService.success(response);
+        this.removeDocuments([meshStudentRequirement.id]);
+      }, error => {
+        this.spinnerService.hide();
+        this.messageService.error(error);
+      });
+  }
 }

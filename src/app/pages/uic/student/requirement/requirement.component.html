@@ -40,6 +40,18 @@
               (files)="storeRequirement($event, requirement.id)"
             ></app-upload-files>
           </div>
+
+          <div *ngIf="requirement.is_solicitable == true" class="p-field p-col">
+            <button
+              pButton
+              pRipple
+              type="button"
+              id="btnSaveContinue"
+              label="Solicitar documento"
+              class="p-button-warning p-button-raised"
+              icon="pi pi-question-circle"
+            ></button>
+          </div>
         </p-card>
       </div>
     </p-accordionTab>
@@ -110,7 +122,7 @@
             ></p-message>
             <p-message
               severity="error"
-              text="No aporbado"
+              text="No aprobado"
               styleClass="p-mr-2"
               *ngIf="document.is_approved == false"
             ></p-message>
