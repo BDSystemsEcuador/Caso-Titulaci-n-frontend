@@ -2,15 +2,17 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
+import { File } from 'src/app/models/app/file';
+import { AppHttpService } from './app-http.service';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class AppHttpService {
+export class AppService {
     private headers: HttpHeaders;
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private appHttpService:AppHttpService ) {
 
     }
 
@@ -58,4 +60,14 @@ export class AppHttpService {
         const url = environment.API_URL_APP + 'countries';
         return this.httpClient.get(url, {params});
     }
+    downloadFile(file: File) {
+        const params = new HttpParams().append('full_path', file.full_path);
+        this.appHttpService.getFile(params).subscribe(response => {
+            const binaryData = [];
+            binaryData.push(response);
+            const filePath = URL.createObjectURL(new Blob(binaryData, {type: response['type']}));
+            const downloadLink = document.createElement('a');
+            downloadLink.href = filePath;
+            downloadLink.setAttribute('download', file.full_name);
+        })}
 }

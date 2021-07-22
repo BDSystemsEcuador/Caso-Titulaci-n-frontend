@@ -125,8 +125,8 @@ export class EventFormComponent implements OnInit {
       });
   }
   getPlannings() {
-    this.uicHttpService.get('plannings').subscribe(response => {
-      this.plannings = response['data'];
+    this.uicHttpService.get('plannings').subscribe((response:Planning[]) => {
+      this.plannings = response;
     }, error => {
       this.messageService.error(error);
     });

@@ -7,8 +7,8 @@
             <i class="pi pi-lock-open" *ngIf="!appMain.staticMenuActive"></i>
         </a>
         <a routerLink="/">
-            <img [src]="STORAGE_URL+institution.logo" alt="logo"/>
-            <span class="app-name">{{institution.short_name}}</span>
+            <img [src]="STORAGE_URL+institution?.logo" alt="logo"/>
+            <span class="app-name">{{institution?.short_name}}</span>
         </a>
     </div>
 

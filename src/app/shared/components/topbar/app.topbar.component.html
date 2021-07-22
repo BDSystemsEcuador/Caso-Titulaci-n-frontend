@@ -3,8 +3,8 @@
         <div class="layout-topbar-left">
             <div class="layout-topbar-logo-wrapper">
                 <a href="#" class="layout-topbar-logo">
-                    <img [src]="STORAGE_URL+institution.logo" alt="logo"/>
-                    <span class="app-name">{{institution.acronym}}</span>
+                    <img [src]="STORAGE_URL+institution?.logo" alt="logo"/>
+                    <span class="app-name">{{institution?.acronym}}</span>
                 </a>
             </div>
 
@@ -29,13 +29,13 @@
                     (click)="appMain.onMegaMenuClick($event)">
                     <li *ngFor="let megaMenu of megaMenus" [ngClass]="{'active-topmenuitem': activeItem === 1}"
                         (click)="mobileMegaMenuItemClick(1)">
-                        <a href="#">{{megaMenu.label}} <i class="pi pi-angle-down"></i></a>
+                        <a href="#">{{megaMenu?.label}} <i class="pi pi-angle-down"></i></a>
                         <ul>
                             <li class="active-row" *ngFor="let menu of megaMenu.items" [routerLink]="[menu.routerLink]">
                                 <i class="pi pi-circle-on"></i>
                                 <span>
-                                        <h5>{{menu.label}}</h5>
-                                        <span>{{menu.description}}</span>
+                                        <h5>{{menu?.label}}</h5>
+                                        <span>{{menu?.description}}</span>
                                     </span>
                             </li>
                         </ul>

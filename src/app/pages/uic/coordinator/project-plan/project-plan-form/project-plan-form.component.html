@@ -113,12 +113,12 @@
             <div class="p-field p-xl-11 p-lg-11 p-md-6 p-sm-12">
               <!-- <input pInputText id="students" [formControlName]="i" /> -->
               <p-dropdown
-                [id]="'tutors' + 'i'"
-                [options]="tutors"
+                [id]="'teachers' + 'i'"
+                [options]="teachers"
                 [formControlName]="i"
-                optionLabel="teacher.user.full_name"
+                optionLabel="user.full_name"
                 [filter]="true"
-                filterBy="teacher.user.full_name"
+                filterBy="user.full_name"
                 [showClear]="true"
                 placeholder="Selecciona el tutor"
               >

@@ -63,7 +63,19 @@ export class UicHttpService {
 
     getFiles(url, params = new HttpParams()) {
         url = this.API_URL_UIC + url;
-        return this.httpClient.get(url, {params});
+        return this.httpClient.get(url, {params, responseType: 'blob' as 'json'});
     }
+
+    downloadEnrollment(id: number) {
+        const params = new HttpParams().append('student_id', id.toString());
+        this.getFiles('export-enrollment').subscribe(response => {
+            const binaryData = [];
+            binaryData.push(response);
+            const filePath = URL.createObjectURL(new Blob(binaryData, {type: response['type']}));
+            const downloadLink = document.createElement('a');
+            downloadLink.href = filePath;
+            downloadLink.setAttribute('download', 'solicitud.pdf');
+        })}
+
 
 }

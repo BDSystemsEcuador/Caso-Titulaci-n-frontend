@@ -133,7 +133,7 @@ export class StudentInformationFormComponent implements OnInit {
   }
 
   getAreas() {
-    this.appHttpService.getCatalogues('UIC.COMPANY_AREA').subscribe((response) => {
+    this.appHttpService.getCatalogues('UIC.STUDENT_INFORMATIONS.COMPANY_AREA').subscribe((response) => {
       this.areas = response['data'];
     }, error => {
       this.messageService.error(error);
@@ -141,7 +141,7 @@ export class StudentInformationFormComponent implements OnInit {
   }
 
   getPositions() {
-    this.appHttpService.getCatalogues('UIC.COMPANY_POSITION').subscribe((response) => {
+    this.appHttpService.getCatalogues('UIC.STUDENT_INFORMATIONS.COMPANY_POSITION').subscribe((response) => {
       this.positions = response['data'];
     }, error => {
       this.messageService.error(error);
@@ -149,7 +149,7 @@ export class StudentInformationFormComponent implements OnInit {
   }
 
   getRelations() {
-    this.appHttpService.getCatalogues('UIC.RELATIONAL_LABORAL_CAREER').subscribe((response) => {
+    this.appHttpService.getCatalogues('UIC.STUDENT_INFORMATIONS.RELATIONAL_LABORAL_CAREER').subscribe((response) => {
       this.relations = response['data'];
     }, error => {
       this.messageService.error(error);

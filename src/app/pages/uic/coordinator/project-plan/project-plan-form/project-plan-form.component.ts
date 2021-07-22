@@ -11,6 +11,7 @@ import { Planning } from 'src/app/models/uic/planning';
 import { MessageService } from 'src/app/pages/shared/services/message.service';
 import { UicHttpService } from 'src/app/services/uic/uic-http.service';
 import { AppHttpService } from 'src/app/services/app/app-http.service';
+import { Teacher } from 'src/app/models/app/teacher';
 
 @Component({
   selector: 'app-project-plan-form',
@@ -21,7 +22,7 @@ export class ProjectPlanFormComponent implements OnInit {
 
   checked: boolean = false;
   students: any;
-  tutors: any;
+  teachers:Teacher[];
 
   @Input() formProjectPlanIn: FormGroup;
   @Input() projectPlansIn: ProjectPlan[];
@@ -46,7 +47,7 @@ export class ProjectPlanFormComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getStudents();
-    this.getTutors();
+    this.getTeachers();
   }
   // Fields of Form
   get idField() {
@@ -74,7 +75,7 @@ export class ProjectPlanFormComponent implements OnInit {
     return this.formProjectPlanIn.get('students') as FormArray;
   }
   get tutorsField() {
-    return this.formProjectPlanIn.get('tutors') as FormArray;
+    return this.formProjectPlanIn.get('teachers') as FormArray;
   }
 
   addObservations(){
@@ -205,9 +206,9 @@ export class ProjectPlanFormComponent implements OnInit {
     });
   }
 
-  getTutors() {
-    this.uicHttpService.get('tutors').subscribe(response => {
-      this.tutors = response;
+  getTeachers() {
+    this.uicHttpService.get('project-plan/teachers').subscribe(response => {
+      this.teachers = response['data'];
     }, error => {
       this.messageService.error(error);
     });

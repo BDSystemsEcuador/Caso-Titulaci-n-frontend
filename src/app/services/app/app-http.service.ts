@@ -73,4 +73,8 @@ export class AppHttpService {
         const url = environment.API_URL_APP + 'countries';
         return this.httpClient.get(url, {params});
     }
+    getFile(params = new HttpParams()) {
+        const url = environment.API_URL_APP + 'file/download';
+        return this.httpClient.get(url, {params, responseType: 'blob' as 'json'});
+    }
 }

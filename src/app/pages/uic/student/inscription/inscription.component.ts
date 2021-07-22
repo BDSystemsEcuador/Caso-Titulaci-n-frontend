@@ -15,7 +15,8 @@ export class InscriptionComponent implements OnInit {
   }
 
   downloadEnrollment(){
-    this.uicHttpService.get("export-enrollment").subscribe((response) => {});
+    console.log('paso por aqui');
+    this.uicHttpService.downloadEnrollment(1);
   }
 
 }

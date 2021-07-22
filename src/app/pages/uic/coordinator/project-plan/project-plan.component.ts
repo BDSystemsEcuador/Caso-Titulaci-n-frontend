@@ -47,7 +47,7 @@ export class ProjectPlanComponent implements OnInit {
       approval_date: [null, [Validators.required]],
       is_approved: [null, [Validators.required]],
       students: this.formBuilder.array([this.formBuilder.control(null)]),
-      tutors: this.formBuilder.array([this.formBuilder.control(null)]),
+      teachers: this.formBuilder.array([this.formBuilder.control(null)]),
       observations: this.formBuilder.array([this.formBuilder.control(null)])
     });
   }
