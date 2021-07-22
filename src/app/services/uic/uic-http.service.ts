@@ -77,5 +77,8 @@ export class UicHttpService {
             downloadLink.setAttribute('download', 'solicitud.pdf');
         })}
 
-
+    getCertificados(url:string) {
+        url = environment.API_URL_UIC + url;  
+        return this.httpClient.get(url,{responseType: 'blob' as 'json'});
+    }
 }

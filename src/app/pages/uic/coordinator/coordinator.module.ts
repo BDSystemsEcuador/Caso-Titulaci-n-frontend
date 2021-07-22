@@ -13,6 +13,9 @@ import {DropdownModule} from 'primeng/dropdown';
 import {SkeletonModule} from 'primeng/skeleton';
 import {CheckboxModule} from 'primeng/checkbox';
 import {DividerModule} from 'primeng/divider';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { TagModule } from 'primeng/tag';
 
 import {InputSwitchModule} from 'primeng/inputswitch';
 
@@ -100,7 +103,10 @@ import { RequirementDeleteFormComponent } from './student-requirement/student-re
     CalendarModule,
     RadioButtonModule,
     InputSwitchModule,
-    DividerModule
+    DividerModule,
+    MessagesModule,
+    MessageModule,
+    TagModule
     
   ],
   declarations: [

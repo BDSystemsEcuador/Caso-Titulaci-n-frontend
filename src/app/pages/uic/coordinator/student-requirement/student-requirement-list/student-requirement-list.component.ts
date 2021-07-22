@@ -25,6 +25,7 @@ export class StudentRequirementListComponent implements OnInit {
 
   @Input() flagStudents: boolean;
   @Input() studentsIn: Student[];
+  @Input() studentFormIn: MeshStudent;
   @Input() studentsEndIn: Student[];
   @Input() paginatorIn: Paginator;
   @Input() formStudentIn: Student;
@@ -37,6 +38,7 @@ export class StudentRequirementListComponent implements OnInit {
   @Output() formStudentOut = new EventEmitter<Student>();
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
+  @Output() approveOut = new EventEmitter<any>();
   @Output() disabledFormOut = new EventEmitter<boolean>();
   colsStudent: Col[];
   selectedStudents: any[];
@@ -68,22 +70,44 @@ export class StudentRequirementListComponent implements OnInit {
   openNewFormStudent() {
   }
 
-  getMeshStudentRequirements(student: Student){
+  // async getDocuments(){
+
+  //   let result = await this.uicHttpService.get("requirements").toPromise();
+  //         this.catalogueDocuments = result["data"];
+
+  //         result = await this.uicHttpService.get("mesh-student-requirements").toPromise();
+
+  //     this.documents = await result['data'];
+      
+  //     this.verifyDocuments();
+  
+  //   }
+
+  async getMeshStudentRequirements(student: Student){
     const params = new HttpParams()
       .append("id", student.id.toString())
     this.spinnerService.show();
-    this.uicHttpService.getFiles("mesh-student-requirements", params).subscribe(
-      (response) => {
-        debugger
-        this.spinnerService.hide();
-        this.filesOut.emit(response);
-      },
-      (error) => {
-        this.spinnerService.hide();
-        this.messageService.error(error);
-      }
-    );
+    let result = await this.uicHttpService.getFiles("mesh-student-requirements", params).toPromise();
+
+    this.filesOut.emit(await result);
   }
+
+  // getMeshStudentRequirements(student: Student){
+  //   const params = new HttpParams()
+  //     .append("id", student.id.toString())
+  //   this.spinnerService.show();
+  //   this.uicHttpService.getFiles("mesh-student-requirements", params).subscribe(
+  //     (response) => {
+  //       debugger
+  //       this.spinnerService.hide();
+  //       this.filesOut.emit(response);
+  //     },
+  //     (error) => {
+  //       this.spinnerService.hide();
+  //       this.messageService.error(error);
+  //     }
+  //   );
+  // }
 
   openEditFormStudent(student: MeshStudent) {
     this.displayOut.emit(true);

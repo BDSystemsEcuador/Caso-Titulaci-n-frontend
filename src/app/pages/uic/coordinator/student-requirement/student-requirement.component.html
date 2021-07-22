@@ -4,6 +4,7 @@
     <app-student-requirement-list
       *ngIf="!studentDialog"
       [studentsIn]="students"
+      [studentFormIn]="studentForm"
       [studentsEndIn]="studentsEnd"
       [flagStudents]="flagStudents"
       [paginatorIn]="paginator"
@@ -34,6 +35,7 @@
         [studentIn]="student"
         [formStudentIn]="formStudent"
         (studentsOut)="students = $event"
+        (studentOut)="studentForm = $event"
         (paginatorAdd)="paginator.total = paginator.total + $event"
         (displayOut)="studentDialog = $event"
       >

@@ -26,6 +26,7 @@ export class StudentRequirementComponent implements OnInit {
   approvedDocuments: MeshStudentRequirement[];
   formStudent: FormGroup;
   student: MeshStudent;
+  studentForm: MeshStudent;
   files: any;
   studentDialog: boolean;
   flagStudents: boolean;

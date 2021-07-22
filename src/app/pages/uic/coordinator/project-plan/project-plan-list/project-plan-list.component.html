@@ -105,11 +105,28 @@
           <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
         </td>
         <td *ngFor="let col of columns">
-          {{
-            rowData[col.field]?.name
-              ? rowData[col.field]?.name
-              : rowData[col.field]
-          }}
+          <div *ngIf="col.field == 'is_approved'">
+            <p-tag
+              *ngIf="rowData[col.field] == true"
+              styleClass="p-mr-2"
+              icon="pi pi-check"
+              severity="success"
+              value="Aprobado"
+            ></p-tag>
+            <p-tag
+              *ngIf="rowData[col.field] == false"
+              icon="pi pi-times"
+              severity="danger"
+              value="No aprobado"
+            ></p-tag>
+          </div>
+          <div *ngIf="col.field != 'is_approved'">
+            {{
+              rowData[col.field]?.name
+                ? rowData[col.field]?.name
+                : rowData[col.field]
+            }}
+          </div>
         </td>
         <td style="text-align: center">
           <button

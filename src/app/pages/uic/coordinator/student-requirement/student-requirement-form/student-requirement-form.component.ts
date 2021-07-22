@@ -23,6 +23,8 @@ export class StudentRequirementFormComponent implements OnInit {
   dialogDeleteFiles: boolean;
   approvedDocuments: MeshStudentRequirement[] = [];
   document: MeshStudentRequirement;
+  approvedRequirements: MeshStudentRequirement[] = [];
+  disapprovedRequirements: MeshStudentRequirement[] = [];
 
   formRequirementDelete: FormGroup;
 
@@ -35,6 +37,7 @@ export class StudentRequirementFormComponent implements OnInit {
   @Input() approvedDocumentsIn: MeshStudentRequirement[];
   @Output() displayOut = new EventEmitter<boolean>();
   @Output() studentsOut = new EventEmitter<Student[]>();
+  @Output() studentOut = new EventEmitter<Student>();
   @Output() paginatorAdd = new EventEmitter<number>();
   @Output() paginatorOut = new EventEmitter<Paginator>();
 
@@ -61,20 +64,28 @@ export class StudentRequirementFormComponent implements OnInit {
     this.uicHttpService.update('mesh-student-requirement/approve/' + document.id, {document} ).subscribe(response => {
       debugger
       this.messageService.success(response);
-      this.removeDocuments([document.id]);
+      //this.removeDocuments([document.id]);
+      this.verifyDocuments(document);
+
     }, error => {
-      debugger
       this.messageService.error(error);
 
     });
   }
 
-  removeDocuments(ids) {
+  verifyDocuments(document: MeshStudentRequirement) {
     debugger
+    for (let requirement of this.documentsIn) {
+        this.documentsIn = this.documentsIn.filter(element => element.id !== document.id);
+    }
+  this.approvedRequirements.push(document);
+}
+
+  removeDocuments(ids) {
     for (const id of ids) {
-      debugger
         this.documentsIn = this.documentsIn.filter(element => element.id !== id);
     }
+    
   }
 
   download(file: File) {
@@ -93,16 +104,6 @@ export class StudentRequirementFormComponent implements OnInit {
         this.messageService.error(error);
     });
 }
-
-  // getStudents() {
-  //   debugger
-  //   if(this.disabledFormIn == true){
-  //       this.observationsField.clear();
-  //       for(const observation of this.studentIn['observations']) {
-  //         this.addObservation(observation);
-  //        }
-  //       }
-  // }
 
   storeStudent(student: Student, flag = false) {
     this.spinnerService.show();
@@ -174,7 +175,6 @@ export class StudentRequirementFormComponent implements OnInit {
   onSubmit(event: Event) {
 
     event.preventDefault();
-    debugger
     if (this.formRequirementDelete.valid) {
       if (this.idField.value) {
         this.updateRequirementDelete(this.formRequirementDelete.value);
@@ -184,19 +184,30 @@ export class StudentRequirementFormComponent implements OnInit {
     }
   }
 
-  
+  verifyDisapprovedDocuments(document: MeshStudentRequirement) {
+    for (let requirement of this.documentsIn) {
+      if(requirement.is_approved == true){
+        
+        if(document.id == requirement.id){
+          this.documentsIn.push(document);
+      }
+
+      }
+    }
+    for (let requirement of this.approvedRequirements) {
+      if(document.id == requirement.id){
+        this.approvedRequirements = this.approvedRequirements.filter(element => element.id !== document.id);
+        this.documentsIn.push(document);
+      }
+    }
+}
 
   updateRequirementDelete(meshStudentRequirement: MeshStudentRequirement) {
-    debugger
-    this.spinnerService.show();
     this.uicHttpService.update('mesh-student-requirement/disapproved/' + meshStudentRequirement.id, { meshStudentRequirement })
       .subscribe(response => {
-        debugger
-        this.spinnerService.hide();
         this.messageService.success(response);
-        this.removeDocuments([meshStudentRequirement.id]);
+        this.verifyDisapprovedDocuments(meshStudentRequirement);
       }, error => {
-        this.spinnerService.hide();
         this.messageService.error(error);
       });
   }
