@@ -22,9 +22,13 @@ export class StudentInformationFormComponent implements OnInit {
   relations: any;
   areas: any;
   positions: any;
+  studentInformation: StudentInformation;
+
+  selectedCategory: any = null;
 
 
   @Input() formStudentInformationIn: FormGroup;
+  @Input() studentInformationIn: StudentInformation;
   @Input() studentInformationFormsIn: StudentInformation[];
   @Input() paginatorIn: Paginator;
 
@@ -49,6 +53,7 @@ export class StudentInformationFormComponent implements OnInit {
     this.getAreas();
     this.getPositions();
     this.getRelations();
+    this.getStudentInformation();
   }
   // Fields of Form
   get idField() {
@@ -83,6 +88,27 @@ export class StudentInformationFormComponent implements OnInit {
   }
   paginateStudentInformationForm(event) {
     this.paginatorOut.emit(this.paginatorIn);
+  }
+
+  getStudentInformationForm() {
+    debugger
+    this.formStudentInformationIn.patchValue(this.studentInformation);
+  }
+
+  getStudentInformation(){
+    
+    this.uicHttpService.get("student-informations/" + 1).subscribe(
+      (response) => {
+        debugger
+        this.studentInformation = response["data"];
+        this.getStudentInformationForm();
+        this.selectedCategory = this.studentInformation.relation_laboral_career.name;
+      },
+      (error) => {
+        this.messageService.error(error);
+      }
+    );
+
   }
 
   storeStudentInformationForm(studentInformation: StudentInformation, flag = false) {

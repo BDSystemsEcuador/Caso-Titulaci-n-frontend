@@ -202,7 +202,6 @@ export class ProjectPlanFormComponent implements OnInit {
       this.students = response;
       console.log(this.students);
     }, error => {
-      this.messageService.error(error);
     });
   }
 

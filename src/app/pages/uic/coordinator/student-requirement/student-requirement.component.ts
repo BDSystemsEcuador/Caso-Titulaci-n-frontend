@@ -45,18 +45,8 @@ export class StudentRequirementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.buildFormStudent();
     this.getStudents(this.paginator);
-    //this.getStudentsEnd(this.paginator);//paginador por tabla
   }
-  // Build form course
-  // buildFormStudent() {
-  //   this.formStudent = this.formBuilder.group({
-  //     id: [null],
-  //     is_approved: [null, [Validators.required]],
-  //     observations: this.formBuilder.array([this.formBuilder.control(null)])
-  //   });
-  // }
 
   getStudents(paginator: Paginator) {
     const params = new HttpParams()
@@ -65,27 +55,12 @@ export class StudentRequirementComponent implements OnInit {
     this.flagStudents = true;
     this.uicHttpService.get("mesh-students", params).subscribe(
       (response) => {
-        
-        // for(let i = 0; i<response['data'].length; i++){
-          
-        //   let haveRequirements: MeshStudentRequirement[] = [];
-        //   for(let j = 0; j<response['data'][i]['mesh_student_requirements'].length; j++){
-            
-        //     if(response['data'][i]['mesh_student_requirements'][j].is_approved == true){
-        //       haveRequirements.push(response['data'][i]['mesh_student_requirements'][j]);
-        //     }
-        //   }
-        //   if(haveRequirements.length <= response['data'][i]['mesh_student_requirements'].length-1){
-        //     this.students.push(response['data'][i]);
-        //   }
-        // }
         this.students = response['data'];
         this.flagStudents = false;
         this.paginator = response as Paginator;
       },
       (error) => {
         this.flagStudents = false;
-        this.messageService.error(error);
       }
     );
   }

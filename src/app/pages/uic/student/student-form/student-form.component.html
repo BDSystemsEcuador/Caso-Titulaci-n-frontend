@@ -1,6 +1,6 @@
 <!-- {{ formStudentInformationIn.value | json }} -->
 
-<div class="p-fluid" >
+<div class="p-fluid">
   <form [formGroup]="formStudentInformationIn" (ngSubmit)="onSubmit($event)">
     <div class="p-field p-lg-6 p-md-12">
       <label for="title">
@@ -28,127 +28,118 @@
         </small>
       </div>
     </div>
-<div class="p-grid">
+    <div class="p-grid">
+      <div class="p-field p-lg-3 p-md-12">
+        <label for="company_area">
+          <i class="p-error">*</i> Area:
+          <i
+            *ngIf="companyAreaField.valid"
+            class="pi pi-check-circle icon-valid"
+          ></i>
+          <i
+            *ngIf="
+              companyAreaField.invalid &&
+              (companyAreaField.touched || companyAreaField.dirty)
+            "
+            class="pi pi-times-circle icon-invalid"
+          ></i>
+        </label>
+        <p-dropdown
+          id="company_area"
+          [options]="areas"
+          formControlName="company_area"
+          optionLabel="name"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          placeholder="Selecciona el area"
+        >
+          <ng-template pTemplate="selectedArea">
+            <div class="country-item country-item-value" *ngIf="selectedArea">
+              <div>{{ selectedArea.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-selectedArea pTemplate="selectedArea">
+            <div class="country-item">
+              <div>{{ selectedArea.name }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
 
-    <div class="p-field p-lg-3 p-md-12">
-
-      <label for="company_area">
-        <i class="p-error">*</i> Area:
+      <div class="p-field p-lg-3 p-md-12">
+        <label for="company_position">
+          <i class="p-error">*</i> Cargo:
+          <i
+            *ngIf="companyPositionField.valid"
+            class="pi pi-check-circle icon-valid"
+          ></i>
+          <i
+            *ngIf="
+              companyPositionField.invalid &&
+              (companyPositionField.touched || companyPositionField.dirty)
+            "
+            class="pi pi-times-circle icon-invalid"
+          ></i>
+        </label>
+        <p-dropdown
+          id="company_position"
+          [options]="positions"
+          formControlName="company_position"
+          optionLabel="name"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          placeholder="Selecciona el cargo"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="p-field p-lg-6">
+      <label for="relation_laboral_career">
+        <i class="p-error">*</i> Relación laboral vs carrera:
         <i
-          *ngIf="companyAreaField.valid"
+          *ngIf="relationLaboralCareerField.valid"
           class="pi pi-check-circle icon-valid"
         ></i>
         <i
           *ngIf="
-            companyAreaField.invalid &&
-            (companyAreaField.touched || companyAreaField.dirty)
+            relationLaboralCareerField.invalid &&
+            (relationLaboralCareerField.touched ||
+              relationLaboralCareerField.dirty)
           "
           class="pi pi-times-circle icon-invalid"
         ></i>
       </label>
-      <p-dropdown
-        id="company_area"
-        [options]="areas"
-        formControlName="company_area"
-        optionLabel="name"
-        [filter]="true"
-        filterBy="name"
-        [showClear]="true"
-        placeholder="Selecciona el area"
-      >
-        <ng-template pTemplate="selectedArea">
-          <div class="country-item country-item-value" *ngIf="selectedArea">
-            <div>{{ selectedArea.name }}</div>
-          </div>
-        </ng-template>
-        <ng-template let-selectedArea pTemplate="selectedArea">
-          <div class="country-item">
-            <div>{{ selectedArea.name }}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
-    </div>
 
-    <div class="p-field p-lg-3 p-md-12">
-      <label for="company_position">
-        <i class="p-error">*</i> Cargo:
-        <i
-          *ngIf="companyPositionField.valid"
-          class="pi pi-check-circle icon-valid"
-        ></i>
-        <i
-          *ngIf="
-            companyPositionField.invalid &&
-            (companyPositionField.touched || companyPositionField.dirty)
-          "
-          class="pi pi-times-circle icon-invalid"
-        ></i>
-      </label>
-      <p-dropdown
-        id="company_position"
-        [options]="positions"
-        formControlName="company_position"
-        optionLabel="name"
-        [filter]="true"
-        filterBy="name"
-        [showClear]="true"
-        placeholder="Selecciona el cargo"
-      >
-        <ng-template pTemplate="selectedPosition">
-          <div class="country-item country-item-value" *ngIf="selectedPosition">
-            <div>{{ selectedPosition.name }}</div>
-          </div>
-        </ng-template>
-        <ng-template let-selectedPosition pTemplate="selectedPosition">
-          <div class="country-item">
-            <div>{{ selectedPosition.name }}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
-    </div>
-  </div>
-  <div class="p-field p-lg-6">
-    <label for="relation_laboral_career">
-      <i class="p-error">*</i> Relación laboral vs carrera:
-      <i
-        *ngIf="relationLaboralCareerField.valid"
-        class="pi pi-check-circle icon-valid"
-      ></i>
-      <i
+      <div class="p-lg-2">
+        <p-dropdown
+          id="relation_laboral_career"
+          [options]="relations"
+          formControlName="relation_laboral_career"
+          optionLabel="name"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+        >
+        </p-dropdown>
+      </div>
+
+      <div
         *ngIf="
-          relationLaboralCareerField.invalid &&
-          (relationLaboralCareerField.touched ||
-            relationLaboralCareerField.dirty)
+          relationLaboralCareerField.errors &&
+          relationLaboralCareerField.touched
         "
-        class="pi pi-times-circle icon-invalid"
-      ></i>
-    </label>
-
-    <div *ngFor="let relation of relations" class="p-field-checkbox">
-      <p-radioButton
-        [inputId]="relation.name"
-        name="relation_laboral_career"
-        [value]="relation"
-        formControlName="relation_laboral_career"
-      ></p-radioButton>
-      <label [for]="relation.id">{{ relation.name }}</label>
-    </div>
-
-    <div
-      *ngIf="
-        relationLaboralCareerField.errors &&
-        relationLaboralCareerField.touched
-      "
-    >
-      <small
-        *ngIf="relationLaboralCareerField.hasError('required')"
-        id="relation_laboral_career-help-1"
-        class="p-error"
       >
-        {{ messageService.fieldRequired }}
-      </small>
+        <small
+          *ngIf="relationLaboralCareerField.hasError('required')"
+          id="relation_laboral_career-help-1"
+          class="p-error"
+        >
+          {{ messageService.fieldRequired }}
+        </small>
+      </div>
     </div>
-  </div>
     <div class="p-formgrid p-grid">
       <!-- <div class="p-field p-col">
         <button
@@ -161,7 +152,7 @@
           icon="pi pi-save"
         ></button>
       </div> -->
-      <div *ngIf="!idField.value" class="p-field p-col-6">
+      <div class="p-field p-col-6">
         <button
           pButton
           pRipple

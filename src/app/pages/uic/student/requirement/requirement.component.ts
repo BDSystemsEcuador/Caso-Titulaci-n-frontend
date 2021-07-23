@@ -29,8 +29,8 @@ import {File} from '../../../../models/app/file';
   styleUrls: ['./requirement.component.css']
 })
 export class RequirementComponent implements OnInit {
-  catalogueDocuments: Requirement[];
-  documents: MeshStudentRequirement[] = [];
+  requirements: Requirement[];
+  studentRequirements: MeshStudentRequirement[] = [];
 
   constructor(private appHttpService: AppHttpService,
               private authService: AuthService,
@@ -43,17 +43,17 @@ export class RequirementComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.getDocuments();
+      this.getRequirements();
   }
 
-  async getDocuments(){
+  async getRequirements(){
 
     let result = await this.uicHttpService.get("requirements").toPromise();
-          this.catalogueDocuments = result["data"];
+          this.requirements = result["data"];
 
           result = await this.uicHttpService.get("mesh-student-requirements").toPromise();
 
-      this.documents = await result['data'];
+      this.studentRequirements = await result['data'];
       
       this.verifyDocuments();
   
@@ -80,7 +80,7 @@ export class RequirementComponent implements OnInit {
     
     this.uicHttpService.store('mesh-student-requirements', { meshStudentRequirement }).subscribe(response => {
       this.upload(event, response['data'].id);
-      this.getDocuments();
+      this.getRequirements();
       this.messageService.success(response);
     }, error => {
       this.messageService.error(error);
@@ -125,7 +125,7 @@ export class RequirementComponent implements OnInit {
                         this.spinnerService.hide();
                         this.messageService.success(response);
                         this.removeDocuments(ids);
-                        this.getDocuments();
+                        this.getRequirements();
                     }, error => {
                         this.spinnerService.hide();
                         this.messageService.error(error);
@@ -136,13 +136,13 @@ export class RequirementComponent implements OnInit {
 
 removeDocuments(ids) {
   for (const id of ids) {
-      this.documents = this.documents.filter(element => element.id !== id);
+      this.studentRequirements = this.studentRequirements.filter(element => element.id !== id);
   }
 }
 
 verifyDocuments() {
-  for (const document of this.documents) {
-      this.catalogueDocuments = this.catalogueDocuments.filter(element => element.id !== document.requirement.id);
+  for (const studentRequirement of this.studentRequirements) {
+      this.requirements = this.requirements.filter(element => element.id !== studentRequirement.requirement.id);
   }
 }
 

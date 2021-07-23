@@ -2,11 +2,11 @@
   <p-accordion>
     <p-accordionTab
       header="Documentos Faltantes"
-      [selected]="catalogueDocuments?.length > 0"
+      [selected]="requirements?.length > 0"
     >
       <div class="p-grid">
         <p-card
-          *ngFor="let requirement of catalogueDocuments"
+          *ngFor="let requirement of requirements"
           class="p-xl-4 p-lg-4 p-md-6 p-sm-12"
         >
           <div class="p-formgrid p-grid">
@@ -37,10 +37,13 @@
       </div>
     </p-accordionTab>
 
-    <p-accordionTab header="Mis documentos" [selected]="documents?.length > 0">
+    <p-accordionTab
+      header="Mis documentos"
+      [selected]="studentRequirements?.length > 0"
+    >
       <div class="p-grid">
         <p-card
-          *ngFor="let document of documents"
+          *ngFor="let document of studentRequirements"
           class="p-xl-4 p-lg-4 p-md-6 p-sm-12"
         >
           <div class="p-fluid">

@@ -3,276 +3,198 @@
 <p-divider align="left">
   <div class="p-d-inline-flex p-ai-center">
     <i class="pi pi-user p-mr-2"></i>
-    <h2>{{ studentIn.student.user.full_name }}</h2>
+    <h2>{{ studentIn?.student.user.full_name }}</h2>
   </div>
 </p-divider>
 
 <div class="p-fluid">
-  <div class="p-grid">
-    <div
-      *ngFor="let document of documentsIn"
-      class="p-xl-6 p-lg-6 p-md-12 p-sm-12"
-      style="display: inline-block"
+  <p-accordion>
+    <p-accordionTab
+      header="Documentos del estudiante"
+      [selected]="studentRequirements?.length > 0"
     >
-      <p-card>
-        <div class="p-fluid">
-          <div class="p-formgrid p-grid">
-            <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
-              {{ document.requirement.name }}
-            </h5>
-          </div>
-          <div class="p-field" style="text-align: center">
-            <button
-              pButton
-              pRipple
-              id="btnDownload1"
-              class="p-button-link"
-              (click)="download(document.files[0])"
-              [label]="
-                document.files[0].name + '.' + document.files[0].extension
-              "
-              *ngIf="document.files[0]"
-            ></button>
-          </div>
-          <div class="p-field" style="text-align: center">
-            <button
-              pButton
-              pRipple
-              id="btnDownload"
-              pTooltip="Descargar"
-              class="p-button-info p-button-rised"
-              icon="pi pi-download"
-              (click)="download(document.files[0])"
-            ></button>
-            <button
-              *ngIf="document.is_approved == null"
-              pButton
-              pRipple
-              id="btnDelete"
-              pTooltip="Rechazar documento"
-              class="p-button-danger p-button-rised p-ml-2"
-              icon="pi pi-thumbs-down"
-              (click)="openDeleteRequirement(document)"
-            ></button>
+      <div class="p-grid">
+        <div
+          style="display: inline-block"
+          *ngFor="let document of studentRequirements"
+          class="p-xl-6 p-lg-6 p-md-12 p-sm-12"
+        >
+          <p-card>
+            <div class="p-fluid">
+              <div class="p-formgrid p-grid">
+                <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
+                  {{ document.requirement?.name }}
+                </h5>
+              </div>
+              <div class="p-field" style="text-align: center">
+                <button
+                  pButton
+                  pRipple
+                  id="btnDownload1"
+                  class="p-button-link"
+                  (click)="download(document?.file)"
+                  [label]="document?.file?.full_name"
+                  *ngIf="document?.file"
+                ></button>
+              </div>
+              <div class="p-field" style="text-align: center">
+                <button
+                  pButton
+                  pRipple
+                  id="btnDownload"
+                  pTooltip="Descargar"
+                  class="p-button-info p-button-rised"
+                  icon="pi pi-download"
+                  (click)="download(document?.file)"
+                ></button>
+                <button
+                  *ngIf="document.is_approved == null"
+                  pButton
+                  pRipple
+                  id="btnDelete"
+                  pTooltip="Rechazar documento"
+                  class="p-button-danger p-button-rised p-ml-2"
+                  icon="pi pi-thumbs-down"
+                  (click)="openDeleteRequirement(document)"
+                ></button>
 
-            <button
-              *ngIf="
-                document.is_approved == false || document.is_approved == null
-              "
-              pButton
-              pRipple
-              id="btnSuccess"
-              pTooltip="Aprobar documento"
-              class="p-button-success p-button-rised p-ml-2"
-              icon="pi pi-thumbs-up"
-              (click)="approveDocument(document)"
-            ></button>
-            <div *ngIf="formRequirementDelete">
-              <div
-                class="p-fluid"
-                *ngIf="
-                  formRequirementDelete.value.requirement_id ==
-                  document.requirement_id
-                "
-              >
-                <form
-                  [formGroup]="formRequirementDelete"
-                  (ngSubmit)="onSubmit($event)"
-                >
-                  <div class="p-field">
-                    <label for="observations">
-                      <i class="p-error">*</i> Observación:
-                      <i
-                        *ngIf="observationField.valid"
-                        class="pi pi-check-circle icon-valid"
-                      ></i>
-                      <i
-                        *ngIf="
-                          observationField.invalid &&
-                          (observationField.touched || observationField.dirty)
-                        "
-                        class="pi pi-times-circle icon-invalid"
-                      ></i>
-                    </label>
-
-                    <textarea
-                      pInputTextarea
-                      name="observations"
-                      id="observations"
-                      formControlName="observations"
-                      rows="4"
-                    ></textarea>
-                    <div
-                      *ngIf="
-                        observationField.errors && observationField.touched
-                      "
+                <button
+                  *ngIf="
+                    document.is_approved == false ||
+                    document.is_approved == null
+                  "
+                  pButton
+                  pRipple
+                  id="btnSuccess"
+                  pTooltip="Aprobar documento"
+                  class="p-button-success p-button-rised p-ml-2"
+                  icon="pi pi-thumbs-up"
+                  (click)="approveDocument(document)"
+                ></button>
+                <div *ngIf="formRequirementDelete">
+                  <div
+                    class="p-fluid"
+                    *ngIf="
+                      formRequirementDelete.value.requirement_id ==
+                      document.requirement_id
+                    "
+                  >
+                    <form
+                      *ngIf="document.is_approved == null"
+                      [formGroup]="formRequirementDelete"
+                      (ngSubmit)="onSubmit($event)"
                     >
-                      <small
-                        *ngIf="observationField.hasError('required')"
-                        id="observation-help-1"
-                        class="p-error"
+                      <div class="p-field">
+                        <label for="observations">
+                          <i class="p-error">*</i> Observación:
+                          <i
+                            *ngIf="observationField.valid"
+                            class="pi pi-check-circle icon-valid"
+                          ></i>
+                          <i
+                            *ngIf="
+                              observationField.invalid &&
+                              (observationField.touched ||
+                                observationField.dirty)
+                            "
+                            class="pi pi-times-circle icon-invalid"
+                          ></i>
+                        </label>
+
+                        <textarea
+                          pInputTextarea
+                          name="observations"
+                          id="observations"
+                          formControlName="observations"
+                          rows="4"
+                        ></textarea>
+                        <div
+                          *ngIf="
+                            observationField.errors && observationField.touched
+                          "
+                        >
+                          <small
+                            *ngIf="observationField.hasError('required')"
+                            id="observation-help-1"
+                            class="p-error"
+                          >
+                            {{ messageService.fieldRequired }}
+                          </small>
+                        </div>
+                      </div>
+                      <div
+                        class="p-field p-col"
+                        style="width: 50%; margin: auto"
                       >
-                        {{ messageService.fieldRequired }}
-                      </small>
-                    </div>
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          id="btnSaveContinue"
+                          label="Rechazar"
+                          class="p-button-danger p-button-raised"
+                          icon="pi pi-thumbs-down"
+                          (click)="onSubmit($event, true)"
+                        ></button>
+                      </div>
+                    </form>
                   </div>
-                  <div class="p-field p-col" style="width: 50%; margin: auto">
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      id="btnSaveContinue"
-                      label="Rechazar"
-                      class="p-button-danger p-button-raised"
-                      icon="pi pi-thumbs-down"
-                      (click)="onSubmit($event, true)"
-                    ></button>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
+            <div class="p-fluid" *ngIf="document.is_approved == false">
+              <p style="text-align: center; font-weight: bold">
+                {{ document.observations }}
+              </p>
+            </div>
+            <div class="p-fluid">
+              <p-message
+                severity="success"
+                text="Aprobado"
+                styleClass="p-mr-2"
+                *ngIf="document.is_approved == true"
+              ></p-message>
+              <p-message
+                severity="warn"
+                text="En espera"
+                styleClass="p-mr-2"
+                *ngIf="document.is_approved == null"
+              ></p-message>
+              <p-message
+                severity="error"
+                text="No aprobado"
+                styleClass="p-mr-2"
+                *ngIf="document.is_approved == false"
+              ></p-message>
+            </div>
+          </p-card>
         </div>
-        <div class="p-fluid">
-          <p-message
-            severity="success"
-            text="Aprobado"
-            styleClass="p-mr-2"
-            *ngIf="document.is_approved == true"
-          ></p-message>
-          <p-message
-            severity="warn"
-            text="En espera"
-            styleClass="p-mr-2"
-            *ngIf="document.is_approved == null"
-          ></p-message>
-          <p-message
-            severity="error"
-            text="No aprobado"
-            styleClass="p-mr-2"
-            *ngIf="document.is_approved == false"
-          ></p-message>
-        </div>
-      </p-card>
-    </div>
-  </div>
-  <div class="p-grid">
-    <div
-      *ngFor="let document of approvedRequirements"
-      class="p-xl-6 p-lg-6 p-md-12 p-sm-12"
-      style="display: inline-block"
+      </div>
+    </p-accordionTab>
+    <p-accordionTab
+      header="Documentos Faltantes"
+      [selected]="requirements?.length > 0"
     >
-      <p-card>
-        <div class="p-fluid">
+      <div
+        style="display: inline-block"
+        *ngFor="let requirement of requirements"
+        class="p-xl-6 p-lg-6 p-md-6 p-sm-12"
+      >
+        <p-card>
           <div class="p-formgrid p-grid">
             <h5 class="p-button-link p-xl-12 p-lg-12 p-md-12 p-sm-12">
-              {{ document.requirement.name }}
+              {{ requirement.name }}
             </h5>
           </div>
-          <div class="p-field" style="text-align: center">
-            <button
-              pButton
-              pRipple
-              id="btnDownload1"
-              class="p-button-link"
-              (click)="download(document.files[0])"
-              [label]="
-                document.files[0].name + '.' + document.files[0].extension
-              "
-              *ngIf="document.files[0]"
-            ></button>
-          </div>
-          <div class="p-field" style="text-align: center">
-            <button
-              pButton
-              pRipple
-              id="btnDownload"
-              pTooltip="Descargar"
-              class="p-button-info p-button-rised"
-              icon="pi pi-download"
-              (click)="download(document.files[0])"
-            ></button>
 
-            <div *ngIf="formRequirementDelete">
-              <div
-                class="p-fluid"
-                *ngIf="
-                  formRequirementDelete.value.requirement_id ==
-                  document.requirement_id
-                "
-              >
-                <form
-                  [formGroup]="formRequirementDelete"
-                  (ngSubmit)="onSubmit($event)"
-                >
-                  <div class="p-field">
-                    <label for="observations">
-                      <i class="p-error">*</i> Observación:
-                      <i
-                        *ngIf="observationField.valid"
-                        class="pi pi-check-circle icon-valid"
-                      ></i>
-                      <i
-                        *ngIf="
-                          observationField.invalid &&
-                          (observationField.touched || observationField.dirty)
-                        "
-                        class="pi pi-times-circle icon-invalid"
-                      ></i>
-                    </label>
-
-                    <textarea
-                      pInputTextarea
-                      name="observations"
-                      id="observations"
-                      formControlName="observations"
-                      rows="4"
-                    ></textarea>
-                    <div
-                      *ngIf="
-                        observationField.errors && observationField.touched
-                      "
-                    >
-                      <small
-                        *ngIf="observationField.hasError('required')"
-                        id="observation-help-1"
-                        class="p-error"
-                      >
-                        {{ messageService.fieldRequired }}
-                      </small>
-                    </div>
-                  </div>
-                  <div class="p-field p-col" style="width: 50%; margin: auto">
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      id="btnSaveContinue"
-                      label="Rechazar"
-                      class="p-button-danger p-button-raised"
-                      icon="pi pi-thumbs-down"
-                      (click)="onSubmit($event, true)"
-                    ></button>
-                  </div>
-                </form>
-              </div>
-            </div>
+          <div class="p-field">
+            <app-upload-files
+              [acceptAttributes]="'.pdf'"
+              (files)="storeRequirement($event, requirement.id)"
+            ></app-upload-files>
           </div>
-        </div>
-        <div class="p-fluid">
-          <p-message
-            severity="success"
-            text="Aprobado"
-            styleClass="p-mr-2"
-          ></p-message>
-          <!-- <p-message
-            severity="error"
-            text="No aprobado"
-            styleClass="p-mr-2"
-            *ngIf="document.is_approved == false"
-          ></p-message> -->
-        </div>
-      </p-card>
-    </div>
-  </div>
+        </p-card>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
 </div>

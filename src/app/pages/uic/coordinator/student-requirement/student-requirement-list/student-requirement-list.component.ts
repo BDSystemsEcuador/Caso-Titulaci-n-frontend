@@ -92,22 +92,7 @@ export class StudentRequirementListComponent implements OnInit {
     this.filesOut.emit(await result);
   }
 
-  // getMeshStudentRequirements(student: Student){
-  //   const params = new HttpParams()
-  //     .append("id", student.id.toString())
-  //   this.spinnerService.show();
-  //   this.uicHttpService.getFiles("mesh-student-requirements", params).subscribe(
-  //     (response) => {
-  //       debugger
-  //       this.spinnerService.hide();
-  //       this.filesOut.emit(response);
-  //     },
-  //     (error) => {
-  //       this.spinnerService.hide();
-  //       this.messageService.error(error);
-  //     }
-  //   );
-  // }
+  
 
   openEditFormStudent(student: MeshStudent) {
     this.displayOut.emit(true);

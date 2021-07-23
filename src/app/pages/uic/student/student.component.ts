@@ -1,5 +1,11 @@
+import { MessageService } from './../../shared/services/message.service';
+import { StudentInformation } from './../../../models/uic/student-information';
+
+import { UicHttpService } from './../../../services/uic/uic-http.service';
+import { Paginator } from './../../../models/setting/paginator';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-student',
@@ -9,9 +15,12 @@ import { Component, OnInit } from '@angular/core';
 export class StudentComponent implements OnInit {
 
   formStudentInformation: FormGroup;
-
+  
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private uicHttpService: UicHttpService,
+    private messageService: MessageService
+
   ) { }
 
   ngOnInit(): void {
